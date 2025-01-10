@@ -1,0 +1,944 @@
+{
+  "data": {
+    "activeSeasonId": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_61",
+    "activeEventId": "O1736287200000",
+    "activeSeasonSquadSize": 3,
+    "activeSeason": {
+      "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_61",
+      "name": "Season 61",
+      "seasonDefId": "4zone_3v3_ga2_c3s1_61a",
+      "territoryMapId": "4zone_3v3_ga2_c3s1_61a",
+      "squadSize": 3,
+      "events": [
+        {
+          "id": "O1735682400000",
+          "eventNumber": 1,
+          "name": "Week 1",
+          "startTime": "2024-12-31 22:00:00+00:00",
+          "endTime": "2025-01-06 22:00:00+00:00",
+          "displayStartTime": "2024-12-30 23:00:00+00:00",
+          "displayEndTime": "2025-01-06 23:00:00+00:00"
+        },
+        {
+          "id": "O1736287200000",
+          "eventNumber": 2,
+          "name": "Week 2",
+          "startTime": "2025-01-07 22:00:00+00:00",
+          "endTime": "2025-01-13 22:00:00+00:00",
+          "displayStartTime": "2025-01-06 23:00:00+00:00",
+          "displayEndTime": "2025-01-13 23:00:00+00:00"
+        }
+      ]
+    },
+    "latestBattleSeasonId": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_61",
+    "latestBattleSeasonIdsBySquadSize": [
+      {
+        "squadSize": 3,
+        "seasonId": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_61"
+      },
+      {
+        "squadSize": 5,
+        "seasonId": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_60"
+      }
+    ],
+    "seasons": [
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_61",
+        "name": "Season 61",
+        "seasonDefId": "4zone_3v3_ga2_c3s1_61a",
+        "territoryMapId": "4zone_3v3_ga2_c3s1_61a",
+        "events": [
+          {
+            "id": "O1735682400000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2024-12-31 22:00:00+00:00",
+            "endTime": "2025-01-06 22:00:00+00:00",
+            "displayStartTime": "2024-12-30 23:00:00+00:00",
+            "displayEndTime": "2025-01-06 23:00:00+00:00"
+          }
+        ],
+        "squadSize": 3
+      },
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_60",
+        "name": "Season 60",
+        "seasonDefId": "4zone_5v5_ga2_c3s1_60a",
+        "territoryMapId": "4zone_5v5_ga2_c3s1_60a",
+        "events": [
+          {
+            "id": "O1733263200000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2024-12-03 22:00:00+00:00",
+            "endTime": "2024-12-09 22:00:00+00:00",
+            "displayStartTime": "2024-12-02 23:00:00+00:00",
+            "displayEndTime": "2024-12-09 23:00:00+00:00"
+          },
+          {
+            "id": "O1733868000000",
+            "eventNumber": 2,
+            "name": "Week 2",
+            "startTime": "2024-12-10 22:00:00+00:00",
+            "endTime": "2024-12-16 22:00:00+00:00",
+            "displayStartTime": "2024-12-09 23:00:00+00:00",
+            "displayEndTime": "2024-12-16 23:00:00+00:00"
+          },
+          {
+            "id": "O1734472800000",
+            "eventNumber": 3,
+            "name": "Week 3",
+            "startTime": "2024-12-17 22:00:00+00:00",
+            "endTime": "2024-12-23 22:00:00+00:00",
+            "displayStartTime": "2024-12-16 23:00:00+00:00",
+            "displayEndTime": "2024-12-24 22:00:00+00:00"
+          }
+        ],
+        "squadSize": 5
+      },
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_59",
+        "name": "Season 59",
+        "seasonDefId": "4zone_3v3_ga2_c3s1_59a",
+        "territoryMapId": "4zone_3v3_ga2_c3s1_59a",
+        "events": [
+          {
+            "id": "O1730844000000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2024-11-05 22:00:00+00:00",
+            "endTime": "2024-11-11 22:00:00+00:00",
+            "displayStartTime": "2024-11-04 23:00:00+00:00",
+            "displayEndTime": "2024-11-11 23:00:00+00:00"
+          },
+          {
+            "id": "O1731448800000",
+            "eventNumber": 2,
+            "name": "Week 2",
+            "startTime": "2024-11-12 22:00:00+00:00",
+            "endTime": "2024-11-18 22:00:00+00:00",
+            "displayStartTime": "2024-11-11 23:00:00+00:00",
+            "displayEndTime": "2024-11-18 23:00:00+00:00"
+          },
+          {
+            "id": "O1732053600000",
+            "eventNumber": 3,
+            "name": "Week 3",
+            "startTime": "2024-11-19 22:00:00+00:00",
+            "endTime": "2024-11-25 22:00:00+00:00",
+            "displayStartTime": "2024-11-18 23:00:00+00:00",
+            "displayEndTime": "2024-11-26 22:00:00+00:00"
+          }
+        ],
+        "squadSize": 3
+      },
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_58",
+        "name": "Season 58",
+        "seasonDefId": "4zone_5v5_ga2_c3s1_58a",
+        "territoryMapId": "4zone_5v5_ga2_c3s1_58a",
+        "events": [
+          {
+            "id": "O1728421200000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2024-10-08 21:00:00+00:00",
+            "endTime": "2024-10-14 21:00:00+00:00",
+            "displayStartTime": "2024-10-07 22:00:00+00:00",
+            "displayEndTime": "2024-10-14 22:00:00+00:00"
+          },
+          {
+            "id": "O1729026000000",
+            "eventNumber": 2,
+            "name": "Week 2",
+            "startTime": "2024-10-15 21:00:00+00:00",
+            "endTime": "2024-10-21 21:00:00+00:00",
+            "displayStartTime": "2024-10-14 22:00:00+00:00",
+            "displayEndTime": "2024-10-21 22:00:00+00:00"
+          },
+          {
+            "id": "O1729630800000",
+            "eventNumber": 3,
+            "name": "Week 3",
+            "startTime": "2024-10-22 21:00:00+00:00",
+            "endTime": "2024-10-28 21:00:00+00:00",
+            "displayStartTime": "2024-10-21 22:00:00+00:00",
+            "displayEndTime": "2024-10-29 21:00:00+00:00"
+          }
+        ],
+        "squadSize": 5
+      },
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_57",
+        "name": "Season 57",
+        "seasonDefId": "4zone_3v3_ga2_c3s1_57a",
+        "territoryMapId": "4zone_3v3_ga2_c3s1_57a",
+        "events": [
+          {
+            "id": "O1726002000000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2024-09-10 21:00:00+00:00",
+            "endTime": "2024-09-16 21:00:00+00:00",
+            "displayStartTime": "2024-09-09 22:00:00+00:00",
+            "displayEndTime": "2024-09-16 22:00:00+00:00"
+          },
+          {
+            "id": "O1726606800000",
+            "eventNumber": 2,
+            "name": "Week 2",
+            "startTime": "2024-09-17 21:00:00+00:00",
+            "endTime": "2024-09-23 21:00:00+00:00",
+            "displayStartTime": "2024-09-16 22:00:00+00:00",
+            "displayEndTime": "2024-09-23 22:00:00+00:00"
+          },
+          {
+            "id": "O1727211600000",
+            "eventNumber": 3,
+            "name": "Week 3",
+            "startTime": "2024-09-24 21:00:00+00:00",
+            "endTime": "2024-09-30 21:00:00+00:00",
+            "displayStartTime": "2024-09-23 22:00:00+00:00",
+            "displayEndTime": "2024-10-01 21:00:00+00:00"
+          }
+        ],
+        "squadSize": 3
+      },
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_56",
+        "name": "Season 56",
+        "seasonDefId": "4zone_5v5_ga2_c3s1_56a",
+        "territoryMapId": "4zone_5v5_ga2_c3s1_56a",
+        "events": [
+          {
+            "id": "O1723582800000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2024-08-13 21:00:00+00:00",
+            "endTime": "2024-08-19 21:00:00+00:00",
+            "displayStartTime": "2024-08-12 22:00:00+00:00",
+            "displayEndTime": "2024-08-19 22:00:00+00:00"
+          },
+          {
+            "id": "O1724187600000",
+            "eventNumber": 2,
+            "name": "Week 2",
+            "startTime": "2024-08-20 21:00:00+00:00",
+            "endTime": "2024-08-26 21:00:00+00:00",
+            "displayStartTime": "2024-08-19 22:00:00+00:00",
+            "displayEndTime": "2024-08-26 22:00:00+00:00"
+          },
+          {
+            "id": "O1724792400000",
+            "eventNumber": 3,
+            "name": "Week 3",
+            "startTime": "2024-08-27 21:00:00+00:00",
+            "endTime": "2024-09-02 21:00:00+00:00",
+            "displayStartTime": "2024-08-26 22:00:00+00:00",
+            "displayEndTime": "2024-09-03 21:00:00+00:00"
+          }
+        ],
+        "squadSize": 5
+      },
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_53",
+        "name": "Season 53",
+        "seasonDefId": "4zone_3v3_ga2_c3s1_53a",
+        "territoryMapId": "4zone_3v3_ga2_c3s1_53a",
+        "events": [
+          {
+            "id": "O1716325200000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2024-05-21 21:00:00+00:00",
+            "endTime": "2024-05-27 21:00:00+00:00",
+            "displayStartTime": "2024-05-20 22:00:00+00:00",
+            "displayEndTime": "2024-05-27 22:00:00+00:00"
+          },
+          {
+            "id": "O1716930000000",
+            "eventNumber": 2,
+            "name": "Week 2",
+            "startTime": "2024-05-28 21:00:00+00:00",
+            "endTime": "2024-06-03 21:00:00+00:00",
+            "displayStartTime": "2024-05-27 22:00:00+00:00",
+            "displayEndTime": "2024-06-03 22:00:00+00:00"
+          },
+          {
+            "id": "O1717534800000",
+            "eventNumber": 3,
+            "name": "Week 3",
+            "startTime": "2024-06-04 21:00:00+00:00",
+            "endTime": "2024-06-10 21:00:00+00:00",
+            "displayStartTime": "2024-06-03 22:00:00+00:00",
+            "displayEndTime": "2024-06-11 21:00:00+00:00"
+          }
+        ],
+        "squadSize": 3
+      },
+      {
+        "id": "CHAMPIONSHIPS_GRAND_ARENA_GA2_EVENT_SEASON_47",
+        "name": "Season 47",
+        "seasonDefId": "4zone_3v3_ga2_c3s1_47a",
+        "territoryMapId": "4zone_3v3_ga2_c3s1_47a",
+        "events": [
+          {
+            "id": "O1701813600000",
+            "eventNumber": 1,
+            "name": "Week 1",
+            "startTime": "2023-12-05 22:00:00+00:00",
+            "endTime": "2023-12-11 22:00:00+00:00",
+            "displayStartTime": "2023-12-04 23:00:00+00:00",
+            "displayEndTime": "2023-12-11 23:00:00+00:00"
+          },
+          {
+            "id": "O1702418400000",
+            "eventNumber": 2,
+            "name": "Week 2",
+            "startTime": "2023-12-12 22:00:00+00:00",
+            "endTime": "2023-12-18 22:00:00+00:00",
+            "displayStartTime": "2023-12-11 23:00:00+00:00",
+            "displayEndTime": "2023-12-18 23:00:00+00:00"
+          }
+        ],
+        "squadSize": 3
+      }
+    ],
+    "leagues": [
+      {
+        "id": "CARBONITE",
+        "name": "Carbonite",
+        "rank": 20,
+        "imageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_carbonite.png",
+        "blankImageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_carbonite_blank.png",
+        "frameImageUrl": "https://game-assets.swgoh.gg/textures/tex.vanity_portrait_league_carbonite.png",
+        "icon": "tex.league_icon_carbonite"
+      },
+      {
+        "id": "BRONZIUM",
+        "name": "Bronzium",
+        "rank": 40,
+        "imageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_bronzium.png",
+        "blankImageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_bronzium_blank.png",
+        "frameImageUrl": "https://game-assets.swgoh.gg/textures/tex.vanity_portrait_league_bronzium.png",
+        "icon": "tex.league_icon_bronzium"
+      },
+      {
+        "id": "CHROMIUM",
+        "name": "Chromium",
+        "rank": 60,
+        "imageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_chromium.png",
+        "blankImageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_chromium_blank.png",
+        "frameImageUrl": "https://game-assets.swgoh.gg/textures/tex.vanity_portrait_league_chromium.png",
+        "icon": "tex.league_icon_chromium"
+      },
+      {
+        "id": "AURODIUM",
+        "name": "Aurodium",
+        "rank": 80,
+        "imageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_aurodium.png",
+        "blankImageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_aurodium_blank.png",
+        "frameImageUrl": "https://game-assets.swgoh.gg/textures/tex.vanity_portrait_league_aurodium.png",
+        "icon": "tex.league_icon_aurodium"
+      },
+      {
+        "id": "KYBER",
+        "name": "Kyber",
+        "rank": 100,
+        "imageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_kyber.png",
+        "blankImageUrl": "https://game-assets.swgoh.gg/textures/tex.league_icon_kyber_blank.png",
+        "frameImageUrl": "https://game-assets.swgoh.gg/textures/tex.vanity_portrait_league_kyber.png",
+        "icon": "tex.league_icon_kyber"
+      }
+    ],
+    "divisions": [
+      {
+        "id": 5,
+        "name": "5",
+        "leagueImages": [
+          {
+            "leagueId": "CARBONITE",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_carbonite_5.png"
+          },
+          {
+            "leagueId": "BRONZIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_bronzium_5.png"
+          },
+          {
+            "leagueId": "CHROMIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_chromium_5.png"
+          },
+          {
+            "leagueId": "AURODIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_aurodium_5.png"
+          },
+          {
+            "leagueId": "KYBER",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_kyber_5.png"
+          }
+        ],
+        "icon": "https://game-assets.swgoh.gg/textures/_5.png"
+      },
+      {
+        "id": 10,
+        "name": "4",
+        "leagueImages": [
+          {
+            "leagueId": "CARBONITE",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_carbonite_4.png"
+          },
+          {
+            "leagueId": "BRONZIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_bronzium_4.png"
+          },
+          {
+            "leagueId": "CHROMIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_chromium_4.png"
+          },
+          {
+            "leagueId": "AURODIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_aurodium_4.png"
+          },
+          {
+            "leagueId": "KYBER",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_kyber_4.png"
+          }
+        ],
+        "icon": "https://game-assets.swgoh.gg/textures/_4.png"
+      },
+      {
+        "id": 15,
+        "name": "3",
+        "leagueImages": [
+          {
+            "leagueId": "CARBONITE",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_carbonite_3.png"
+          },
+          {
+            "leagueId": "BRONZIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_bronzium_3.png"
+          },
+          {
+            "leagueId": "CHROMIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_chromium_3.png"
+          },
+          {
+            "leagueId": "AURODIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_aurodium_3.png"
+          },
+          {
+            "leagueId": "KYBER",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_kyber_3.png"
+          }
+        ],
+        "icon": "https://game-assets.swgoh.gg/textures/_3.png"
+      },
+      {
+        "id": 20,
+        "name": "2",
+        "leagueImages": [
+          {
+            "leagueId": "CARBONITE",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_carbonite_2.png"
+          },
+          {
+            "leagueId": "BRONZIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_bronzium_2.png"
+          },
+          {
+            "leagueId": "CHROMIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_chromium_2.png"
+          },
+          {
+            "leagueId": "AURODIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_aurodium_2.png"
+          },
+          {
+            "leagueId": "KYBER",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_kyber_2.png"
+          }
+        ],
+        "icon": "https://game-assets.swgoh.gg/textures/_2.png"
+      },
+      {
+        "id": 25,
+        "name": "1",
+        "leagueImages": [
+          {
+            "leagueId": "CARBONITE",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_carbonite_1.png"
+          },
+          {
+            "leagueId": "BRONZIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_bronzium_1.png"
+          },
+          {
+            "leagueId": "CHROMIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_chromium_1.png"
+          },
+          {
+            "leagueId": "AURODIUM",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_aurodium_1.png"
+          },
+          {
+            "leagueId": "KYBER",
+            "url": "https://game-assets.swgoh.gg/textures/tex.league_icon_kyber_1.png"
+          }
+        ],
+        "icon": "https://game-assets.swgoh.gg/textures/_1.png"
+      }
+    ],
+    "zones": [
+      {
+        "id": "4zone_phase01_conflict01_duel01",
+        "name": "Front Top",
+        "combatType": 1
+      },
+      {
+        "id": "4zone_phase01_conflict02_duel01",
+        "name": "Front Bottom",
+        "combatType": 1
+      },
+      {
+        "id": "4zone_phase02_conflict01_duel01",
+        "name": "Back Top",
+        "combatType": 2
+      },
+      {
+        "id": "4zone_phase02_conflict02_duel01",
+        "name": "Back Bottom",
+        "combatType": 1
+      }
+    ],
+    "squadSizes": [
+      {
+        "size": 3,
+        "name": "3v3"
+      },
+      {
+        "size": 5,
+        "name": "5v5"
+      }
+    ],
+    "perspectives": [
+      {
+        "id": "attack",
+        "name": "Win %",
+        "pluralName": "Win %"
+      },
+      {
+        "id": "defense",
+        "name": "Hold %",
+        "pluralName": "Hold %"
+      }
+    ],
+    "datacronSetIds": [
+      11,
+      12,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "datacronPrimaryTierUniqueKeys": [
+      "target_datacron_gamorreanguard:datacron_character_generic_026",
+      "target_datacron_mercenary:datacron_faction_generic_012",
+      "target_datacron_ufu:datacron_faction_ufu_001",
+      "target_datacron_gungan:datacron_faction_generic_003",
+      "target_datacron_mercenary:datacron_faction_generic_007",
+      "target_datacron_inquisitorius:datacron_faction_generic_033",
+      "target_datacron_resistance:datacron_faction_generic_017",
+      "target_datacron_rebel:datacron_faction_generic_027",
+      "target_datacron_oldrepublic:datacron_faction_generic_018",
+      "target_datacron_oldrepublic:datacron_faction_generic_013",
+      "target_datacron_tusken:datacron_faction_generic_036",
+      "target_datacron_darkside:datacron_alignment_generic_020",
+      "target_datacron_lightside:datacron_alignment_generic_001",
+      "target_datacron_wampa:datacron_character_generic_035",
+      "target_datacron_hondo:datacron_character_hondo_001",
+      "target_datacron_coruscantunderworldpolice:datacron_character_generic_027",
+      "target_datacron_snowtrooper:datacron_character_generic_033",
+      "target_datacron_zaalbar:datacron_character_zaalbar_001",
+      "target_datacron_tuskenraider:datacron_character_generic_014",
+      "target_datacron_darkside:datacron_alignment_generic_030",
+      "target_datacron_tuskenraider:datacron_character_tuskenraider_001",
+      "target_datacron_kelleranbeq:datacron_character_kelleranbeq_001",
+      "target_datacron_lightside:datacron_alignment_generic_016",
+      "target_datacron_coruscantunderworldpolice:datacron_character_coruscantunderworldpolice_001",
+      "target_datacron_tuskenhuntress:datacron_character_generic_016",
+      "target_datacron_support:datacron_role_support_001",
+      "target_datacron_ufu:datacron_faction_unalignedforceuser_001",
+      "target_datacron_aurrasing:datacron_character_generic_001",
+      "target_datacron_support:datacron_faction_generic_035",
+      "target_datacron_healer:datacron_faction_generic_025",
+      "target_datacron_princesskneesaa:datacron_character_princesskneesaa_001",
+      "target_datacron_glrey:datacron_character_generic_012",
+      "target_datacron_healer:datacron_role_healer_001",
+      "target_datacron_idenversioempire:datacron_character_generic_017",
+      "target_datacron_darthsidious:datacron_character_darthsidious_001",
+      "target_datacron_attacker:datacron_role_attacker_001",
+      "target_datacron_glleia:datacron_character_glleia_001",
+      "target_datacron_jedi:datacron_faction_jedi_002",
+      "target_datacron_deathtrooperperidea:datacron_character_generic_033",
+      "target_datacron_vandorchewbacca:datacron_character_generic_011",
+      "target_datacron_sawgerrera:datacron_character_generic_005",
+      "target_datacron_calkestis:datacron_character_generic_005",
+      "target_datacron_tusken:datacron_faction_generic_017",
+      "target_datacron_geonosiansoilder:datacron_character_generic_015",
+      "target_datacron_stormtrooper:datacron_character_generic_026",
+      "target_datacron_firstorder:datacron_faction_firstorder_002",
+      "target_datacron_triplezero:datacron_character_generic_009",
+      "target_datacron_tuskenchieftain:datacron_character_generic_027",
+      "target_datacron_hothhan:datacron_character_generic_018",
+      "target_datacron_jawaengineer:datacron_character_generic_023",
+      "target_datacron_resistance:datacron_faction_generic_032",
+      "target_datacron_darthnihilus:datacron_character_generic_017",
+      "target_datacron_darkside:datacron_alignment_generic_001",
+      "target_datacron_tusken:datacron_faction_generic_029",
+      "target_datacron_rebel:datacron_faction_generic_028",
+      "target_datacron_gungan:datacron_faction_gungan_001",
+      "target_datacron_ufu:datacron_faction_generic_040",
+      "target_datacron_lightside:datacron_alignment_generic_017",
+      "target_datacron_galacticrepublic:datacron_faction_generic_031",
+      "target_datacron_mauls7:datacron_character_generic_037",
+      "target_datacron_gungan:datacron_faction_generic_018",
+      "target_datacron_ewok:datacron_faction_generic_016",
+      "target_datacron_wattambor:datacron_character_generic_029",
+      "target_datacron_tusken:datacron_faction_generic_025",
+      "target_datacron_captainenoch:datacron_character_captainenoch_001",
+      "target_datacron_krrsantan:datacron_character_generic_016",
+      "target_datacron_barrisoffee:datacron_character_barrisoffee_001",
+      "target_datacron_ufu:datacron_faction_generic_024",
+      "target_datacron_darkside:datacron_alignment_generic_024",
+      "target_datacron_c3p0:datacron_character_generic_025",
+      "target_datacron_garsaxon:datacron_character_generic_023",
+      "target_datacron_imperialtrooper:datacron_faction_generic_024",
+      "target_datacron_moffgideons1:datacron_character_moffgideons1_001",
+      "target_datacron_lightside:datacron_alignment_generic_024",
+      "target_datacron_nightsister:datacron_faction_generic_007",
+      "target_datacron_lightside:datacron_alignment_generic_027",
+      "target_datacron_darkside:datacron_alignment_generic_028",
+      "target_datacron_gamorreanguard:datacron_character_gamorreanguard_001",
+      "target_datacron_missionvao:datacron_character_generic_040",
+      "target_datacron_imperialtrooper:datacron_faction_generic_027",
+      "target_datacron_ewok:datacron_faction_generic_022",
+      "target_datacron_mercenary:datacron_faction_mercenary_001",
+      "target_datacron_oldrepublic:datacron_faction_oldrepublic_001",
+      "target_datacron_juhani:datacron_character_generic_026",
+      "target_datacron_huttcartel:datacron_faction_generic_024",
+      "target_datacron_jawascavenger:datacron_character_jawascavenger_001",
+      "target_datacron_inquisitorius:datacron_faction_inquisitorius_003",
+      "target_datacron_galacticrepublic:datacron_faction_generic_008",
+      "target_datacron_luminara:datacron_character_generic_012",
+      "target_datacron_scoundrel:datacron_faction_generic_034",
+      "target_datacron_galacticrepublic:datacron_faction_generic_027",
+      "target_datacron_stormtrooperhan:datacron_character_stormtrooperhan_001",
+      "target_datacron_amilynholdo:datacron_character_amilynholdo_001",
+      "target_datacron_darktrooper:datacron_character_generic_015",
+      "target_datacron_nightsister:datacron_faction_generic_016",
+      "target_datacron_lightside:datacron_alignment_generic_005",
+      "target_datacron_tank:datacron_faction_generic_029",
+      "target_datacron_sabinewrens3:datacron_character_generic_020",
+      "target_datacron_colonelstarck:datacron_character_generic_015",
+      "target_datacron_gungan:datacron_faction_generic_014",
+      "target_datacron_healer:datacron_faction_generic_018",
+      "target_datacron_darkside:datacron_alignment_generic_018",
+      "target_datacron_countdooku:datacron_character_generic_040",
+      "target_datacron_ufu:datacron_faction_generic_005",
+      "target_datacron_boushh:datacron_character_boushh_001",
+      "target_datacron_galacticrepublic:datacron_faction_galacticrepublic_002",
+      "target_datacron_darthnihilus:datacron_character_darthnihilus_001",
+      "target_datacron_stormtrooperhan:datacron_character_generic_028",
+      "target_datacron_darkside:datacron_alignment_generic_008",
+      "target_datacron_wedgeantilles:datacron_character_generic_023",
+      "target_datacron_stormtrooperhan:datacron_character_generic_030",
+      "target_datacron_fulcrumahsoka:datacron_character_fulcrumahsoka_001",
+      "target_datacron_separatist:datacron_faction_generic_011",
+      "target_datacron_baylanskoll:datacron_character_baylanskoll_003",
+      "target_datacron_tusken:datacron_faction_tusken_001",
+      "target_datacron_healer:datacron_faction_generic_008",
+      "target_datacron_visasmarr:datacron_character_generic_002",
+      "target_datacron_dathcha:datacron_character_generic_025",
+      "target_datacron_greatmothers:datacron_character_greatmothers_001",
+      "target_datacron_ufu:datacron_faction_generic_034",
+      "target_datacron_mercenary:datacron_faction_generic_004",
+      "target_datacron_lightside:datacron_alignment_generic_003",
+      "target_datacron_nightsister:datacron_faction_nightsister_003",
+      "target_datacron_lightside:datacron_alignment_generic_006",
+      "target_datacron_jawa:datacron_faction_generic_036",
+      "target_datacron_huttcartel:datacron_faction_generic_034",
+      "target_datacron_admiralackbar:datacron_character_generic_008",
+      "target_datacron_jediknightconsular:datacron_character_jediknightconsular_001",
+      "target_datacron_baylanskoll:datacron_character_baylanskoll_001",
+      "target_datacron_urorrurrr:datacron_character_generic_023",
+      "target_datacron_l3-37:datacron_character_l337_001",
+      "target_datacron_mercenary:datacron_faction_generic_023",
+      "target_datacron_ufu:datacron_faction_generic_029",
+      "target_datacron_ufu:datacron_faction_generic_017",
+      "target_datacron_rogueone:datacron_faction_generic_034",
+      "target_datacron_inquisitorius:datacron_faction_generic_036",
+      "target_datacron_tuskenchieftain:datacron_character_tuskenchieftain_001",
+      "target_datacron_tuskenhuntress:datacron_character_tuskenhuntress_001",
+      "target_datacron_nightsisterspirit:datacron_character_generic_041",
+      "target_datacron_kyloren:datacron_character_generic_005",
+      "target_datacron_shinhati:datacron_character_generic_025",
+      "target_datacron_bossk:datacron_character_generic_038",
+      "target_datacron_lightside:datacron_alignment_generic_014",
+      "target_datacron_jedi:datacron_faction_generic_033",
+      "target_datacron_t3-m4:datacron_character_generic_027",
+      "target_datacron_support:datacron_faction_generic_003",
+      "target_datacron_separatist:datacron_faction_separatist_001",
+      "target_datacron_wattambor:datacron_character_generic_002",
+      "target_datacron_ewok:datacron_faction_ewok_001",
+      "target_datacron_sith:datacron_faction_sith_003",
+      "target_datacron_sithassassin:datacron_character_generic_036",
+      "target_datacron_darthbane:datacron_character_darthbane_001",
+      "target_datacron_wicket:datacron_character_generic_025",
+      "target_datacron_jedi:datacron_faction_generic_001",
+      "target_datacron_padawanobiwan:datacron_character_padawanobiwan_001",
+      "target_datacron_lightside:datacron_alignment_generic_018",
+      "target_datacron_imperialtrooper:datacron_faction_generic_034",
+      "target_datacron_firstorder:datacron_faction_generic_022",
+      "target_datacron_rebel:datacron_faction_generic_030",
+      "target_datacron_jawa_jawa:datacron_character_jawa_001",
+      "target_datacron_seventhsister:datacron_character_generic_018",
+      "target_datacron_scoundrel:datacron_faction_generic_036",
+      "target_datacron_coruscantunderworldpolice:datacron_character_generic_038",
+      "target_datacron_gamorreanguard:datacron_character_generic_021",
+      "target_datacron_imperialremnant:datacron_faction_generic_002",
+      "target_datacron_marajade:datacron_character_marajade_001",
+      "target_datacron_darkside:datacron_alignment_generic_016",
+      "target_datacron_darkside:datacron_alignment_generic_015",
+      "target_datacron_enfysnest:datacron_character_generic_012",
+      "target_datacron_urorrurrr:datacron_character_generic_025",
+      "target_datacron_rebel:datacron_faction_generic_006",
+      "target_datacron_stap:datacron_character_stap_001",
+      "target_datacron_bb8:datacron_character_generic_039",
+      "target_datacron_darkside:datacron_alignment_generic_002",
+      "target_datacron_rebel:datacron_faction_generic_035",
+      "target_datacron_thirdsister:datacron_character_thirdsister_001",
+      "target_datacron_eethkoth:datacron_character_eethkoth_001",
+      "target_datacron_visasmarr:datacron_character_generic_031",
+      "target_datacron_lightside:datacron_alignment_generic_030",
+      "target_datacron_resistance:datacron_faction_resistance_003",
+      "target_datacron_jawa:datacron_faction_generic_014",
+      "target_datacron_rangetrooper:datacron_character_generic_015",
+      "target_datacron_nighttrooper:datacron_character_nighttrooper_001",
+      "target_datacron_attacker:datacron_faction_generic_016",
+      "target_datacron_jedi:datacron_faction_generic_005",
+      "target_datacron_rebel:datacron_faction_rebel_001",
+      "target_datacron_boomadier:datacron_character_generic_025",
+      "target_datacron_support:datacron_faction_generic_011",
+      "target_datacron_tank:datacron_role_tank_001",
+      "target_datacron_bossk:datacron_character_generic_032",
+      "target_datacron_darkside:datacron_alignment_generic_029",
+      "target_datacron_trench:datacron_character_trench_001",
+      "target_datacron_attacker:datacron_faction_generic_028",
+      "target_datacron_shaakti:datacron_character_generic_042",
+      "target_datacron_idenversioempire:datacron_character_generic_025",
+      "target_datacron_baylanskoll:datacron_character_baylanskoll_002",
+      "target_datacron_k2so:datacron_character_generic_026",
+      "target_datacron_taronmalicos:datacron_character_taronmalicos_001",
+      "target_datacron_smugglerhan:datacron_character_generic_015",
+      "target_datacron_padawansabine:datacron_character_generic_025",
+      "target_datacron_firstorder:datacron_faction_generic_012",
+      "target_datacron_masterquigon:datacron_character_generic_043",
+      "target_datacron_darkside:datacron_alignment_generic_017",
+      "target_datacron_ufu:datacron_faction_generic_003",
+      "target_datacron_finn:datacron_character_generic_023",
+      "target_datacron_triplezero:datacron_character_generic_033",
+      "target_datacron_imperialtrooper:datacron_faction_generic_012",
+      "target_datacron_kitfisto:datacron_character_kitfisto_001",
+      "target_datacron_separatist:datacron_faction_generic_027",
+      "target_datacron_ufu:datacron_faction_generic_014",
+      "target_datacron_doctoraphra:datacron_character_doctoraphra_001",
+      "target_datacron_rebel:datacron_faction_generic_016",
+      "target_datacron_commanderlukeskywalker:datacron_character_generic_034",
+      "target_datacron_scoundrel:datacron_faction_scoundrel_001",
+      "target_datacron_cassianandor:datacron_character_generic_005",
+      "target_datacron_tusken:datacron_faction_generic_014",
+      "target_datacron_tusken:datacron_faction_generic_008",
+      "target_datacron_tusken:datacron_faction_generic_038",
+      "target_datacron_jawa:datacron_faction_generic_024",
+      "target_datacron_lightside:datacron_alignment_generic_031",
+      "target_datacron_admiralpiett:datacron_character_generic_031",
+      "target_datacron_support:datacron_faction_generic_027",
+      "target_datacron_asajventress:datacron_character_generic_001",
+      "target_datacron_carthonasi:datacron_character_carthonasi_001",
+      "target_datacron_caradune:datacron_character_caradune_001",
+      "target_datacron_geonosiansoilder:datacron_character_generic_034",
+      "target_datacron_dengar:datacron_character_generic_013",
+      "target_datacron_lightside:datacron_alignment_generic_013",
+      "target_datacron_jedi:datacron_faction_generic_008",
+      "target_datacron_sith:datacron_faction_generic_011",
+      "target_datacron_hansolo:datacron_character_generic_012",
+      "target_datacron_ewok:datacron_faction_generic_023",
+      "target_datacron_tusken:datacron_faction_generic_024",
+      "target_datacron_attacker:datacron_faction_generic_034",
+      "target_datacron_tech:datacron_character_generic_035",
+      "target_datacron_darkside:datacron_alignment_generic_011",
+      "target_datacron_inquisitorius:datacron_faction_generic_037",
+      "target_datacron_ufu:datacron_faction_generic_028",
+      "target_datacron_tank:datacron_faction_generic_015",
+      "target_datacron_padmeamidala:datacron_character_padmeamidala_001",
+      "target_datacron_younghan:datacron_character_generic_024",
+      "target_datacron_scouttrooper_v3:datacron_character_scouttrooper_v3_001",
+      "target_datacron_jangofett:datacron_character_generic_016",
+      "target_datacron_kiadimundi:datacron_character_generic_034",
+      "target_datacron_50rt:datacron_character_generic_018",
+      "target_datacron_lightside:datacron_alignment_generic_010",
+      "target_datacron_commanderahsokatano:datacron_character_generic_020",
+      "target_datacron_tuskenshaman:datacron_character_generic_001",
+      "target_datacron_imperialremnant:datacron_faction_generic_040",
+      "target_datacron_lightside:datacron_alignment_generic_028",
+      "target_datacron_ufu:datacron_faction_generic_018",
+      "target_datacron_darkside:datacron_alignment_generic_023",
+      "target_datacron_humanthug:datacron_character_generic_032",
+      "target_datacron_huttcartel:datacron_faction_generic_017",
+      "target_datacron_cadbane:datacron_character_generic_030",
+      "target_datacron_lightside:datacron_alignment_generic_019",
+      "target_datacron_ewokelder:datacron_character_generic_007",
+      "target_datacron_bossnass:datacron_character_bossnass_001",
+      "target_datacron_jedi:datacron_faction_generic_022",
+      "target_datacron_darkside:datacron_alignment_generic_012",
+      "target_datacron_rogueone:datacron_faction_rogueone_001",
+      "target_datacron_darkside:datacron_alignment_generic_019",
+      "target_datacron_younghan:datacron_character_generic_019",
+      "target_datacron_nightsister:datacron_faction_generic_028",
+      "target_datacron_tank:datacron_faction_generic_031",
+      "target_datacron_garsaxon:datacron_character_garsaxon_001",
+      "target_datacron_jawa:datacron_faction_jawa_001",
+      "target_datacron_nightsister:datacron_faction_generic_031",
+      "target_datacron_magmatrooper:datacron_character_generic_032",
+      "target_datacron_administratorlando:datacron_character_generic_015",
+      "target_datacron_rogueone:datacron_faction_generic_039",
+      "target_datacron_glahsoka:datacron_character_glahsoka_001",
+      "target_datacron_lightside:datacron_alignment_generic_022",
+      "target_datacron_luthenrael:datacron_character_luthenrael_001",
+      "target_datacron_wampa:datacron_character_generic_004",
+      "target_datacron_rebel:datacron_faction_generic_031",
+      "target_datacron_rebel:datacron_faction_generic_026",
+      "target_datacron_chiefchirpa:datacron_character_generic_011",
+      "target_datacron_eighthbrother:datacron_character_generic_020",
+      "target_datacron_ig11:datacron_character_generic_035",
+      "target_datacron_darkside:datacron_alignment_generic_025",
+      "target_datacron_grandinquisitor:datacron_character_grandinquisitor_001",
+      "target_datacron_imperialtrooper:datacron_faction_generic_015",
+      "target_datacron_secondsister:datacron_character_generic_029",
+      "target_datacron_lightside:datacron_alignment_generic_029",
+      "target_datacron_deathtrooper:datacron_character_generic_029",
+      "target_datacron_captaintarpals:datacron_character_generic_023",
+      "target_datacron_lightside:datacron_alignment_generic_015",
+      "target_datacron_rogueone:datacron_faction_generic_031",
+      "target_datacron_ninthsister:datacron_character_ninthsister_002",
+      "target_datacron_vandorchewbacca:datacron_character_generic_005",
+      "target_datacron_firstorder:datacron_faction_generic_023",
+      "target_datacron_pao:datacron_character_pao_001",
+      "target_datacron_darkside:datacron_alignment_generic_027",
+      "target_datacron_ig11:datacron_character_generic_003",
+      "target_datacron_ewok:datacron_faction_generic_014",
+      "target_datacron_imperialremnant:datacron_faction_imperialremnant_001",
+      "target_datacron_resistance:datacron_faction_generic_040",
+      "target_datacron_starkiller:datacron_character_generic_023",
+      "target_datacron_imperialremnant:datacron_faction_generic_038",
+      "target_datacron_attacker:datacron_faction_generic_026",
+      "target_datacron_imperialtrooper:datacron_faction_generic_025",
+      "target_datacron_tuskenshaman:datacron_character_generic_018",
+      "target_datacron_separatist:datacron_faction_generic_036",
+      "target_datacron_lightside:datacron_alignment_generic_008",
+      "target_datacron_sabinewrens3:datacron_character_generic_013",
+      "target_datacron_plokoon:datacron_character_plokoon_001",
+      "target_datacron_imperialtrooper:datacron_faction_generic_026",
+      "target_datacron_jedi:datacron_faction_generic_004",
+      "target_datacron_imperialtrooper:datacron_faction_imperialtrooper_001",
+      "target_datacron_padawanobiwan:datacron_character_padawanobiwan_002",
+      "target_datacron_scoundrel:datacron_faction_generic_033",
+      "target_datacron_darkside:datacron_alignment_generic_005",
+      "target_datacron_inquisitorius:datacron_faction_generic_006",
+      "target_datacron_supremeleaderkyloren:datacron_character_generic_030",
+      "target_datacron_darkside:datacron_alignment_generic_006",
+      "target_datacron_lightside:datacron_alignment_generic_002",
+      "target_datacron_chiefnebit:datacron_character_generic_030",
+      "target_datacron_phasma:datacron_character_generic_001",
+      "target_datacron_lightside:datacron_alignment_generic_025",
+      "target_datacron_jedi:datacron_faction_generic_003",
+      "target_datacron_separatist:datacron_faction_separatist_002",
+      "target_datacron_firstorderspecialforcespilot:datacron_character_tiefighterpilot_002",
+      "target_datacron_geonosianspy:datacron_character_generic_011",
+      "target_datacron_hothleia:datacron_character_generic_012",
+      "target_datacron_firstordertrooper:datacron_character_firstordertrooper_002",
+      "target_datacron_jarjarbinks:datacron_character_jarjar_001",
+      "target_datacron_nightsisterzombie:datacron_character_nightsisterzombie_001",
+      "target_datacron_galacticrepublic:datacron_faction_generic_035",
+      "target_datacron_jediknightcal:datacron_character_generic_017",
+      "target_datacron_50rt:datacron_character_generic_016",
+      "target_datacron_captaindrogan:datacron_character_captaindrogan_001",
+      "target_datacron_jedi:datacron_faction_generic_017",
+      "target_datacron_scoundrel:datacron_faction_generic_035",
+      "target_datacron_darkside:datacron_alignment_generic_021",
+      "target_datacron_jedi:datacron_faction_generic_035",
+      "target_datacron_macewindu:datacron_character_generic_016",
+      "target_datacron_morganelsbeth:datacron_character_generic_023",
+      "target_datacron_tank:datacron_faction_generic_040",
+      "target_datacron_darkside:datacron_alignment_generic_031",
+      "target_datacron_sith:datacron_faction_generic_009",
+      "target_datacron_imperialremnant:datacron_faction_generic_032",
+      "target_datacron_resistance:datacron_faction_generic_036",
+      "target_datacron_joleebindo:datacron_character_generic_008",
+      "target_datacron_healer:datacron_faction_generic_013",
+      "target_datacron_rebel:datacron_faction_generic_010",
+      "target_datacron_gungan:datacron_faction_generic_024",
+      "target_datacron_gunganphalanx:datacron_character_generic_016",
+      "target_datacron_lightside:datacron_alignment_generic_012",
+      "target_datacron_lightside:datacron_alignment_generic_009",
+      "target_datacron_sith:datacron_faction_generic_037",
+      "target_datacron_countdooku:datacron_character_generic_038",
+      "target_datacron_cerejunda:datacron_character_generic_009",
+      "target_datacron_50rt:datacron_character_50rt_001",
+      "target_datacron_fulcrumahsoka:datacron_character_generic_013",
+      "target_datacron_sith:datacron_faction_generic_010",
+      "target_datacron_idenversioempire:datacron_character_idenversio_001",
+      "target_datacron_rogueone:datacron_faction_generic_036",
+      "target_datacron_enfysnest:datacron_character_enfysnest_001",
+      "target_datacron_jawa:datacron_faction_generic_008",
+      "target_datacron_oldrepublic:datacron_faction_generic_003",
+      "target_datacron_imperialtrooper:datacron_faction_generic_011",
+      "target_datacron_padawanobiwan:datacron_character_padawanobiwan_003",
+      "target_datacron_huttcartel:datacron_faction_huttcartel_001",
+      "target_datacron_huttcartel:datacron_faction_generic_009",
+      "target_datacron_firstorder:datacron_faction_generic_026",
+      "target_datacron_darkside:datacron_alignment_generic_022",
+      "target_datacron_oldrepublic:datacron_faction_generic_017"
+    ],
+    "datacronStats": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      48,
+      49,
+      53,
+      54,
+      55,
+      56
+    ]
+  },
+  "message": null,
+  "total_count": null
+}

@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: toon-world
+  datasource:
+    url: jdbc:mariadb://${DATABASE_HOST}/${DATABASE_SCHEMA}?serverTimezone=UTC
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          time_zone: UTC
+          batch_size: 50
+        order_inserts: true
+    show-sql: false
+
+logging:
+  level:
+    de.hydrum: TRACE
+
+app:
+  sync:
+    player:
+      delay-in-seconds: 21600 # 6 * 60 * 60 # 6 hours
+      error-delay-in-seconds: 300 # 5 * 60 # 5 min
+    guild:
+      delay-in-seconds: 21600 # 6 * 60 * 60 # 6 hours
+      error-delay-in-seconds: 300 # 5 * 60 # 5 min
+    unit:
+      fixed-delay-in-milliseconds: 86400000 # 24 * 60 * 60 * 1000 # 24 hours
+      initial-delay-in-milliseconds: 0
+  api:
+    swgohgg:
+      base-url: "https://swgoh.gg/api"
+    comlink:
+      base-url: "http://comlink:3000"
+  discord:
+    bot-token: ${DISCORD_TOKEN}
+    super-admin:
+      guild: "1230541668680339597"
+      test-channel: "1325874045391994881"
+      error-channel: "1325874045391994881"
+  cache:
+    expire-after-write-in-minutes: 1440
+
+commands:
+  player-progress:
+    default-from: 7
+    default-to:

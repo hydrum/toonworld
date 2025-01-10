@@ -1,0 +1,23 @@
+{
+  "name": "@toonworld/api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:comlink && npm run build:swgohgg",
+    "build:comlink": "tsp compile src/comlink --config=src/comlink/tspconfig.yaml",
+    "build:swgohgg": "tsp compile src/swgohgg --config=src/swgohgg/tspconfig.yaml"
+  },
+  "peerDependencies": {
+    "@typespec/compiler": "latest",
+    "@typespec/http": "latest",
+    "@typespec/rest": "latest",
+    "@typespec/openapi3": "latest"
+  },
+  "devDependencies": {
+    "@typespec/compiler": "latest",
+    "@typespec/http": "latest",
+    "@typespec/rest": "latest",
+    "@typespec/openapi3": "latest"
+  },
+  "private": true
+}

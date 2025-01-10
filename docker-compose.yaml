@@ -1,0 +1,58 @@
+services:
+
+  toonworld:
+    build:
+      context: core
+    #image: hydrum/toonworld:latest
+    ports:
+      - "127.0.0.1:8080:8080"
+    container_name: toonworld
+    environment:
+      DATABASE_HOST: "mariadb:3306"
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_SCHEMA: ${DATABASE_SCHEMA}
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+    networks:
+      - toonworld
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  mariadb:
+    image: mariadb:latest
+    ports:
+      - "127.0.0.1:3333:3306"
+    container_name: mariadb
+    hostname: mariadb
+    environment:
+      MARIADB_USER: ${DATABASE_USER}
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+      MARIADB_DATABASE: ${DATABASE_SCHEMA}
+    volumes:
+      - ../mariadb-data:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      start_period: 1m
+      interval: 1m
+      timeout: 5s
+      retries: 3
+    networks:
+      - toonworld
+
+  comlink:
+    image: ghcr.io/swgoh-utils/swgoh-comlink:latest
+    ports:
+      - "127.0.0.1:3000:3000"
+    container_name: comlink
+    environment:
+      APP_NAME: ${COMLINK_APP_NAME}
+      PORT: 3000
+    restart: always
+    networks:
+      - toonworld
+
+networks:
+  toonworld:
+    driver: bridge
