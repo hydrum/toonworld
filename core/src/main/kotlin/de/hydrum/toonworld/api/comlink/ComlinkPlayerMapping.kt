@@ -1,7 +1,9 @@
 package de.hydrum.toonworld.api.comlink
 
 import de.hydrum.toonworld.api.comlink.models.PlayerProfileStat
+import de.hydrum.toonworld.data.mods.*
 import de.hydrum.toonworld.player.database.model.GacLeague
+import de.hydrum.toonworld.player.database.model.PlayerUnitMod
 import de.hydrum.toonworld.player.database.model.RelicTier
 import de.hydrum.toonworld.unit.UnitCacheService
 import de.hydrum.toonworld.util.elseTake
@@ -9,11 +11,13 @@ import de.hydrum.toonworld.util.firstOrDefault
 import de.hydrum.toonworld.util.utcNow
 import java.time.Instant
 import java.time.LocalTime
+import de.hydrum.toonworld.api.comlink.models.Mod as ComlinkMod
 import de.hydrum.toonworld.api.comlink.models.Player as ComlinkPlayer
 import de.hydrum.toonworld.api.comlink.models.RosterUnit as ComlinkPlayerUnit
 import de.hydrum.toonworld.player.database.model.Player as ToonWorldPlayer
 import de.hydrum.toonworld.player.database.model.PlayerUnit as ToonWorldPlayerUnit
 import de.hydrum.toonworld.player.database.model.PlayerUnitAbility as ToonWorldPlayerUnitAbility
+import de.hydrum.toonworld.player.database.model.PlayerUnitMod as ToonWorldPlayerUnitMod
 import de.hydrum.toonworld.unit.database.model.Unit as ToonWorldUnit
 import de.hydrum.toonworld.unit.database.model.UnitAbility as ToonWorldUnitAbility
 
@@ -160,3 +164,91 @@ fun ToonWorldUnitAbility.getZetaTier(): Int {
 }
 
 fun ToonWorldUnitAbility.getOmicronTier(): Int = if (isOmicron) maxTier else Int.MAX_VALUE
+
+
+fun ComlinkPlayer.updatesModsOf(player: ToonWorldPlayer, modData: ModData): ToonWorldPlayer {
+    player.units
+        .forEach { playerUnit ->
+            val comlinkPlayerUnit = requireNotNull(this.rosterUnit.find { it.definitionId.split(":").first() == playerUnit.baseId }) { "${playerUnit.baseId} cannot be found in Comlink response for player ${player.allyCode}" }
+            val mods = playerUnit.createOrUpdateModsFrom(comlinkPlayerUnit, modData)
+            playerUnit.mods.clear()
+            playerUnit.mods.addAll(mods)
+        }
+    return player
+}
+
+fun ToonWorldPlayerUnit.createOrUpdateModsFrom(comlinkPlayerUnit: ComlinkPlayerUnit, modData: ModData): List<ToonWorldPlayerUnitMod> =
+    comlinkPlayerUnit.equippedStatMod.map { comlinkMod ->
+        val statMod = requireNotNull(modData.statMod.find { it.id == comlinkMod.definitionId })
+        val modSet = requireNotNull(modData.statModSet.find { it.id == statMod.setId })
+        mods.find { statMod.slot == it.slot.ordinal }
+            ?.updatedBy(comlinkMod, statMod, modSet)
+            .elseTake { comlinkMod.toEntity(statMod, modSet) }
+            .also {
+                it.unit = this
+                it.player = it.unit?.player
+            }
+    }
+
+fun ComlinkMod.toEntity(statMod: StatMod, modSet: ModSet): ToonWorldPlayerUnitMod {
+    return PlayerUnitMod(
+        id = null,
+        unit = null,
+        playerUnitId = null,
+        player = null,
+        playerId = null,
+        slot = ModSlot.entries[statMod.slot],
+        level = this.level,
+        rarity = statMod.rarity,
+        tier = ModTier.entries[this.tier],
+        modSet = modSet.completeBonus.stat.unitStatId,
+
+        primaryStat = UnitStat.entries[this.primaryStat.stat.unitStatId],
+        primaryValue = this.primaryStat.stat.statValueDecimal.toLong(),
+
+        secondary1Stat = this.secondaryStat.elementAtOrNull(0)?.let { UnitStat.entries[it.stat.unitStatId] },
+        secondary1Value = this.secondaryStat.elementAtOrNull(0)?.stat?.statValueDecimal?.toLong(),
+        secondary1Roll = this.secondaryStat.elementAtOrNull(0)?.statRolls,
+
+        secondary2Stat = this.secondaryStat.elementAtOrNull(1)?.let { UnitStat.entries[it.stat.unitStatId] },
+        secondary2Value = this.secondaryStat.elementAtOrNull(1)?.stat?.statValueDecimal?.toLong(),
+        secondary2Roll = this.secondaryStat.elementAtOrNull(1)?.statRolls,
+
+        secondary3Stat = this.secondaryStat.elementAtOrNull(2)?.let { UnitStat.entries[it.stat.unitStatId] },
+        secondary3Value = this.secondaryStat.elementAtOrNull(2)?.stat?.statValueDecimal?.toLong(),
+        secondary3Roll = this.secondaryStat.elementAtOrNull(2)?.statRolls,
+
+        secondary4Stat = this.secondaryStat.elementAtOrNull(3)?.let { UnitStat.entries[it.stat.unitStatId] },
+        secondary4Value = this.secondaryStat.elementAtOrNull(3)?.stat?.statValueDecimal?.toLong(),
+        secondary4Roll = this.secondaryStat.elementAtOrNull(3)?.statRolls,
+    )
+}
+
+fun ToonWorldPlayerUnitMod.updatedBy(comlinkMod: ComlinkMod, statMod: StatMod, modSet: ModSet): ToonWorldPlayerUnitMod {
+    slot = ModSlot.entries[statMod.slot]
+    level = comlinkMod.level
+    rarity = statMod.rarity
+    tier = ModTier.entries[comlinkMod.tier]
+    this.modSet = modSet.completeBonus.stat.unitStatId
+
+    primaryStat = UnitStat.entries[comlinkMod.primaryStat.stat.unitStatId]
+    primaryValue = comlinkMod.primaryStat.stat.statValueDecimal.toLong()
+
+    secondary1Stat = comlinkMod.secondaryStat.elementAtOrNull(0)?.let { UnitStat.entries[it.stat.unitStatId] }
+    secondary1Value = comlinkMod.secondaryStat.elementAtOrNull(0)?.stat?.statValueDecimal?.toLong()
+    secondary1Roll = comlinkMod.secondaryStat.elementAtOrNull(0)?.statRolls
+
+    secondary2Stat = comlinkMod.secondaryStat.elementAtOrNull(1)?.let { UnitStat.entries[it.stat.unitStatId] }
+    secondary2Value = comlinkMod.secondaryStat.elementAtOrNull(1)?.stat?.statValueDecimal?.toLong()
+    secondary2Roll = comlinkMod.secondaryStat.elementAtOrNull(1)?.statRolls
+
+    secondary3Stat = comlinkMod.secondaryStat.elementAtOrNull(2)?.let { UnitStat.entries[it.stat.unitStatId] }
+    secondary3Value = comlinkMod.secondaryStat.elementAtOrNull(2)?.stat?.statValueDecimal?.toLong()
+    secondary3Roll = comlinkMod.secondaryStat.elementAtOrNull(2)?.statRolls
+
+    secondary4Stat = comlinkMod.secondaryStat.elementAtOrNull(3)?.let { UnitStat.entries[it.stat.unitStatId] }
+    secondary4Value = comlinkMod.secondaryStat.elementAtOrNull(3)?.stat?.statValueDecimal?.toLong()
+    secondary4Roll = comlinkMod.secondaryStat.elementAtOrNull(3)?.statRolls
+
+    return this
+}

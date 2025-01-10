@@ -33,3 +33,6 @@ build/
 
 ### Misc ###
 .env
+
+### remove big file ###
+/core/src/test/resources/data/game-data-0.json

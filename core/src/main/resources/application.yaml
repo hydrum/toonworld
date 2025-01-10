@@ -47,6 +47,8 @@ app:
       error-channel: "1325874045391994881"
   cache:
     expire-after-write-in-minutes: 1440
+  data:
+    mod-file: game-data-mods_20250110.json
 
 commands:
   player-progress:

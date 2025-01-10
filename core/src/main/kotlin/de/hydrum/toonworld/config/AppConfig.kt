@@ -7,7 +7,8 @@ class AppConfig(
     var sync: SyncConfig,
     var api: ApiCategoryConfig,
     var discord: DiscordConfig,
-    var cache: CacheAppConfig
+    var cache: CacheAppConfig,
+    var data: DataAppConfig,
 )
 
 data class SyncConfig(
@@ -53,4 +54,8 @@ data class DiscordSuperAdminConfig(
 
 data class CacheAppConfig(
     val expireAfterWriteInMinutes: Long
+)
+
+data class DataAppConfig(
+    val modFile: String
 )

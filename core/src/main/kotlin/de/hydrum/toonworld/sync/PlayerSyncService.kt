@@ -1,10 +1,8 @@
 package de.hydrum.toonworld.sync
 
-import de.hydrum.toonworld.api.comlink.ComlinkApi
-import de.hydrum.toonworld.api.comlink.toEntity
-import de.hydrum.toonworld.api.comlink.updates
-import de.hydrum.toonworld.api.comlink.updatesAbilitiesOf
+import de.hydrum.toonworld.api.comlink.*
 import de.hydrum.toonworld.config.AppConfig
+import de.hydrum.toonworld.data.DataCacheService
 import de.hydrum.toonworld.jobs.JobService
 import de.hydrum.toonworld.player.database.model.Player
 import de.hydrum.toonworld.player.database.repository.PlayerRepository
@@ -27,6 +25,7 @@ class PlayerSyncService(
     private val syncPlayerRepository: SyncPlayerRepository,
     private val playerRepository: PlayerRepository,
     private val unitCacheService: UnitCacheService,
+    private val dataCacheService: DataCacheService,
     private val comlinkApi: ComlinkApi,
     private val jobService: JobService,
     private val applicationEventPublisher: ApplicationEventPublisher
@@ -55,6 +54,7 @@ class PlayerSyncService(
 
         // we require the units to determine what abilities exist
         comlinkPlayer.updatesAbilitiesOf(dbPlayer, unitCacheService)
+        comlinkPlayer.updatesModsOf(dbPlayer, dataCacheService.getModData())
 
         return playerRepository.save(dbPlayer)
     }
@@ -65,7 +65,8 @@ class PlayerSyncService(
             .map { comlinkApi.findPlayerById(it) }
             .map { it to playerRepository.findPlayerBySwgohPlayerId(it.playerId) }
             .map { (comlinkPlayer, dbPlayer) -> comlinkPlayer to if (dbPlayer != null) comlinkPlayer updates dbPlayer else comlinkPlayer.toEntity() }
-            .map { (comlinkPlayer, dbPlayer) -> comlinkPlayer.updatesAbilitiesOf(dbPlayer, unitCacheService) }
+            .map { (comlinkPlayer, dbPlayer) -> comlinkPlayer to comlinkPlayer.updatesAbilitiesOf(dbPlayer, unitCacheService) }
+            .map { (comlinkPlayer, dbPlayer) -> comlinkPlayer.updatesModsOf(dbPlayer, dataCacheService.getModData()) }
             .also { playerRepository.saveAll(it) }
 
     @Transactional

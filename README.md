@@ -19,6 +19,8 @@ Progress management tool for Player and Guild
 - [ ] cleanup existing code
 - [ ] create a repository on github.com and commit the code - be wary of leaks of pws/data
 
+nice info: how many under-leveled / non-matching mods you have
+
 ### Discord interaction
 
 - [ ] create a `/track <allyCode>` command that will register a given allyCode for tracking

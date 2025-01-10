@@ -49,5 +49,13 @@ data class PlayerUnit(
         orphanRemoval = true
     )
     @Fetch(value = FetchMode.SUBSELECT)
-    var abilities: MutableList<PlayerUnitAbility> = mutableListOf()
+    var abilities: MutableList<PlayerUnitAbility> = mutableListOf(),
+
+    @OneToMany(
+        mappedBy = "unit",
+        cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE],
+        orphanRemoval = true
+    )
+    @Fetch(value = FetchMode.SUBSELECT)
+    var mods: MutableList<PlayerUnitMod> = mutableListOf()
 )

@@ -71,7 +71,7 @@ class SyncCommand(
             duration = (System.currentTimeMillis() - startTime)
             return@runCatching result
         }.onSuccess {
-            editReply("Player ${it?.name} (${it?.allyCode}) synced in ${duration}ms").subscribe()
+            editReply("Player `${it?.name} (${it?.allyCode})` synced in ${duration}ms").subscribe()
         }.onFailure { handleError(this, it, allyCode) }
     }
 
