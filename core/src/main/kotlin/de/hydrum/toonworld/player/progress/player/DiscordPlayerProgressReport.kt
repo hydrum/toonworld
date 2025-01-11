@@ -80,7 +80,9 @@ fun PlayerProgressData.toToonAbilityEmbedOrNull(): String? =
                         .filter { ability -> ability.hasOmicronChanged() }
                         .map { ability -> "omi: ${ability.getAbilityName()}" }
                 ).map { changeText -> Pair(unit, changeText) }
-        }.let {
+        }
+        .let {
+            if (it.isEmpty()) return@let null
             val maxToonLength = it.maxOf { it.first.name.length }
             it.joinToString("\n") { "${it.first.name.padEnd(maxToonLength)} | ${it.second}" }
         }

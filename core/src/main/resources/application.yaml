@@ -43,8 +43,8 @@ app:
     bot-token: ${DISCORD_TOKEN}
     super-admin:
       guild: "1230541668680339597"
-      test-channel: "1325874045391994881"
-      error-channel: "1325874045391994881"
+      test-channel: "1230542316242993224"
+      error-channel: "1230542316242993224"
   cache:
     expire-after-write-in-minutes: 1440
   data:

@@ -33,6 +33,7 @@ class RegisterCommands(
             ?.filterNotNull()
             .let { it!! }
             .map { registerCommandForGuild(it) }
+            .also { discordClient.on(CommandReactiveEventAdapter(commands, discordClient, appConfig)).subscribe() }
     }
 
     private fun registerCommandForGuild(guild: Guild) =
@@ -55,8 +56,6 @@ class RegisterCommands(
                         .doOnError { e -> log.error(e) { "Unable to register commands" } }
                         .onErrorResume { Mono.empty() }
                         .blockLast()
-                }.also {
-                    discordClient.on(CommandReactiveEventAdapter(commands, discordClient, appConfig)).subscribe()
                 }
         }
 

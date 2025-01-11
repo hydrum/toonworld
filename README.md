@@ -16,9 +16,6 @@ Progress management tool for Player and Guild
 
 ## TODO
 
-- [ ] cleanup existing code
-- [ ] create a repository on github.com and commit the code - be wary of leaks of pws/data
-
 nice info: how many under-leveled / non-matching mods you have
 
 ### Discord interaction
@@ -86,6 +83,8 @@ nice info: how many under-leveled / non-matching mods you have
 ## Bugs
 
 _nothing known_
+
+- letting it join a new discord server does not automatically register commands. only a restart does
 
 ## Snippets
 
