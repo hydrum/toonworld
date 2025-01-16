@@ -1,5 +1,8 @@
 package de.hydrum.toonworld.player.database.repository
 
+import de.hydrum.toonworld.data.mods.ModSlot
+import de.hydrum.toonworld.data.mods.ModTier
+import de.hydrum.toonworld.data.mods.UnitStat
 import de.hydrum.toonworld.player.database.model.*
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.PreparedStatementCreator
@@ -47,6 +50,14 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                             ?.also { playerUnit -> playerUnit.abilities.clear() }
                             ?.also { playerUnit -> playerUnit.abilities.addAll(abilities) }
                     }
+            }?.also { player ->
+                findPlayerUnitModsAtTimestamp(checkNotNull(player.id), instant.plusSeconds(10))
+                    .groupBy { it.playerUnitId }
+                    .forEach { playerUnitId, mods ->
+                        player.units.find { playerUnit -> playerUnit.id == playerUnitId }
+                            ?.also { playerUnit -> playerUnit.mods.clear() }
+                            ?.also { playerUnit -> playerUnit.mods.addAll(mods) }
+                    }
             }
 
     private fun findPlayerUnitsAtTimestamp(playerId: Long, instant: Instant): List<PlayerUnit> =
@@ -75,11 +86,25 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 PlayerUnitAbilityMapper()
             )
 
+    private fun findPlayerUnitModsAtTimestamp(playerId: Long, instant: Instant): List<PlayerUnitMod> =
+        jdbcTemplate
+            .query(
+                ToonWorldHistoryPreparedStatementCreator(
+                    sql = SQL_PLAYER_UNIT_MODS_AT_TIMESTAMP,
+                    paramCallback = {
+                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setLong(2, playerId)
+                    }
+                ),
+                PlayerUnitModMapper()
+            )
+
 
     companion object {
         const val SQL_PLAYER_AT_TIMESTAMP = "SELECT p.* FROM players FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.ally_code = ?"
         const val SQL_PLAYER_UNITS_AT_TIMESTAMP = "SELECT p.* FROM players_units FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.player_id = ?"
         const val SQL_PLAYER_UNIT_ABILITIES_AT_TIMESTAMP = "SELECT p.* FROM players_units_abilities FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.player_id = ?"
+        const val SQL_PLAYER_UNIT_MODS_AT_TIMESTAMP = "SELECT p.* FROM players_units_mods FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.player_id = ?"
         const val SQL_EARLIEST_SYNC_INSTANT = "SELECT p.row_start FROM players FOR SYSTEM_TIME ALL AS p WHERE p.ally_code = ? ORDER BY p.row_start ASC LIMIT 1"
     }
 
@@ -146,6 +171,41 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 hasOmega = rs.getBoolean("has_omega"),
                 hasZeta = rs.getBoolean("has_zeta"),
                 hasOmicron = rs.getBoolean("has_omicron")
+            )
+    }
+
+    private class PlayerUnitModMapper : RowMapper<PlayerUnitMod> {
+        override fun mapRow(rs: ResultSet, rowNum: Int): PlayerUnitMod? =
+            PlayerUnitMod(
+                id = rs.getLong("id"),
+                unit = null,
+                playerUnitId = rs.getLong("player_unit_id"),
+                player = null,
+                playerId = rs.getLong("player_id"),
+                slot = ModSlot.entries.first { it.name == rs.getString("slot") },
+                level = rs.getInt("level"),
+                rarity = rs.getInt("rarity"),
+                tier = ModTier.entries.first { it.name == rs.getString("tier") },
+                modSet = UnitStat.entries.first { it.name == rs.getString("mod_set") },
+
+                primaryStat = UnitStat.entries.first { it.name == rs.getString("primary_stat") },
+                primaryValue = rs.getLong("primary_value"),
+
+                secondary1Stat = UnitStat.entries.first { it.name == rs.getString("secondary_1_stat") },
+                secondary1Value = rs.getLong("secondary_1_value"),
+                secondary1Roll = rs.getInt("secondary_1_roll"),
+
+                secondary2Stat = UnitStat.entries.first { it.name == rs.getString("secondary_2_stat") },
+                secondary2Value = rs.getLong("secondary_2_value"),
+                secondary2Roll = rs.getInt("secondary_2_roll"),
+
+                secondary3Stat = UnitStat.entries.first { it.name == rs.getString("secondary_3_stat") },
+                secondary3Value = rs.getLong("secondary_3_value"),
+                secondary3Roll = rs.getInt("secondary_3_roll"),
+
+                secondary4Stat = UnitStat.entries.first { it.name == rs.getString("secondary_4_stat") },
+                secondary4Value = rs.getLong("secondary_4_value"),
+                secondary4Roll = rs.getInt("secondary_4_roll"),
             )
     }
 }

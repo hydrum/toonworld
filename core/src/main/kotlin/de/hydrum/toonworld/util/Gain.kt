@@ -20,6 +20,10 @@ open class Gain<T>(
 
     open fun formatValue(value: T?): String = value?.toString() ?: "---"
 
+    open fun fromValueString(): String = formatValue(fromValue)
+    open fun toValueString(): String = formatValue(toValue)
+    open fun absGainString(): String = formatValue(absGain)
+
     open fun sortByValue(): Comparable<*> = toValue as Comparable<*>
     open fun sortByChangeValue(): Comparable<*> = absGain as Comparable<*>
 }
@@ -73,6 +77,7 @@ class GainLong(
     absGain = (toValue ?: 0L) - (fromValue ?: 0L),
     pctGain = if (fromValue == null || toValue == null || fromValue == 0L) null else toValue / fromValue.toDouble()
 ) {
+    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else if (absGain != null && absGain < 0) "-" else "") + super.absGainString()
     override fun formatValue(value: Long?): String = value.abvFormatting()
 }
 
@@ -84,8 +89,24 @@ class GainInt(
     toValue = toValue,
     absGain = (toValue ?: 0) - (fromValue ?: 0),
     pctGain = if (fromValue == null || toValue == null || fromValue == 0) null else toValue / fromValue.toDouble()
-)
+) {
+    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else if (absGain != null && absGain < 0) "-" else "") + super.absGainString()
+}
 
+class GainDouble(
+    override val fromValue: Double?,
+    override val toValue: Double?
+) : Gain<Double?>(
+    fromValue = fromValue ?: 0.0,
+    toValue = toValue ?: 0.0,
+    absGain = (toValue ?: 0.0) - (fromValue ?: 0.0),
+    pctGain = if (fromValue == null || toValue == null || fromValue == 0.0) null else toValue / fromValue.toDouble()
+) {
+    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else if (absGain != null && absGain < 0) "-" else "") + super.absGainString()
+    override fun formatValue(value: Double?): String = value?.round(2).toString()
+}
+
+infix fun Double?.gainToDouble(to: Double?): Gain<Double?> = GainDouble(fromValue = this, toValue = to)
 infix fun Int?.gainToInt(to: Int?): Gain<Int?> = GainInt(fromValue = this, toValue = to)
 infix fun Int?.gainToLong(to: Int?): Gain<Long?> = GainLong(fromValue = this?.toLong(), toValue = to?.toLong())
 infix fun Long?.gainToLong(to: Long?): Gain<Long?> = GainLong(fromValue = this, toValue = to)
@@ -94,6 +115,15 @@ infix fun Boolean?.gainToBoolean(to: Boolean?): Gain<Boolean?> = Gain(fromValue 
 infix fun RelicTier?.gainToRelicTier(to: RelicTier): GainRelicTier = GainRelicTier(fromValue = this, toValue = to)
 
 fun Long?.abvFormatting(): String {
+    if (this == null) return "---"
+    if (this > 10_000_000) return "%4.2f".format(this / 1_000_000.0) + "m"
+    if (this > 1_000_000) return "%4.3f".format(this / 1_000_000.0) + "m"
+    if (this > 100_000) return "%4.1f".format(this / 1_000.0) + "k"
+    if (this > 10_000) return "%4.2f".format(this / 1_000.0) + "k"
+    else return return "%6d".format(this)
+}
+
+fun Int?.abvFormatting(): String {
     if (this == null) return "---"
     if (this > 10_000_000) return "%4.2f".format(this / 1_000_000.0) + "m"
     if (this > 1_000_000) return "%4.3f".format(this / 1_000_000.0) + "m"

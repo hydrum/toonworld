@@ -16,7 +16,13 @@ data class PlayerProgressData(
     val galacticPowerGain: Gain<Long?>,
     val zetaGain: Gain<Long?>,
     val omicronGain: Gain<Long?>,
-    val upgradedUnits: List<PlayerProgressUnit>
+    val upgradedUnits: List<PlayerProgressUnit>,
+    val modsSixRarity: Gain<Int?>,
+    val modsSpeed25: Gain<Int?>,
+    val modsSpeed20: Gain<Int?>,
+    val modsSpeed15: Gain<Int?>,
+    val mods25SpeedAverage: Gain<Double?>,
+    val mods500SpeedAverage: Gain<Double?>,
 )
 
 @Data

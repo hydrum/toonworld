@@ -49,29 +49,41 @@ class PlayerProgressReportService(
             galacticPowerGain = fromPlayer.galacticPower gainToLong toPlayer.galacticPower,
             zetaGain = fromPlayer.units.sumOf { it.zetas } gainToLong toPlayer.units.sumOf { it.zetas },
             omicronGain = fromPlayer.units.sumOf { it.omicrons } gainToLong toPlayer.units.sumOf { it.omicrons },
-            upgradedUnits = toPlayer.units.map { toUnit ->
-                Pair(fromPlayer.units.firstOrNull { fromUnit -> fromUnit.id == toUnit.id }, toUnit)
-            }.map { (fromUnit, toUnit) ->
-                PlayerProgressUnit(
-                    name = unitCacheService.findUnit(toUnit.baseId)?.name ?: toUnit.baseId,
-                    gearLevelGain = fromUnit?.gearLevel gainToInt toUnit.gearLevel,
-                    levelGain = fromUnit?.level gainToInt toUnit.level,
-                    rarityGain = fromUnit?.rarity gainToInt toUnit.rarity,
-                    relicTierGain = fromUnit?.relicTier gainToRelicTier toUnit.relicTier,
-                    ultimateGain = fromUnit?.hasUltimate gainToBoolean toUnit.hasUltimate,
-                    abilityGains =
-                        toUnit.abilities.map { secondAbility -> Pair(secondAbility, fromUnit?.abilities?.firstOrNull { firstAbility -> secondAbility.baseId == firstAbility.baseId }) }
-                            .map { (toAbility, fromAbility) ->
-                                GainUnitAbility(
-                                    fromAbility = fromAbility,
-                                    toAbility = toAbility,
-                                    ability = checkNotNull(unitCacheService.findUnit(toUnit.baseId)?.abilities?.first { ability -> toAbility.baseId == ability.baseId })
-                                )
-                            },
-                )
-            }.filter { it.hasChanged() }
+            modsSpeed15 = fromPlayer.getModSpeedValues().filter { it >= 15 }.size gainToInt toPlayer.getModSpeedValues().filter { it >= 15 }.size,
+            modsSpeed20 = fromPlayer.getModSpeedValues().filter { it >= 20 }.size gainToInt toPlayer.getModSpeedValues().filter { it >= 20 }.size,
+            modsSpeed25 = fromPlayer.getModSpeedValues().filter { it >= 25 }.size gainToInt toPlayer.getModSpeedValues().filter { it >= 25 }.size,
+            modsSixRarity = fromPlayer.units.flatMap { it.mods }.filter { it.rarity == 6 }.size gainToInt toPlayer.units.flatMap { it.mods }.filter { it.rarity == 6 }.size,
+            mods25SpeedAverage = fromPlayer.getModSpeedValues().sortedDescending().take(25).average() gainToDouble toPlayer.getModSpeedValues().sortedDescending().take(25).average(),
+            mods500SpeedAverage = fromPlayer.getModSpeedValues().sortedDescending().take(500).average() gainToDouble toPlayer.getModSpeedValues().sortedDescending().take(500).average(),
+            upgradedUnits = toPlayer.units
+                .map { toUnit -> Pair(fromPlayer.units.firstOrNull { fromUnit -> fromUnit.id == toUnit.id }, toUnit) }
+                .map { (fromUnit, toUnit) ->
+                    PlayerProgressUnit(
+                        name = unitCacheService.findUnit(toUnit.baseId)?.name ?: toUnit.baseId,
+                        gearLevelGain = fromUnit?.gearLevel gainToInt toUnit.gearLevel,
+                        levelGain = fromUnit?.level gainToInt toUnit.level,
+                        rarityGain = fromUnit?.rarity gainToInt toUnit.rarity,
+                        relicTierGain = fromUnit?.relicTier gainToRelicTier toUnit.relicTier,
+                        ultimateGain = fromUnit?.hasUltimate gainToBoolean toUnit.hasUltimate,
+                        abilityGains =
+                            toUnit.abilities.map { secondAbility -> Pair(secondAbility, fromUnit?.abilities?.firstOrNull { firstAbility -> secondAbility.baseId == firstAbility.baseId }) }
+                                .map { (toAbility, fromAbility) ->
+                                    GainUnitAbility(
+                                        fromAbility = fromAbility,
+                                        toAbility = toAbility,
+                                        ability = checkNotNull(unitCacheService.findUnit(toUnit.baseId)?.abilities?.first { ability -> toAbility.baseId == ability.baseId })
+                                    )
+                                },
+                    )
+                }.filter { it.hasChanged() }
         )
     }
+
+    private fun Player.getModSpeedValues(): List<Long> =
+        units
+            .flatMap { it.mods }
+            .map { it.getSecondarySpeed() }
+            .ifEmpty { listOf<Long>(0) }
 
     companion object {
         private val log = KotlinLogging.logger { }

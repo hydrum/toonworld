@@ -86,4 +86,19 @@ data class PlayerUnitMod(
     var secondary4Value: Long?,
     @Column(name = "secondary_4_roll")
     var secondary4Roll: Int?,
-)
+) {
+
+    @Transient
+    private fun getSecondaryTriples(): List<Triple<UnitStat, Long, Int>> = listOfNotNull(
+        if (secondary1Stat != null && secondary1Stat != null && secondary1Stat != null) Triple(secondary1Stat!!, secondary1Value!!, secondary1Roll!!) else null,
+        if (secondary2Stat != null && secondary2Stat != null && secondary2Stat != null) Triple(secondary2Stat!!, secondary2Value!!, secondary2Roll!!) else null,
+        if (secondary3Stat != null && secondary3Stat != null && secondary3Stat != null) Triple(secondary3Stat!!, secondary3Value!!, secondary3Roll!!) else null,
+        if (secondary4Stat != null && secondary4Stat != null && secondary4Stat != null) Triple(secondary4Stat!!, secondary4Value!!, secondary4Roll!!) else null
+    )
+
+    @Transient
+    fun getSecondarySpeed(): Long =
+        getSecondaryTriples()
+            .firstOrNull { it.first == UnitStat.SPEED }?.let { (it.second / 10_000) }
+            ?: 0
+}
