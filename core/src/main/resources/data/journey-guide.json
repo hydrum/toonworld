@@ -1,0 +1,1406 @@
+{
+  "units": [
+    {
+      "baseId": "SUPREMELEADERKYLOREN",
+      "requiredUnits": [
+        {
+          "baseId": "KYLORENUNMASKED",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "FIRSTORDEROFFICERMALE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "FIRSTORDERTROOPER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "KYLOREN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "PHASMA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "FIRSTORDEREXECUTIONER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "SMUGGLERHAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "FOSITHTROOPER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "FIRSTORDERSPECIALFORCESPILOT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "GENERALHUX",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "FIRSTORDERTIEPILOT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "EMPERORPALPATINE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "CAPITALFINALIZER",
+          "rarity": 5,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "GLREY",
+      "requiredUnits": [
+        {
+          "baseId": "REYJEDITRAINING",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "FINN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "RESISTANCETROOPER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "REY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "POE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "RESISTANCEPILOT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "EPIXFINN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "AMILYNHOLDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "ROSETICO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "EPIXPOE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "BB8",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "SMUGGLERCHEWBACCA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "CAPITALRADDUS",
+          "rarity": 5,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "JEDIKNIGHTLUKE",
+      "requiredUnits": [
+        {
+          "baseId": "C3POLEGENDARY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "VADER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "CHEWBACCALEGENDARY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "WAMPA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "HOTHLEIA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "ADMINISTRATORLANDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "HOTHHAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "COMMANDERLUKESKYWALKER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "HERMITYODA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "MILLENNIUMFALCON",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "XWINGRED2",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "GRANDMASTERLUKE",
+      "requiredUnits": [
+        {
+          "baseId": "MONMOTHMA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "C3POCHEWBACCA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "OLDBENKENOBI",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "REYJEDITRAINING",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "C3POLEGENDARY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "R2D2_LEGENDARY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "CHEWBACCALEGENDARY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "HANSOLO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "JEDIKNIGHTLUKE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "PRINCESSLEIA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "HERMITYODA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "WEDGEANTILLES",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "BIGGSDARKLIGHTER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "ADMINISTRATORLANDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "YWINGREBEL",
+          "rarity": 6,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "SITHPALPATINE",
+      "requiredUnits": [
+        {
+          "baseId": "ADMIRALPIETT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "ROYALGUARD",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "VADER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "EMPERORPALPATINE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "DIRECTORKRENNIC",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_4"
+        },
+        {
+          "baseId": "COUNTDOOKU",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "SITHMARAUDER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "DARTHSIDIOUS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "MAUL",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_4"
+        },
+        {
+          "baseId": "ANAKINKNIGHT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "GRANDADMIRALTHRAWN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "GRANDMOFFTARKIN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "VEERS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "COLONELSTARCK",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "TIEBOMBERIMPERIAL",
+          "rarity": 6,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "JEDIMASTERKENOBI",
+      "requiredUnits": [
+        {
+          "baseId": "AAYLASECURA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "GENERALKENOBI",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "MACEWINDU",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "BOKATAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "QUIGONJINN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "MAGNAGUARD",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "CLONESERGEANTPHASEI",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "WATTAMBOR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "GRIEVOUS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "CADBANE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "CC2224",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "JANGOFETT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "SHAAKTI",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "GRANDMASTERYODA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "CAPITALNEGOTIATOR",
+          "rarity": 6,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "LORDVADER",
+      "requiredUnits": [
+        {
+          "baseId": "BADBATCHHUNTER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "BADBATCHWRECKER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "BADBATCHTECH",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "TUSKENRAIDER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "PADMEAMIDALA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "GENERALSKYWALKER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "EMBO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "CT210408",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "BADBATCHECHO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "COUNTDOOKU",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "ZAMWESELL",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "NUTEGUNRAY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "ARCTROOPER501ST",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "GRANDMOFFTARKIN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "YWINGCLONEWARS",
+          "rarity": 6,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "STARKILLER",
+      "requiredUnits": [
+        {
+          "baseId": "DASHRENDAR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "KYLEKATARN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "DARTHTALON",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "MARAJADE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        }
+      ]
+    },
+    {
+      "baseId": "GRANDINQUISITOR",
+      "requiredUnits": [
+        {
+          "baseId": "SECONDSISTER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "NINTHSISTER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "SEVENTHSISTER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "EIGHTHBROTHER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "FIFTHBROTHER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        }
+      ]
+    },
+    {
+      "baseId": "JABBATHEHUTT",
+      "requiredUnits": [
+        {
+          "baseId": "HANSOLO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "GAMORREANGUARD",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "GREEDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "KRRSANTAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "UNDERCOVERLANDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "JEDIKNIGHTLUKE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "JAWA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "URORRURRR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_4"
+        },
+        {
+          "baseId": "C3POLEGENDARY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "BOUSHH",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "AURRA_SING",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "FENNECSHAND",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "BOBAFETT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "HUMANTHUG",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "OUTRIDER",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "CAPITALEXECUTOR",
+      "requiredUnits": [
+        {
+          "baseId": "VADER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "ADMIRALPIETT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "BOBAFETT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "TIEFIGHTERPILOT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "BOSSK",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "IG88",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "DENGAR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "TIEBOMBERIMPERIAL",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "TIEADVANCED",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "TIEFIGHTERIMPERIAL",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "RAZORCREST",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "IG2000",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "SLAVE1",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "HOUNDSTOOTH",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "CAPITALPROFUNDITY",
+      "requiredUnits": [
+        {
+          "baseId": "ADMIRALRADDUS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "CASSIANANDOR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "DASHRENDAR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "MONMOTHMA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "BISTAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "JYNERSO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "HERASYNDULLAS3",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "OUTRIDER",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "UWINGROGUEONE",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "UWINGSCARIF",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "XWINGRED2",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "XWINGRED3",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "YWINGREBEL",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "GHOST",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "DOCTORAPHRA",
+      "requiredUnits": [
+        {
+          "baseId": "TRIPLEZERO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "BT1",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "HONDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "SANASTARROS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        }
+      ]
+    },
+    {
+      "baseId": "JEDIKNIGHTCAL",
+      "requiredUnits": [
+        {
+          "baseId": "CALKESTIS",
+          "rarity": 7,
+          "gearLevel": 12,
+          "relicTier": "LOCKED"
+        },
+        {
+          "baseId": "CEREJUNDA",
+          "rarity": 7,
+          "gearLevel": 12,
+          "relicTier": "LOCKED"
+        },
+        {
+          "baseId": "MERRIN",
+          "rarity": 7,
+          "gearLevel": 12,
+          "relicTier": "LOCKED"
+        },
+        {
+          "baseId": "TARFFUL",
+          "rarity": 7,
+          "gearLevel": 12,
+          "relicTier": "LOCKED"
+        },
+        {
+          "baseId": "SAWGERRERA",
+          "rarity": 7,
+          "gearLevel": 12,
+          "relicTier": "LOCKED"
+        }
+      ]
+    },
+    {
+      "baseId": "CAPITALLEVIATHAN",
+      "requiredUnits": [
+        {
+          "baseId": "DARTHREVAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "DARTHMALAK",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "SITHTROOPER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "FOSITHTROOPER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "MAUL",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "HK47",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "BASTILASHAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "SITHASSASSIN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "50RT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "SITHBOMBER",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "SITHSUPREMACYCLASS",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "TIEDAGGER",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "SITHINFILTRATOR",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "SITHFIGHTER",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "FURYCLASSINTERCEPTOR",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        },
+        {
+          "baseId": "EBONHAWK",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "GLLEIA",
+      "requiredUnits": [
+        {
+          "baseId": "CAPTAINREX",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "PRINCESSKNEESAA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "WICKET",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "ADMINISTRATORLANDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "ADMIRALACKBAR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "SCOUTTROOPER_V3",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "R2D2_LEGENDARY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "HOTHHAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "HOTHLEIA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "CHIEFCHIRPA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "CAPTAINDROGAN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "COMMANDERLUKESKYWALKER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "BOUSHH",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "C3POCHEWBACCA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "LOBOT",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        }
+      ]
+    },
+    {
+      "baseId": "MANDALORBOKATAN",
+      "requiredUnits": [
+        {
+          "baseId": "THEMANDALORIANBESKARARMOR",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "PAZVIZSLA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "IG12",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "KELLERANBEQ",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        }
+      ]
+    },
+    {
+      "baseId": "JARJARBINKS",
+      "requiredUnits": [
+        {
+          "baseId": "BOSSNASS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "CAPTAINTARPALS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "BOOMADIER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "GUNGANPHALANX",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        }
+      ]
+    },
+    {
+      "baseId": "GLAHSOKATANO",
+      "requiredUnits": [
+        {
+          "baseId": "AHSOKATANO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "GENERALSKYWALKER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "ASAJVENTRESS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "NIGHTTROOPER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "COMMANDERAHSOKA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "CAPTAINENOCH",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "DEATHTROOPERPERIDEA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "EZRABRIDGERS3",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "FULCRUMAHSOKA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "CT7567",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "BARRISSOFFEE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "PADAWANSABINE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "HUYANG",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "GENERALSYNDULLA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "JEDISTARFIGHTERAHSOKATANO",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
+    },
+    {
+      "baseId": "BAYLANSKOLL",
+      "requiredUnits": [
+        {
+          "baseId": "GRANDADMIRALTHRAWN",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "MORGANELSBETH",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "GREATMOTHERS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "SHINHATI",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "MARROK",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        }
+      ]
+    }
+  ]
+}

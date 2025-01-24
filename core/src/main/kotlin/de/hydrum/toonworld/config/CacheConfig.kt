@@ -25,6 +25,7 @@ object CacheNames {
 
     const val UNITS = "UNITS"
     const val MODS = "MODS"
+    const val JOURNEY_GUIDES = "JOURNEY_GUIDES"
     const val DISCORD_USER_ALLY_CODE = "DISCORD_USER_ALLY_CODE"
     const val DISCORD_USER_GUILD = "DISCORD_USER_GUILD"
 

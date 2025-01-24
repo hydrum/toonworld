@@ -53,7 +53,6 @@ class ModDataTest {
 
     companion object {
         private val log = KotlinLogging.logger { }
+        fun createObjectMapper(): ObjectMapper = ObjectMapper().findAndRegisterModules()
     }
 }
-
-fun createObjectMapper(): ObjectMapper = ObjectMapper().findAndRegisterModules()

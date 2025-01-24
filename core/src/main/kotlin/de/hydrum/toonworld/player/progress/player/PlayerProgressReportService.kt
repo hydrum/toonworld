@@ -1,5 +1,7 @@
 package de.hydrum.toonworld.player.progress.player
 
+import de.hydrum.toonworld.data.DataCacheService
+import de.hydrum.toonworld.data.JourneyGuideProgress
 import de.hydrum.toonworld.player.database.model.Player
 import de.hydrum.toonworld.player.database.repository.PlayerHistoryRepository
 import de.hydrum.toonworld.unit.UnitCacheService
@@ -12,7 +14,8 @@ import java.time.Instant
 @Service
 class PlayerProgressReportService(
     private val playerHistoryRepository: PlayerHistoryRepository,
-    private val unitCacheService: UnitCacheService
+    private val unitCacheService: UnitCacheService,
+    private val dataCacheService: DataCacheService
 ) {
 
     @Transactional
@@ -75,7 +78,29 @@ class PlayerProgressReportService(
                                     )
                                 },
                     )
-                }.filter { it.hasChanged() }
+                }.filter { it.hasChanged() },
+            journeyProgress = dataCacheService.getJourneyData()
+                .map {
+                    val fromJourneyProgress = JourneyGuideProgress(it, fromPlayer.units)
+                    val toJourneyProgress = JourneyGuideProgress(it, toPlayer.units)
+                    PlayerProgressJourney(
+                        unitName = unitCacheService.findUnit(it.baseId)?.name ?: it.baseId,
+                        totalProgressGain = fromJourneyProgress.totalProgress gainToDouble toJourneyProgress.totalProgress,
+                        requirementGains = it.requiredUnits.map { requiredUnits ->
+                            val fromUnit = fromJourneyProgress.relatedPlayerUnits.firstOrNull { it.playerUnit?.baseId == requiredUnits.baseId }
+                            val toUnit = toJourneyProgress.relatedPlayerUnits.firstOrNull { it.playerUnit?.baseId == requiredUnits.baseId }
+                            PlayerProgressJourneyUnit(
+                                unitName = unitCacheService.findUnit(requiredUnits.baseId)?.name ?: it.baseId,
+                                rarityProgress = fromUnit?.getRarityProgress() gainToDouble toUnit?.getRarityProgress(),
+                                gearProgress = fromUnit?.getGearProgress() gainToDouble toUnit?.getGearProgress(),
+                                relicProgress = fromUnit?.getRelicProgress() gainToDouble toUnit?.getRelicProgress(),
+                                totalProgress = fromUnit?.getWeightedProgress() gainToDouble toUnit?.getWeightedProgress()
+                            )
+                        }
+                    )
+                }
+                .filter { it.totalProgressGain.fromValue != 1.0 }
+                .sortedByDescending { it.totalProgressGain.toValue }
         )
     }
 

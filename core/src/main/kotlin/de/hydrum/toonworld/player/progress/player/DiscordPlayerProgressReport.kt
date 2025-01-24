@@ -1,5 +1,6 @@
 package de.hydrum.toonworld.player.progress.player
 
+import de.hydrum.toonworld.data.toPctText
 import de.hydrum.toonworld.util.Gain
 import de.hydrum.toonworld.util.toDiscordRelativeDateTime
 import discord4j.core.spec.EmbedCreateSpec
@@ -23,7 +24,9 @@ fun PlayerProgressData.toDiscordEmbed(): List<EmbedCreateSpec> =
         > Stars / Gear / Relic
         ```${toToonGearText()}```
         > Abilities
-        ```${toToonAbilityEmbedOrNull() ?: "---"}```
+        ```${toToonAbilityTextOrNull() ?: "---"}```
+        > Journey
+        ```${toJourneyProgressText() ?: "---"}```
     """
         .trimIndent()
         .let {
@@ -91,7 +94,7 @@ fun PlayerProgressData.toToonGearText(): String =
             it.joinToString("\n") { "${it.name.padEnd(maxToonLength)} | ${it.rarityGain.changeText().padEnd(maxStarsLength)} | ${if (it.relicTierGain.hasChanged()) it.relicTierGain.changeText() else "G" + it.gearLevelGain.changeText()}" }
         }
 
-fun PlayerProgressData.toToonAbilityEmbedOrNull(): String? =
+fun PlayerProgressData.toToonAbilityTextOrNull(): String? =
     upgradedUnits
         .filter { it.abilityGains.any { ability -> ability.hasZetaChanged() || ability.hasOmicronChanged() } }
         .take(MAX_TOON_PROGRESS)
@@ -109,6 +112,22 @@ fun PlayerProgressData.toToonAbilityEmbedOrNull(): String? =
             if (it.isEmpty()) return@let null
             val maxToonLength = it.maxOf { it.first.name.length }
             it.joinToString("\n") { "${it.first.name.padEnd(maxToonLength)} | ${it.second}" }
+        }
+
+fun PlayerProgressData.toJourneyProgressText(): String? =
+    journeyProgress
+        .take(MAX_TOON_PROGRESS)
+        .let {
+            if (it.isEmpty()) return@let null
+            val maxToonLength = it.maxOf { it.unitName.length }
+            val maxCurrValueLength = it.maxOf { it.totalProgressGain.toValue?.toPctText()?.length ?: 3 }
+            it.joinToString("\n") {
+                "${it.unitName.padEnd(maxToonLength)} " +
+                        "| ${it.totalProgressGain.toValue?.toPctText()?.padEnd(maxCurrValueLength)} % " +
+                        if ((it.totalProgressGain.absGain ?: 0.0) > 0.0)
+                            "(+${it.totalProgressGain.absGain?.toPctText()} %)"
+                        else ""
+            }
         }
 
 
