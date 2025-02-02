@@ -13,11 +13,5 @@
     "@typespec/rest": "latest",
     "@typespec/openapi3": "latest"
   },
-  "devDependencies": {
-    "@typespec/compiler": "latest",
-    "@typespec/http": "latest",
-    "@typespec/rest": "latest",
-    "@typespec/openapi3": "latest"
-  },
   "private": true
 }

@@ -18,12 +18,6 @@ Progress management tool for Player and Guild
 
 nice info: how many under-leveled / non-matching mods you have
 
-### Discord interaction
-
-- [ ] create a `/track <allyCode>` command that will register a given allyCode for tracking
-- [ ] validate that the allyCode belongs to a valid allyCode, in case it is already tracked, return such info, if not; enable
-- [ ] trigger the job's re-evaluation of the next sync
-
 ## User Stories
 
 ### Enable player tracking
@@ -65,7 +59,6 @@ nice info: how many under-leveled / non-matching mods you have
 - GAC: track history, what the player used against someone else, counters that match your account
     - based on https://youtu.be/wkcap-W5kTc
 - Fleet Arena: track position, observe shard to see their progress regarding fleet + changes
-- Farming: track own progress regarding the journey guides (https://swgoh.gg/api/gl-checklist/?format=json)
 - Gear towards farming.
 - modding advice regarding swgoh.gg best mods for character, based on own characters
 - define squads for teams for 3v3 and 5v5, track farming progress
