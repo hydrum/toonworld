@@ -191,21 +191,21 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 primaryStat = UnitStat.entries.first { it.name == rs.getString("primary_stat") },
                 primaryValue = rs.getLong("primary_value"),
 
-                secondary1Stat = UnitStat.entries.first { it.name == rs.getString("secondary_1_stat") },
-                secondary1Value = rs.getLong("secondary_1_value"),
-                secondary1Roll = rs.getInt("secondary_1_roll"),
+                secondary1Stat = UnitStat.entries.firstOrNull { it.name == rs.getString("secondary_1_stat") },
+                secondary1Value = rs.getLong("secondary_1_value").let { if (rs.wasNull()) null else it },
+                secondary1Roll = rs.getInt("secondary_1_roll").let { if (rs.wasNull()) null else it },
 
-                secondary2Stat = UnitStat.entries.first { it.name == rs.getString("secondary_2_stat") },
-                secondary2Value = rs.getLong("secondary_2_value"),
-                secondary2Roll = rs.getInt("secondary_2_roll"),
+                secondary2Stat = UnitStat.entries.firstOrNull { it.name == rs.getString("secondary_2_stat") },
+                secondary2Value = rs.getLong("secondary_2_value").let { if (rs.wasNull()) null else it },
+                secondary2Roll = rs.getInt("secondary_2_roll").let { if (rs.wasNull()) null else it },
 
-                secondary3Stat = UnitStat.entries.first { it.name == rs.getString("secondary_3_stat") },
-                secondary3Value = rs.getLong("secondary_3_value"),
-                secondary3Roll = rs.getInt("secondary_3_roll"),
+                secondary3Stat = UnitStat.entries.firstOrNull { it.name == rs.getString("secondary_3_stat") },
+                secondary3Value = rs.getLong("secondary_3_value").let { if (rs.wasNull()) null else it },
+                secondary3Roll = rs.getInt("secondary_3_roll").let { if (rs.wasNull()) null else it },
 
-                secondary4Stat = UnitStat.entries.first { it.name == rs.getString("secondary_4_stat") },
-                secondary4Value = rs.getLong("secondary_4_value"),
-                secondary4Roll = rs.getInt("secondary_4_roll"),
+                secondary4Stat = UnitStat.entries.firstOrNull { it.name == rs.getString("secondary_4_stat") },
+                secondary4Value = rs.getLong("secondary_4_value").let { if (rs.wasNull()) null else it },
+                secondary4Roll = rs.getInt("secondary_4_roll").let { if (rs.wasNull()) null else it },
             )
     }
 }
