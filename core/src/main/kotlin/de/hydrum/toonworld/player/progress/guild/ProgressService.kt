@@ -6,6 +6,8 @@ import de.hydrum.toonworld.player.progress.player.PlayerProgressReportService
 import de.hydrum.toonworld.sync.GuildSyncService.AfterGuildSyncEvent
 import discord4j.common.util.Snowflake
 import discord4j.core.GatewayDiscordClient
+import discord4j.discordjson.json.EmbedData
+import discord4j.rest.util.Color
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
@@ -54,7 +56,15 @@ class ProgressService(
                 if (discordGuild?.journeyProgressReportChannelId == null) return // we should not report it.
                 discordClient
                     .getChannelById(Snowflake.of(discordGuild.journeyProgressReportChannelId))
-                    .flatMap { channel -> channel.restChannel.createMessage(unlockTexts.joinToString("\n")) }
+                    .flatMap { channel ->
+                        channel.restChannel.createMessage(
+                            EmbedData.builder()
+                                .color(Color.LIGHT_SEA_GREEN.rgb)
+                                .title("Journey Progress")
+                                .description(unlockTexts.joinToString("\n"))
+                                .build()
+                        )
+                    }
                     .subscribe()
             }
 
