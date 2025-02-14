@@ -41,24 +41,42 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ),
                 PlayerHistoryMapper()
             ).firstOrNull()
-            ?.also { it.units.addAll(findPlayerUnitsAtTimestamp(checkNotNull(it.id), instant.plusSeconds(10))) }
-            ?.also { player ->
-                findPlayerUnitAbilitiesAtTimestamp(checkNotNull(player.id), instant.plusSeconds(10))
-                    .groupBy { it.playerUnitId }
-                    .forEach { playerUnitId, abilities ->
-                        player.units.find { playerUnit -> playerUnit.id == playerUnitId }
-                            ?.also { playerUnit -> playerUnit.abilities.clear() }
-                            ?.also { playerUnit -> playerUnit.abilities.addAll(abilities) }
+            ?.also { mapHistoryData(it, instant) }
+
+    fun findPlayersOfGuildAtTimestamp(guildId: String, instant: Instant): List<Player> =
+        jdbcTemplate
+            .query(
+                ToonWorldHistoryPreparedStatementCreator(
+                    sql = SQL_PLAYER_OF_GUILD_AT_TIMESTAMP,
+                    paramCallback = {
+                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setString(2, guildId)
                     }
-            }?.also { player ->
-                findPlayerUnitModsAtTimestamp(checkNotNull(player.id), instant.plusSeconds(10))
-                    .groupBy { it.playerUnitId }
-                    .forEach { playerUnitId, mods ->
-                        player.units.find { playerUnit -> playerUnit.id == playerUnitId }
-                            ?.also { playerUnit -> playerUnit.mods.clear() }
-                            ?.also { playerUnit -> playerUnit.mods.addAll(mods) }
-                    }
-            }
+                ),
+                PlayerHistoryMapper()
+            )
+            .also { it.forEach { mapHistoryData(it, instant) } }
+
+    fun mapHistoryData(player: Player, instant: Instant): Player = player
+        .also { it.units.addAll(findPlayerUnitsAtTimestamp(checkNotNull(it.id), instant.plusSeconds(10))) }
+        .also { player ->
+            findPlayerUnitAbilitiesAtTimestamp(checkNotNull(player.id), instant.plusSeconds(10))
+                .groupBy { it.playerUnitId }
+                .forEach { playerUnitId, abilities ->
+                    player.units.find { playerUnit -> playerUnit.id == playerUnitId }
+                        ?.also { playerUnit -> playerUnit.abilities.clear() }
+                        ?.also { playerUnit -> playerUnit.abilities.addAll(abilities) }
+                }
+        }
+        .also { player ->
+            findPlayerUnitModsAtTimestamp(checkNotNull(player.id), instant.plusSeconds(10))
+                .groupBy { it.playerUnitId }
+                .forEach { playerUnitId, mods ->
+                    player.units.find { playerUnit -> playerUnit.id == playerUnitId }
+                        ?.also { playerUnit -> playerUnit.mods.clear() }
+                        ?.also { playerUnit -> playerUnit.mods.addAll(mods) }
+                }
+        }
 
     private fun findPlayerUnitsAtTimestamp(playerId: Long, instant: Instant): List<PlayerUnit> =
         jdbcTemplate
@@ -106,6 +124,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
         const val SQL_PLAYER_UNIT_ABILITIES_AT_TIMESTAMP = "SELECT p.* FROM players_units_abilities FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.player_id = ?"
         const val SQL_PLAYER_UNIT_MODS_AT_TIMESTAMP = "SELECT p.* FROM players_units_mods FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.player_id = ?"
         const val SQL_EARLIEST_SYNC_INSTANT = "SELECT p.row_start FROM players FOR SYSTEM_TIME ALL AS p WHERE p.ally_code = ? ORDER BY p.row_start ASC LIMIT 1"
+        const val SQL_PLAYER_OF_GUILD_AT_TIMESTAMP = "SELECT p.* FROM players FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.swgoh_guild_id = ?"
     }
 
     internal class ToonWorldHistoryPreparedStatementCreator(
