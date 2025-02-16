@@ -77,7 +77,7 @@ class GainLong(
     absGain = (toValue ?: 0L) - (fromValue ?: 0L),
     pctGain = if (fromValue == null || toValue == null || fromValue == 0L) null else toValue / fromValue.toDouble()
 ) {
-    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else if (absGain != null && absGain < 0) "-" else "") + super.absGainString()
+    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else "") + super.absGainString()
     override fun formatValue(value: Long?): String = value.abvFormatting()
 }
 
@@ -90,7 +90,7 @@ class GainInt(
     absGain = (toValue ?: 0) - (fromValue ?: 0),
     pctGain = if (fromValue == null || toValue == null || fromValue == 0) null else toValue / fromValue.toDouble()
 ) {
-    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else if (absGain != null && absGain < 0) "-" else "") + super.absGainString()
+    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else "") + super.absGainString()
 }
 
 class GainDouble(
@@ -102,7 +102,7 @@ class GainDouble(
     absGain = (toValue ?: 0.0) - (fromValue ?: 0.0),
     pctGain = if (fromValue == null || toValue == null || fromValue == 0.0) null else toValue / fromValue.toDouble()
 ) {
-    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else if (absGain != null && absGain < 0) "-" else "") + super.absGainString()
+    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else "") + super.absGainString()
     override fun formatValue(value: Double?): String = value?.round(2).toString()
 }
 
