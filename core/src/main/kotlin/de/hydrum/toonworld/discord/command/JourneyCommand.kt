@@ -11,6 +11,8 @@ import discord4j.core.spec.InteractionFollowupCreateSpec
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 import discord4j.discordjson.json.ApplicationCommandOptionData
 import org.springframework.stereotype.Component
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 @Component
 class JourneyCommand(
@@ -38,6 +40,12 @@ class JourneyCommand(
             .required(true)
             .build(),
         ApplicationCommandOptionData.builder()
+            .name("user")
+            .description("default is none. if provided, the user's linked allyCode is used")
+            .type(Type.USER.value)
+            .required(false)
+            .build(),
+        ApplicationCommandOptionData.builder()
             .name("allycode")
             .description("default is none. if provided, a report for that allyCode is compiled")
             .type(Type.STRING.value)
@@ -59,8 +67,11 @@ class JourneyCommand(
         val slot = getOption("slot").flatMap { it.value }?.map { it.asLong() }?.orElse(0L) ?: 0L
 
         runCatching {
+            val userOption = getOption("user").flatMap { it.value }?.map { it.asUser().blockOptional(1.seconds.toJavaDuration()) }?.orElse(null)
+            val user = if (userOption?.isPresent == true) userOption.get() else interaction.user
+
             playerStatusService.getJourneyStatus(
-                allyCode = allyCode ?: playerService.getAllyCodeChecked(interaction.user, slot),
+                allyCode = allyCode ?: playerService.getAllyCodeChecked(user, slot),
                 journey = journey
             ).also {
                 it.toDiscordEmbed().forEach {

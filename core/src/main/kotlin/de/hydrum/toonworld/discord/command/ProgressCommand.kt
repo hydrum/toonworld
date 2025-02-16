@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import kotlin.jvm.optionals.getOrElse
 import kotlin.jvm.optionals.getOrNull
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 @Component
 class ProgressCommand(
@@ -32,6 +34,12 @@ class ProgressCommand(
             .type(Type.SUB_COMMAND.value)
             .options(
                 listOf(
+                    ApplicationCommandOptionData.builder()
+                        .name("user")
+                        .description("default is none. if provided, the users linked allyCode is used")
+                        .type(Type.USER.value)
+                        .required(false)
+                        .build(),
                     ApplicationCommandOptionData.builder()
                         .name("allycode")
                         .description("default is none. if provided, a report for that allyCode is compiled")
@@ -72,6 +80,18 @@ class ProgressCommand(
                         .required(false)
                         .build(),
                     ApplicationCommandOptionData.builder()
+                        .name("user")
+                        .description("default is none. if provided, the user's linked allyCode is used")
+                        .type(Type.USER.value)
+                        .required(false)
+                        .build(),
+                    ApplicationCommandOptionData.builder()
+                        .name("allycode")
+                        .description("default is none. if provided, a report for that allyCode is compiled")
+                        .type(Type.STRING.value)
+                        .required(false)
+                        .build(),
+                    ApplicationCommandOptionData.builder()
                         .name("slot")
                         .description("default is 0 (primary slot). If no id is provided, it's guild is used")
                         .type(Type.INTEGER.value)
@@ -98,19 +118,23 @@ class ProgressCommand(
         deferReply().subscribe()
 
         val isPlayerOption = getOption("player").getOrNull() != null
+        fun getBaseOption() = getOption("player").getOrElse { getOption("guild").getOrNull() }
 
-        val allyCode = getOption("player").getOrNull()?.getOption("allycode")?.flatMap { it.value }?.map { it.asString() }?.orElse(null)
         val guildId = getOption("guild").getOrNull()?.getOption("id")?.flatMap { it.value }?.map { it.asString() }?.orElse(null)
-        val slot = getOption("player").getOrElse { getOption("guild").getOrNull() }?.getOption("slot")?.flatMap { it.value }?.map { it.asLong() }?.orElse(0L) ?: 0L
-        val from = getOption("player").getOrElse { getOption("guild").getOrNull() }?.getOption("from")?.flatMap { it.value }?.map { it.asLong() }?.orElse(defaultFrom)
-        val to = getOption("player").getOrElse { getOption("guild").getOrNull() }?.getOption("to")?.flatMap { it.value }?.map { it.asLong() }?.orElse(defaultTo)
+        val allyCode = getBaseOption()?.getOption("allycode")?.flatMap { it.value }?.map { it.asString() }?.orElse(null)
+        val slot = getBaseOption()?.getOption("slot")?.flatMap { it.value }?.map { it.asLong() }?.orElse(0L) ?: 0L
+        val from = getBaseOption()?.getOption("from")?.flatMap { it.value }?.map { it.asLong() }?.orElse(defaultFrom)
+        val to = getBaseOption()?.getOption("to")?.flatMap { it.value }?.map { it.asLong() }?.orElse(defaultTo)
+
+        val userOption = getBaseOption()?.getOption("user")?.flatMap { it.value }?.map { it.asUser().blockOptional(1.seconds.toJavaDuration()) }?.orElse(null)
+        val user = if (userOption?.isPresent == true) userOption.get() else interaction.user
 
         runCatching {
 
             if (isPlayerOption) {
 
                 playerProgressReportService.reportProgress(
-                    allyCode = allyCode ?: playerService.getAllyCodeChecked(interaction.user, slot),
+                    allyCode = allyCode ?: playerService.getAllyCodeChecked(user, slot),
                     from = from?.let { utcNow().minusSeconds(24 * 60 * 60 * it) },
                     to = to?.let { utcNow().minusSeconds(24 * 60 * 60 * it) }
                 ).also {
@@ -126,7 +150,7 @@ class ProgressCommand(
 
             } else {
                 guildProgressReportService.reportProgress(
-                    swgohGuildId = guildId ?: playerService.getGuildIdChecked(interaction.user, slot),
+                    swgohGuildId = guildId ?: playerService.getGuildIdChecked(user, slot),
                     from = from?.let { utcNow().minusSeconds(24 * 60 * 60 * it) },
                     to = to?.let { utcNow().minusSeconds(24 * 60 * 60 * it) }
                 ).also {
