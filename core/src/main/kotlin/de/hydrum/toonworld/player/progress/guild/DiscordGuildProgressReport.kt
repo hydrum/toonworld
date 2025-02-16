@@ -52,6 +52,7 @@ fun GuildProgressData.toMemberTopProgressText() =
         .sortedWith(
             compareByDescending<GuildMemberProgress> { it.galacticPowerGain.sortByChangeValue() }
         )
+        .filter { it.galacticPowerGain.fromValue != null }
         .take(10)
         .let {
             val maxNameLength = it.maxOf { it.name.length }
@@ -64,6 +65,7 @@ fun GuildProgressData.toMemberLeastProgressText() =
         .sortedWith(
             compareBy<GuildMemberProgress> { it.galacticPowerGain.sortByChangeValue() }
         )
+        .filter { it.galacticPowerGain.fromValue != null }
         .take(10)
         .let {
             val maxNameLength = it.maxOf { it.name.length }
