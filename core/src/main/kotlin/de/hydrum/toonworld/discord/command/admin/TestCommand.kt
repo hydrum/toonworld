@@ -1,8 +1,9 @@
-package de.hydrum.toonworld.discord.command
+package de.hydrum.toonworld.discord.command.admin
 
+import de.hydrum.toonworld.discord.command.BaseCommand
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
-import discord4j.core.`object`.command.ApplicationCommandOption.Type
+import discord4j.core.`object`.command.ApplicationCommandOption
 import discord4j.core.spec.InteractionReplyEditSpec
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 import discord4j.discordjson.json.ApplicationCommandOptionData
@@ -17,7 +18,7 @@ class TestCommand(private val gatewayDiscordClient: GatewayDiscordClient) : Base
     options = listOf(
         ApplicationCommandOptionData.builder()
             .name("option1")
-            .type(Type.BOOLEAN.value)
+            .type(ApplicationCommandOption.Type.BOOLEAN.value)
             .description("required option 1")
             .required(true)
             .choices(
@@ -30,7 +31,7 @@ class TestCommand(private val gatewayDiscordClient: GatewayDiscordClient) : Base
 
         ApplicationCommandOptionData.builder()
             .name("option2")
-            .type(Type.STRING.value)
+            .type(ApplicationCommandOption.Type.STRING.value)
             .description("option 2")
             .build()
     ),

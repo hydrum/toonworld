@@ -1,10 +1,10 @@
-package de.hydrum.toonworld.player.progress.guild
+package de.hydrum.toonworld.player.progress
 
 import de.hydrum.toonworld.data.DataCacheService
 import de.hydrum.toonworld.management.database.DiscordGuildRepository
 import de.hydrum.toonworld.player.database.repository.PlayerHistoryRepository
 import de.hydrum.toonworld.player.progress.player.PlayerProgressReportService
-import de.hydrum.toonworld.sync.GuildSyncService.AfterGuildSyncEvent
+import de.hydrum.toonworld.sync.GuildSyncService
 import discord4j.common.util.Snowflake
 import discord4j.core.GatewayDiscordClient
 import discord4j.discordjson.json.EmbedData
@@ -12,7 +12,7 @@ import discord4j.rest.util.Color
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT
+import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
 import java.time.Instant
 
@@ -25,9 +25,9 @@ class ProgressService(
     private val dataCacheService: DataCacheService
 ) {
 
-    @TransactionalEventListener(phase = AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    fun sendJourneyProgressMessage(event: AfterGuildSyncEvent) {
+    fun sendJourneyProgressMessage(event: GuildSyncService.AfterGuildSyncEvent) {
         Pair(
             playerHistoryRepository.findPlayersOfGuildAtTimestamp(guildId = event.swgohGuildId, Instant.now()),
             playerHistoryRepository.findPlayersOfGuildAtTimestamp(guildId = event.swgohGuildId, Instant.now().minusSeconds(60 * 5))
