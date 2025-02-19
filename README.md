@@ -20,22 +20,30 @@ nice info: how many under-leveled / non-matching mods you have
 
 ## User Stories
 
-### Enable player tracking
+### Link player to another discord user
 
-1. I want to track someone's progress (toon build, gp gain)
-2. I call something like `/track <allyCode>`
-3. Therefore, I provide an `allyCode` of the target player
-4. The player will be retrieved to check whether it's a valid `allyCode`
-5. Now every `[6 hours]` the player will be synced again
-6. Therefore, a job is running with a delay to the next player
-7. The job gets automatically started on application start and calculates when the next player needs to be synced
-8. _TO BE CONSIDERED_: auto-tracking when linked/unlinked?
+1. I want to have a reference of a player to their discord user (e.g for automatic role assignments, ...)
+2. I call something like `/link-other <@user> <allyCode> <slot:0>`
+3. Should this be restricted to officers?
+4. The user is then assigned to that allyCode (analog actions of `/link` applies)
 
-### Disable player tracking
+### List linked players of discord
 
-1. I want to be able to untrack a player if I am no longer interested
-2. I call something like `/untrack <allyCode>`
-3. The tracking of the player is disabled and the job checks if it needs to reschedule
+1. I want to be able to see which of my guild mates is registered already and whose not
+2. I call something like `/link-list guild`
+3. A list of all GuildMembers as well as their linked Discord User is shown
+4. This should be done silently and not mention the discord user, but still display the name
+
+### Be able to link a role to a toon
+
+1. I want to be able to put all players of an owning toon to a discord role
+2. I call something like `/guild-role <unit> <role> <minRarity:1> <minGear:1> <minRelic:0> <action:add>`
+3. This command should be restricted to officers
+4. The `action: [add, update, delete]` defines what happens to it
+5. If the role got added/updated, it will be applied to all linked users
+6. When a user account is linked to a player and the DiscordGuild matches, a user gets automatically assigned that role
+
+Note: later on there should be the possibility to define farms (such as `Reva-ready`, `Zeffo-ready`, ...) which has multiple unit conditions
 
 ### Scouting
 
@@ -53,11 +61,16 @@ nice info: how many under-leveled / non-matching mods you have
 
 #### Recruitment
 
+- value for TB
+- value for TW
+- TW omicrons
+- Journey status + progression
+
 ## Ideas
 
 - Account timeline
 - GAC: track history, what the player used against someone else, counters that match your account
-    - based on https://youtu.be/wkcap-W5kTc
+    - scouting based on https://youtu.be/wkcap-W5kTc
 - Fleet Arena: track position, observe shard to see their progress regarding fleet + changes
 - Gear towards farming.
 - modding advice regarding swgoh.gg best mods for character, based on own characters
@@ -72,12 +85,32 @@ nice info: how many under-leveled / non-matching mods you have
 - proving grounds: suggested squads and the player's progress. also ability to mark which are done
 - ship counter planner (mods to increase speed etc) [compared to fleet shard?]
 - notification for fleet arena movement, GL + Journey unlocks, ...
+- Toon Farms (guild farms, AB farms, player-based squad planner)
+    - define name of farm (Reva-ready) + team size
+    - define toons at gear/relic level as well as required or not
+        - required/optional
+        - rarity requirement
+        - gear/relic requirement
+        - target speed/health/offense/prot
+        - zeta/omi requirements
+        - turn order (or related to speed?)
+    - examples:
+        - Reva-ready: teamSize: 5
+            - GI, R7 required
+            - each other Inq unit, R7 optional
+        - JKCK-ready: teamSize: 2
+            - Cere, R7 required
+            - JKCK, R7 required
+        - Mandalore-ready: teamSize: 3
+            - BKM, R7 required
+            - BAM, R7 optional
+            - Grogu, R7 optional
+            - Paz, R7 optional
 
 ## Bugs
 
-_nothing known_
-
 - letting it join a new discord server does not automatically register commands. only a restart does
+- PlayerHistoryByGuildId includes former players, because it is not joined over GuildMembers
 
 ## Snippets
 

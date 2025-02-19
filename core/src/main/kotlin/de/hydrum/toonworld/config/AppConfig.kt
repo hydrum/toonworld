@@ -43,7 +43,8 @@ data class ApiConfig(
 
 data class DiscordConfig(
     val botToken: String,
-    val superAdmin: DiscordSuperAdminConfig
+    val superAdmin: DiscordSuperAdminConfig,
+    val officerRoles: List<String>
 )
 
 data class DiscordSuperAdminConfig(

@@ -61,7 +61,7 @@ class PlayerService(
     }
 
     @Transactional
-    fun unlinkPlayer(user: User, allyCode: String) {
+    fun unlinkPlayer(user: User, allyCode: String): Pair<String, Long> {
         validateAllyCode(allyCode)
 
         val existing = discordPlayerRepository.findByDiscordUserIdAndAllyCode(user.id.asLong(), allyCode)
@@ -69,10 +69,12 @@ class PlayerService(
 
         discordPlayerRepository.delete(existing)
         sendInvalidateCacheEventIfSuccess(user.id.asLong(), existing.slot)
+
+        return Pair(existing.allyCode, existing.slot)
     }
 
     @Transactional
-    fun unlinkPlayer(user: User, slot: Long) {
+    fun unlinkPlayer(user: User, slot: Long): Pair<String, Long> {
         validateSlot(slot)
 
         val existing = discordPlayerRepository.findByDiscordUserIdAndSlot(user.id.asLong(), slot)
@@ -80,6 +82,8 @@ class PlayerService(
 
         discordPlayerRepository.delete(existing)
         sendInvalidateCacheEventIfSuccess(user.id.asLong(), existing.slot)
+
+        return Pair(existing.allyCode, existing.slot)
     }
 
     private fun sendInvalidateCacheEventIfSuccess(discordUserId: Long, slot: Long) = applicationEventPublisher.publishEvent(
