@@ -62,6 +62,7 @@ class PlayerProgressReportService(
                 .map { toUnit -> Pair(fromPlayer.units.firstOrNull { fromUnit -> fromUnit.id == toUnit.id }, toUnit) }
                 .map { (fromUnit, toUnit) ->
                     PlayerProgressUnit(
+                        baseId = toUnit.baseId,
                         name = unitCacheService.findUnit(toUnit.baseId)?.name ?: toUnit.baseId,
                         gearLevelGain = fromUnit?.gearLevel gainToInt toUnit.gearLevel,
                         levelGain = fromUnit?.level gainToInt toUnit.level,
@@ -84,6 +85,7 @@ class PlayerProgressReportService(
                     val fromJourneyProgress = JourneyGuideProgress(it, fromPlayer.units)
                     val toJourneyProgress = JourneyGuideProgress(it, toPlayer.units)
                     PlayerProgressJourney(
+                        unitBaseId = it.baseId,
                         unitName = unitCacheService.findUnit(it.baseId)?.name ?: it.baseId,
                         totalProgressGain = fromJourneyProgress.totalProgress gainToDouble toJourneyProgress.totalProgress,
                         requirementGains = it.requiredUnits.map { requiredUnits ->

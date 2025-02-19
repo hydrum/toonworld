@@ -28,6 +28,7 @@ data class PlayerProgressData(
 
 @Data
 data class PlayerProgressUnit(
+    val baseId: String,
     val name: String,
     val gearLevelGain: Gain<Int?>,
     val levelGain: Gain<Int?>,
@@ -46,6 +47,7 @@ data class PlayerProgressUnit(
 }
 
 data class PlayerProgressJourney(
+    val unitBaseId: String,
     val unitName: String,
     val totalProgressGain: Gain<Double?>,
     val requirementGains: List<PlayerProgressJourneyUnit>

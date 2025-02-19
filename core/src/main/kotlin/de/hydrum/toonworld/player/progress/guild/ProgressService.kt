@@ -1,5 +1,6 @@
 package de.hydrum.toonworld.player.progress.guild
 
+import de.hydrum.toonworld.data.DataCacheService
 import de.hydrum.toonworld.management.database.DiscordGuildRepository
 import de.hydrum.toonworld.player.database.repository.PlayerHistoryRepository
 import de.hydrum.toonworld.player.progress.player.PlayerProgressReportService
@@ -20,7 +21,8 @@ class ProgressService(
     private val playerHistoryRepository: PlayerHistoryRepository,
     private val playerProgressReportService: PlayerProgressReportService,
     private val discordClient: GatewayDiscordClient,
-    private val discordGuildRepository: DiscordGuildRepository
+    private val discordGuildRepository: DiscordGuildRepository,
+    private val dataCacheService: DataCacheService
 ) {
 
     @TransactionalEventListener(phase = AFTER_COMMIT)
@@ -34,11 +36,14 @@ class ProgressService(
             .filter { (_, oldPlayer) -> oldPlayer != null }
             .map { (newPlayer, oldPlayer) -> playerProgressReportService.compareProgress(oldPlayer!!, newPlayer) }
             .flatMap { progress ->
-                progress.journeyProgress
-                    .map { journeyProgress ->
-                        val requirementDone = journeyProgress.totalProgressGain.toValue == 1.0 && journeyProgress.totalProgressGain.fromValue != 1.0
-                        val unlockedToon = progress.upgradedUnits.any { it.name == journeyProgress.unitName } && progress.upgradedUnits.first { it.name == journeyProgress.unitName }.levelGain.fromValue == null
-                        Triple(progress.player.name, journeyProgress.unitName, listOf(requirementDone, unlockedToon))
+                dataCacheService.getJourneyData()
+                    .map { journey ->
+                        val journeyProgress = progress.journeyProgress.firstOrNull { it.unitBaseId == journey.baseId }
+                        val requirementDone = journeyProgress?.totalProgressGain?.toValue == 1.0 && journeyProgress.totalProgressGain.fromValue != 1.0
+                        val unlockedToon = progress.upgradedUnits.firstOrNull { it.baseId == journey.baseId }
+                        val hasUnlockedToon = unlockedToon != null && unlockedToon.levelGain.fromValue == null
+                        val journeyUnitName = unlockedToon?.name ?: journeyProgress?.unitName ?: journey.baseId
+                        Triple(progress.player.name, journeyUnitName, listOf(requirementDone, hasUnlockedToon))
                     }
                     .filter { (_, _, done) -> done[0] || done[1] }
                     .mapNotNull { (playerName, unitName, done) ->
