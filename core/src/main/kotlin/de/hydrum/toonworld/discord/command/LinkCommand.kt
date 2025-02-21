@@ -1,11 +1,14 @@
 package de.hydrum.toonworld.discord.command
 
 import de.hydrum.toonworld.config.AppConfig
-import de.hydrum.toonworld.management.PlayerService
+import de.hydrum.toonworld.management.DiscordPlayerCacheService
+import de.hydrum.toonworld.management.PlayerLinkService
 import de.hydrum.toonworld.util.getNicknameOrNull
+import de.hydrum.toonworld.util.returnNullOr
 import discord4j.common.util.Snowflake
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type
+import discord4j.core.`object`.entity.PartialMember
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.core.spec.InteractionReplyEditSpec
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
@@ -19,7 +22,8 @@ import kotlin.time.toJavaDuration
 
 @Component
 class LinkCommand(
-    private val playerService: PlayerService,
+    private val playerLinkService: PlayerLinkService,
+    private val playerCacheService: DiscordPlayerCacheService,
     private val appConfig: AppConfig
 ) : BaseCommand(
     name = "link",
@@ -105,19 +109,13 @@ class LinkCommand(
                         .build(),
                     ApplicationCommandOptionData.builder()
                         .name("user")
-                        .description("OPTIONAL. list information is based on your user if none set, else the provided user")
+                        .description("user to be based of, if none provided, then your user is taken")
                         .type(Type.USER.value)
                         .required(false)
                         .build(),
                     ApplicationCommandOptionData.builder()
-                        .name("allycode")
-                        .description("OPTIONAL. only used for guilds. it then takes the guild of the ally code")
-                        .type(Type.STRING.value)
-                        .required(false)
-                        .build(),
-                    ApplicationCommandOptionData.builder()
                         .name("slot")
-                        .description("OPTIONAL. only used for guilds. it then takes the guild of the registered slot")
+                        .description("slot to be taken. if none provided, primary slot is used")
                         .type(Type.INTEGER.value)
                         .required(false)
                         .build()
@@ -151,7 +149,7 @@ class LinkCommand(
                 isAddOption -> {
                     requireNotNull(allyCode)
                     val actualSlot = slot ?: 0L
-                    playerService.linkPlayer(user, allyCode, actualSlot)
+                    playerLinkService.linkPlayer(user, allyCode, actualSlot)
                     editReply("linked `$allyCode` to `@${userName}` as ${if (actualSlot == 0L) "primary" else "$actualSlot"} slot").subscribe()
                 }
 
@@ -162,21 +160,21 @@ class LinkCommand(
                     }
                     val actualSlot = slot ?: 0L
 
-                    val (unlinkedAllyCode, unlinkedSlot) = if (allyCode != null) playerService.unlinkPlayer(user, allyCode) else playerService.unlinkPlayer(user, actualSlot)
+                    val (unlinkedAllyCode, unlinkedSlot) = if (allyCode != null) playerLinkService.unlinkPlayer(user, allyCode) else playerLinkService.unlinkPlayer(user, actualSlot)
                     editReply("unlink `$unlinkedAllyCode` of ${if (actualSlot == 0L) "primary" else "$unlinkedSlot"} slot successful").subscribe()
                 }
 
                 isListUserOption -> {
-                    if (allyCode != null || slot != null) {
-                        editReply(":warning: you cannot set an ally code or slot for the option `user`").subscribe()
+                    if (slot != null) {
+                        editReply(":warning: you cannot set a slot for the option `user`").subscribe()
                         return
                     }
-                    val accounts = playerService.listUserLinkedAccounts(user)
+                    val accounts = playerLinkService.listUserLinkedAccounts(user)
                     val text =
                         if (accounts.isEmpty()) "no accounts linked for @$userName"
                         else {
                             val maxNameLength = accounts.maxOf { it.playerName.length }
-                            accounts.joinToString("\n") { "${it.slot}: ${it.allyCode} ${it.playerName.padEnd(maxNameLength)} | ${it.guildName}" }
+                            accounts.joinToString("\n") { "${it.slot}: ${it.allyCode} | ${it.playerName.padEnd(maxNameLength)} | ${it.guildName}" }
                         }
                     editReply(
                         InteractionReplyEditSpec.builder()
@@ -192,7 +190,31 @@ class LinkCommand(
                 }
 
                 isListGuildOption -> {
-                    TODO()
+                    val accounts = playerLinkService.listGuildLinkAccounts(playerCacheService.getGuildIdChecked(user, slot ?: 0))
+                    val linkedDiscordUserIds = accounts.mapNotNull { it.userId.returnNullOr { Snowflake.of(it) } }
+                    val discordMembers = interaction.guild.flatMap { it.members.filter { it.id in linkedDiscordUserIds }.collectList() }.block(10.seconds.toJavaDuration())!!
+                    val text = {
+                        val maxPlayerNameLength = accounts.maxOf { it.playerName.length }
+                        fun PartialMember.getName() = nickname.orElse(username)
+                        val maxDiscordUserNameLength = discordMembers.maxOf { it.getName().length }
+                        accounts.joinToString("\n") { info ->
+                            val member = discordMembers.firstOrNull { member -> member.id.asLong() == info.userId }
+                            val discordName = member?.getName()?.let { "@$it" } ?: ""
+                            val slotText = member?.let { " [${info.slot ?: "--"}]" } ?: ""
+                            "${info.allyCode} | ${info.playerName.padEnd(maxPlayerNameLength)} | ${discordName.padEnd(maxDiscordUserNameLength)}$slotText"
+                        }
+                    }
+                    editReply(
+                        InteractionReplyEditSpec.builder()
+                            .addEmbed(
+                                EmbedCreateSpec.builder()
+                                    .title("Linked accounts for ${accounts.first { it.guildId.isNotBlank() }.guildName} on this server")
+                                    .color(Color.RUBY)
+                                    .description("```${text()}```")
+                                    .build()
+                            )
+                            .build()
+                    ).subscribe()
                 }
             }
         }.onFailure { handleError(this, it, allyCode) }

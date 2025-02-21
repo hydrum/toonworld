@@ -1,8 +1,10 @@
 package de.hydrum.toonworld.management
 
 import de.hydrum.toonworld.api.comlink.ComlinkApi
+import de.hydrum.toonworld.guild.database.repository.GuildRepository
 import de.hydrum.toonworld.management.database.DiscordPlayer
 import de.hydrum.toonworld.management.database.DiscordPlayerRepository
+import de.hydrum.toonworld.player.database.repository.PlayerRepository
 import de.hydrum.toonworld.util.validateAllyCode
 import de.hydrum.toonworld.util.validateSlot
 import discord4j.core.`object`.entity.User
@@ -11,18 +13,13 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class PlayerService(
+class PlayerLinkService(
     private val discordPlayerRepository: DiscordPlayerRepository,
     private val applicationEventPublisher: ApplicationEventPublisher,
-    private val discordPlayerCacheService: DiscordPlayerCacheService,
-    private val comlinkApi: ComlinkApi
+    private val comlinkApi: ComlinkApi,
+    private val guildRepository: GuildRepository,
+    private val playerCacheService: DiscordPlayerCacheService, private val playerRepository: PlayerRepository
 ) {
-
-    fun getAllyCodeChecked(user: User, slot: Long = 0L) = requireNotNull(getAllyCode(user, slot)) { "Nothing is linked for slot $slot. Please link an ally code first for this slot." }
-    fun getAllyCode(user: User, slot: Long = 0L) = discordPlayerCacheService.findAllyCode(user.id.asLong(), slot)
-
-    fun getGuildIdChecked(user: User, slot: Long = 0L) = requireNotNull(getGuildId(user, slot)) { "Cannot retrieve the guild of slot $slot. Either no ally code is linked or no synced profile was found." }
-    fun getGuildId(user: User, slot: Long = 0L) = discordPlayerCacheService.findGuildId(user.id.asLong(), slot)
 
     @Transactional
     fun linkPlayer(user: User, allyCode: String, slot: Long) {
@@ -87,11 +84,11 @@ class PlayerService(
     }
 
     @Transactional
-    fun listUserLinkedAccounts(user: User): List<DiscordUserInfo> =
+    fun listUserLinkedAccounts(user: User): List<DiscordSingleUserInfo> =
         discordPlayerRepository.findByDiscordUserId(user.id.asLong())
             .map { discordUser ->
                 comlinkApi.findPlayerById(discordUser.swgohPlayerId).let {
-                    DiscordUserInfo(
+                    DiscordSingleUserInfo(
                         allyCode = it.allyCode,
                         slot = discordUser.slot,
                         playerName = it.name,
@@ -101,6 +98,28 @@ class PlayerService(
                 }
             }.sortedBy { it.slot }
 
+    @Transactional
+    fun listGuildLinkAccounts(swgohGuildId: String): List<DiscordGuildUserInfo> =
+        guildRepository.findBySwgohGuildId(swgohGuildId = swgohGuildId)
+            ?.members.orEmpty()
+            .map { it.swgohPlayerId }
+            .let {
+                val discordPlayers = discordPlayerRepository.findBySwgohPlayerIdIn(it)
+                val players = playerRepository.findBySwgohPlayerIdIn(it)
+                return@let players.map { player -> Pair(player, discordPlayers.firstOrNull { it.swgohPlayerId == player.swgohPlayerId }) }
+            }
+            .map { (player, discordUser) ->
+                DiscordGuildUserInfo(
+                    playerName = player.name,
+                    allyCode = player.allyCode,
+                    guildId = player.swgohGuildId ?: "",
+                    guildName = player.guildName ?: "",
+                    userId = discordUser?.discordUserId,
+                    slot = discordUser?.slot,
+                )
+            }
+            .sortedBy { it.playerName.lowercase() }
+
     private fun sendInvalidateCacheEventIfSuccess(discordUserId: Long, slot: Long) = applicationEventPublisher.publishEvent(
         DiscordPlayerCacheService.InvalidateDiscordPlayerCache(
             discordUserId = discordUserId,
@@ -108,5 +127,6 @@ class PlayerService(
         )
     )
 
-    data class DiscordUserInfo(val allyCode: String, val slot: Long, val playerName: String, val guildId: String, val guildName: String)
+    data class DiscordSingleUserInfo(val allyCode: String, val slot: Long, val playerName: String, val guildId: String, val guildName: String)
+    data class DiscordGuildUserInfo(val playerName: String, val allyCode: String, val guildId: String, val guildName: String, val userId: Long?, val slot: Long?)
 }

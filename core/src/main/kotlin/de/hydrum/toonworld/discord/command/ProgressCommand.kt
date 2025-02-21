@@ -1,6 +1,6 @@
 package de.hydrum.toonworld.discord.command
 
-import de.hydrum.toonworld.management.PlayerService
+import de.hydrum.toonworld.management.DiscordPlayerCacheService
 import de.hydrum.toonworld.player.progress.guild.GuildProgressReportService
 import de.hydrum.toonworld.player.progress.guild.toDiscordEmbed
 import de.hydrum.toonworld.player.progress.player.PlayerProgressReportService
@@ -21,9 +21,9 @@ import kotlin.time.toJavaDuration
 class ProgressCommand(
     private val playerProgressReportService: PlayerProgressReportService,
     private val guildProgressReportService: GuildProgressReportService,
+    private val playerCacheService: DiscordPlayerCacheService,
     @Value("\${commands.player-progress.default-from:#{null}}") private val defaultFrom: Long?,
     @Value("\${commands.player-progress.default-to:#{null}}") private val defaultTo: Long?,
-    private val playerService: PlayerService,
 ) : BaseCommand(
     name = "progress",
     description = "Retrieve a progress report",
@@ -134,7 +134,7 @@ class ProgressCommand(
             if (isPlayerOption) {
 
                 playerProgressReportService.reportProgress(
-                    allyCode = allyCode ?: playerService.getAllyCodeChecked(user, slot),
+                    allyCode = allyCode ?: playerCacheService.getAllyCodeChecked(user, slot),
                     from = from?.let { utcNow().minusSeconds(24 * 60 * 60 * it) },
                     to = to?.let { utcNow().minusSeconds(24 * 60 * 60 * it) }
                 ).also {
@@ -150,7 +150,7 @@ class ProgressCommand(
 
             } else {
                 guildProgressReportService.reportProgress(
-                    swgohGuildId = guildId ?: playerService.getGuildIdChecked(user, slot),
+                    swgohGuildId = guildId ?: playerCacheService.getGuildIdChecked(user, slot),
                     from = from?.let { utcNow().minusSeconds(24 * 60 * 60 * it) },
                     to = to?.let { utcNow().minusSeconds(24 * 60 * 60 * it) }
                 ).also {

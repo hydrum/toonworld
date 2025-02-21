@@ -1,7 +1,7 @@
 package de.hydrum.toonworld.discord.command
 
 import de.hydrum.toonworld.data.DataCacheService
-import de.hydrum.toonworld.management.PlayerService
+import de.hydrum.toonworld.management.DiscordPlayerCacheService
 import de.hydrum.toonworld.player.status.PlayerStatusService
 import de.hydrum.toonworld.player.status.toDiscordEmbed
 import de.hydrum.toonworld.unit.UnitCacheService
@@ -16,7 +16,7 @@ import kotlin.time.toJavaDuration
 
 @Component
 class JourneyCommand(
-    private val playerService: PlayerService,
+    private val playerCacheService: DiscordPlayerCacheService,
     private val playerStatusService: PlayerStatusService,
     dataCacheService: DataCacheService,
     unitCacheService: UnitCacheService
@@ -71,7 +71,7 @@ class JourneyCommand(
             val user = if (userOption?.isPresent == true) userOption.get() else interaction.user
 
             playerStatusService.getJourneyStatus(
-                allyCode = allyCode ?: playerService.getAllyCodeChecked(user, slot),
+                allyCode = allyCode ?: playerCacheService.getAllyCodeChecked(user, slot),
                 journey = journey
             ).also {
                 it.toDiscordEmbed().forEach {

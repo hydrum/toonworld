@@ -9,5 +9,7 @@ interface PlayerRepository : JpaRepository<Player, Long> {
 
     fun findPlayerByAllyCode(allyCode: String): Player?
     fun findPlayerBySwgohPlayerId(swgohPlayerId: String): Player?
+    
+    fun findBySwgohPlayerIdIn(ids: List<String>): List<Player>
 
 }

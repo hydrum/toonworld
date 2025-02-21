@@ -1,7 +1,7 @@
 package de.hydrum.toonworld.discord.command.admin
 
 import de.hydrum.toonworld.discord.command.BaseCommand
-import de.hydrum.toonworld.management.PlayerService
+import de.hydrum.toonworld.management.PlayerLinkService
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type
 import discord4j.discordjson.json.ApplicationCommandOptionData
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ForceUnlinkCommand(
-    private val playerService: PlayerService
+    private val playerLinkService: PlayerLinkService
 ) : BaseCommand(
     name = "unlink-force",
     description = "Force the unlink of an allyCode.",
@@ -27,7 +27,7 @@ class ForceUnlinkCommand(
         deferReply().subscribe()
         val allyCode = getOption("allycode").flatMap { it.value }.map { it.asString() }.get()
         runCatching {
-            playerService.unlinkPlayer(allyCode)
+            playerLinkService.unlinkPlayer(allyCode)
             editReply("forced-unlink successful").subscribe()
         }.onFailure { handleError(this, it) }
     }

@@ -14,4 +14,5 @@ interface DiscordPlayerRepository : JpaRepository<DiscordPlayer, Long> {
     fun existsByAllyCode(allyCode: String): Boolean
 
     fun findByDiscordUserId(discordUserId: Long): List<DiscordPlayer>
+    fun findBySwgohPlayerIdIn(ids: List<String>): List<DiscordPlayer>
 }

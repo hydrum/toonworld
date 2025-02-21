@@ -26,3 +26,5 @@ fun Double.round(decimals: Int): Double {
     repeat(decimals) { multiplier *= 10 }
     return (this * multiplier).roundToInt() / multiplier
 }
+
+fun <T, S> T?.returnNullOr(lambda: (T) -> S) = if (this == null) null else lambda(this)
