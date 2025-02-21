@@ -19,6 +19,7 @@
         <discord4j.version>3.2.7</discord4j.version>
         <openapigenerator.version>7.11.0</openapigenerator.version>
         <okhttp.version>4.12.0</okhttp.version>
+        <jsoup.version>1.18.3</jsoup.version>
     </properties>
 
     <dependencies>
@@ -106,6 +107,12 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>${okhttp.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
 
         <dependency>
