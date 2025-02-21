@@ -8,7 +8,6 @@ import de.hydrum.toonworld.util.returnNullOr
 import discord4j.common.util.Snowflake
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type
-import discord4j.core.`object`.entity.PartialMember
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.core.spec.InteractionReplyEditSpec
 import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
@@ -195,11 +194,10 @@ class LinkCommand(
                     val discordMembers = interaction.guild.flatMap { it.members.filter { it.id in linkedDiscordUserIds }.collectList() }.block(10.seconds.toJavaDuration())!!
                     val text = {
                         val maxPlayerNameLength = accounts.maxOf { it.playerName.length }
-                        fun PartialMember.getName() = nickname.orElse(username)
-                        val maxDiscordUserNameLength = discordMembers.maxOf { it.getName().length }
+                        val maxDiscordUserNameLength = discordMembers.maxOf { it.displayName.length }
                         accounts.joinToString("\n") { info ->
                             val member = discordMembers.firstOrNull { member -> member.id.asLong() == info.userId }
-                            val discordName = member?.getName()?.let { "@$it" } ?: ""
+                            val discordName = member?.displayName?.let { "@$it" } ?: ""
                             val slotText = member?.let { " [${info.slot ?: "--"}]" } ?: ""
                             "${info.allyCode} | ${info.playerName.padEnd(maxPlayerNameLength)} | ${discordName.padEnd(maxDiscordUserNameLength)}$slotText"
                         }
