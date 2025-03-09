@@ -1,5 +1,6 @@
 package de.hydrum.toonworld.guild.database.model
 
+import de.hydrum.toonworld.management.database.DiscordGuild
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -47,5 +48,10 @@ data class Guild(
         cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE],
         orphanRemoval = true
     )
-    var raids: MutableList<GuildRaid> = mutableListOf()
+    var raids: MutableList<GuildRaid> = mutableListOf(),
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Transient
+    @JoinColumn(name = "swgoh_guild_id", referencedColumnName = "swgoh_guild_id", insertable = false, updatable = false)
+    var discordGuild: DiscordGuild? = null
 )

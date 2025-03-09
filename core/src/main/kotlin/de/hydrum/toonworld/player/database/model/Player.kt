@@ -1,5 +1,6 @@
 package de.hydrum.toonworld.player.database.model
 
+import de.hydrum.toonworld.management.database.DiscordPlayer
 import jakarta.persistence.*
 import java.time.Instant
 import java.time.LocalTime
@@ -69,5 +70,10 @@ data class Player(
         cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE],
         orphanRemoval = true
     )
-    var units: MutableList<PlayerUnit> = mutableListOf()
+    var units: MutableList<PlayerUnit> = mutableListOf(),
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Transient
+    @JoinColumn(name = "swgoh_player_id", referencedColumnName = "swgoh_player_id", insertable = false, updatable = false)
+    var discordPlayer: DiscordPlayer? = null
 )

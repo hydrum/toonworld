@@ -2,6 +2,7 @@ package de.hydrum.toonworld.management
 
 import de.hydrum.toonworld.api.comlink.ComlinkApi
 import de.hydrum.toonworld.guild.database.repository.GuildRepository
+import de.hydrum.toonworld.management.DiscordRoleAssignmentService.CheckDiscordRoleAssignment
 import de.hydrum.toonworld.management.database.DiscordPlayer
 import de.hydrum.toonworld.management.database.DiscordPlayerRepository
 import de.hydrum.toonworld.player.database.repository.PlayerRepository
@@ -18,7 +19,7 @@ class PlayerLinkService(
     private val applicationEventPublisher: ApplicationEventPublisher,
     private val comlinkApi: ComlinkApi,
     private val guildRepository: GuildRepository,
-    private val playerCacheService: DiscordPlayerCacheService, private val playerRepository: PlayerRepository
+    private val playerRepository: PlayerRepository
 ) {
 
     @Transactional
@@ -40,10 +41,15 @@ class PlayerLinkService(
                 allyCode = allyCode,
                 swgohPlayerId = comlinkPlayer.playerId,
                 discordUserId = user.id.asLong(),
-                slot = slot
+                slot = slot,
+                player = null
             )
         )
         sendInvalidateCacheEventIfSuccess(user.id.asLong(), slot)
+
+        if (comlinkPlayer.guildId.isNotEmpty()) {
+            applicationEventPublisher.publishEvent(CheckDiscordRoleAssignment(swgohGuildId = comlinkPlayer.guildId))
+        }
     }
 
     @Transactional

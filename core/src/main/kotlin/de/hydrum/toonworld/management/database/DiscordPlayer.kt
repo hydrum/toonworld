@@ -1,5 +1,6 @@
 package de.hydrum.toonworld.management.database
 
+import de.hydrum.toonworld.player.database.model.Player
 import jakarta.persistence.*
 
 @Entity
@@ -20,6 +21,10 @@ class DiscordPlayer(
     var discordUserId: Long,
 
     @Column(name = "slot", nullable = false)
-    var slot: Long
+    var slot: Long,
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Transient
+    @JoinColumn(name = "swgoh_player_id", referencedColumnName = "swgoh_player_id", insertable = false, updatable = false)
+    var player: Player? = null
 )

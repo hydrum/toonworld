@@ -1,5 +1,6 @@
 package de.hydrum.toonworld.guild.database.model
 
+import de.hydrum.toonworld.player.database.model.Player
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -45,5 +46,10 @@ data class GuildMember(
     var donations: Long,
 
     @OneToMany(mappedBy = "member")
-    var raids: MutableList<GuildRaidMember> = mutableListOf()
+    var raids: MutableList<GuildRaidMember> = mutableListOf(),
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Transient
+    @JoinColumn(name = "swgoh_player_id", referencedColumnName = "swgoh_player_id", insertable = false, updatable = false)
+    var player: Player? = null
 )
