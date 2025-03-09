@@ -2,8 +2,8 @@ package de.hydrum.toonworld.discord.command
 
 import de.hydrum.toonworld.data.DataCacheService
 import de.hydrum.toonworld.management.DiscordPlayerCacheService
-import de.hydrum.toonworld.player.status.PlayerStatusService
-import de.hydrum.toonworld.player.status.toDiscordEmbed
+import de.hydrum.toonworld.status.PlayerStatusService
+import de.hydrum.toonworld.status.toDiscordEmbed
 import de.hydrum.toonworld.unit.UnitCacheService
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type

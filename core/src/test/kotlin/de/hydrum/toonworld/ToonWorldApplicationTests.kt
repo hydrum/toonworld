@@ -5,7 +5,7 @@ import de.hydrum.toonworld.api.comlink.ComlinkApi
 import de.hydrum.toonworld.discord.RegisterCommands
 import de.hydrum.toonworld.jobs.JobStartupService
 import de.hydrum.toonworld.player.database.repository.PlayerHistoryRepository
-import de.hydrum.toonworld.player.progress.player.PlayerProgressReportService
+import de.hydrum.toonworld.progress.player.PlayerProgressReportService
 import discord4j.core.GatewayDiscordClient
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.junit.jupiter.api.Disabled

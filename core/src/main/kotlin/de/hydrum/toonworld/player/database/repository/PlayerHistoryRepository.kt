@@ -50,7 +50,9 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                     sql = SQL_PLAYER_OF_GUILD_AT_TIMESTAMP,
                     paramCallback = {
                         it.setTimestamp(1, Timestamp.from(instant))
-                        it.setString(2, guildId)
+                        it.setTimestamp(2, Timestamp.from(instant))
+                        it.setTimestamp(3, Timestamp.from(instant))
+                        it.setString(4, guildId)
                     }
                 ),
                 PlayerHistoryMapper()
@@ -124,7 +126,12 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
         const val SQL_PLAYER_UNIT_ABILITIES_AT_TIMESTAMP = "SELECT p.* FROM players_units_abilities FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.player_id = ?"
         const val SQL_PLAYER_UNIT_MODS_AT_TIMESTAMP = "SELECT p.* FROM players_units_mods FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.player_id = ?"
         const val SQL_EARLIEST_SYNC_INSTANT = "SELECT p.row_start FROM players FOR SYSTEM_TIME ALL AS p WHERE p.ally_code = ? ORDER BY p.row_start ASC LIMIT 1"
-        const val SQL_PLAYER_OF_GUILD_AT_TIMESTAMP = "SELECT p.* FROM players FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p WHERE p.swgoh_guild_id = ?" // TODO: this does include former guild members. instead we have to take GuildMembers
+        val SQL_PLAYER_OF_GUILD_AT_TIMESTAMP =
+            """ SELECT p.* FROM guilds FOR SYSTEM_TIME AS OF TIMESTAMP ? AS g 
+                JOIN guilds_members FOR SYSTEM_TIME AS OF TIMESTAMP ? AS gm ON gm.guild_id = g.id 
+                JOIN players FOR SYSTEM_TIME AS OF TIMESTAMP ? AS p ON p.swgoh_player_id = gm.swgoh_player_id 
+                WHERE g.swgoh_guild_id = ?
+            """.trimIndent()
     }
 
     internal class ToonWorldHistoryPreparedStatementCreator(

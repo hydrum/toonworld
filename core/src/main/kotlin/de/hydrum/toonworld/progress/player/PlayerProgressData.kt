@@ -1,4 +1,4 @@
-package de.hydrum.toonworld.player.progress.player
+package de.hydrum.toonworld.progress.player
 
 import de.hydrum.toonworld.player.database.model.Player
 import de.hydrum.toonworld.util.Gain

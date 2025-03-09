@@ -2,7 +2,7 @@ package de.hydrum.toonworld.report.progress
 
 import de.hydrum.toonworld.player.database.model.PlayerUnit
 import de.hydrum.toonworld.player.database.model.RelicTier
-import de.hydrum.toonworld.player.progress.player.PlayerProgressUnit
+import de.hydrum.toonworld.progress.player.PlayerProgressUnit
 import de.hydrum.toonworld.util.gainToBoolean
 import de.hydrum.toonworld.util.gainToInt
 import de.hydrum.toonworld.util.gainToRelicTier

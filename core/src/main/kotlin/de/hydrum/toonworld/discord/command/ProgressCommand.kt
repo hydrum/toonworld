@@ -1,10 +1,10 @@
 package de.hydrum.toonworld.discord.command
 
 import de.hydrum.toonworld.management.DiscordPlayerCacheService
-import de.hydrum.toonworld.player.progress.guild.GuildProgressReportService
-import de.hydrum.toonworld.player.progress.guild.toDiscordEmbed
-import de.hydrum.toonworld.player.progress.player.PlayerProgressReportService
-import de.hydrum.toonworld.player.progress.player.toDiscordEmbed
+import de.hydrum.toonworld.progress.guild.GuildProgressReportService
+import de.hydrum.toonworld.progress.guild.toDiscordEmbed
+import de.hydrum.toonworld.progress.player.PlayerProgressReportService
+import de.hydrum.toonworld.progress.player.toDiscordEmbed
 import de.hydrum.toonworld.util.utcNow
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type

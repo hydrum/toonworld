@@ -1,4 +1,4 @@
-package de.hydrum.toonworld.player.progress.player
+package de.hydrum.toonworld.progress.player
 
 import de.hydrum.toonworld.data.toPctText
 import de.hydrum.toonworld.util.Gain

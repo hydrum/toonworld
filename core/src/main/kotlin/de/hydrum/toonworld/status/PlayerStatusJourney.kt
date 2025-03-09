@@ -1,4 +1,4 @@
-package de.hydrum.toonworld.player.status
+package de.hydrum.toonworld.status
 
 import de.hydrum.toonworld.data.JourneyGuideProgress
 import de.hydrum.toonworld.data.toPctText

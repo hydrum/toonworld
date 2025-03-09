@@ -1,4 +1,4 @@
-package de.hydrum.toonworld.player.progress.guild
+package de.hydrum.toonworld.progress.guild
 
 import de.hydrum.toonworld.util.abvFormatting
 import de.hydrum.toonworld.util.toDiscordRelativeDateTime
