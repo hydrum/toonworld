@@ -72,8 +72,7 @@ data class Player(
     )
     var units: MutableList<PlayerUnit> = mutableListOf(),
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     @JoinColumn(name = "swgoh_player_id", referencedColumnName = "swgoh_player_id", insertable = false, updatable = false)
     var discordPlayer: DiscordPlayer? = null
 )

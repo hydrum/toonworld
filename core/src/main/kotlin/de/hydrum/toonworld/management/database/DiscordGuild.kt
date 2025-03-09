@@ -38,8 +38,7 @@ class DiscordGuild(
     )
     var farmRoles: MutableList<DiscordGuildFarmRole> = mutableListOf(),
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     @JoinColumn(name = "swgoh_guild_id", referencedColumnName = "swgoh_guild_id", insertable = false, updatable = false)
     var guild: Guild? = null
 

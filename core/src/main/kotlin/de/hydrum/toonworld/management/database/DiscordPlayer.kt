@@ -23,8 +23,7 @@ class DiscordPlayer(
     @Column(name = "slot", nullable = false)
     var slot: Long,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     @JoinColumn(name = "swgoh_player_id", referencedColumnName = "swgoh_player_id", insertable = false, updatable = false)
     var player: Player? = null
 )

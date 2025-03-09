@@ -50,8 +50,7 @@ data class Guild(
     )
     var raids: MutableList<GuildRaid> = mutableListOf(),
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     @JoinColumn(name = "swgoh_guild_id", referencedColumnName = "swgoh_guild_id", insertable = false, updatable = false)
     var discordGuild: DiscordGuild? = null
 )
