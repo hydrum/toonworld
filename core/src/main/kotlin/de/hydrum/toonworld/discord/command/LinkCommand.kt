@@ -123,7 +123,7 @@ class LinkCommand(
             .build()
     )
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         deferReply().subscribe()
 
         val isAddOption = getOption("add").getOrNull() != null

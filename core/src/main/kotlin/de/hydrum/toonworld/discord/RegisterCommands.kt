@@ -6,6 +6,7 @@ import de.hydrum.toonworld.util.ErrorHelper
 import discord4j.common.util.Snowflake
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.ReactiveEventAdapter
+import discord4j.core.event.domain.interaction.ChatInputAutoCompleteEvent
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.entity.Guild
 import discord4j.discordjson.json.ApplicationCommandRequest
@@ -65,7 +66,16 @@ class RegisterCommands(
                 .publishOn(Schedulers.boundedElastic())
                 .doOnNext {
                     runCatching {
-                        commands.firstOrNull { event.commandName == it.name }?.callback(event)
+                        commands.firstOrNull { event.commandName == it.name }?.handle(event)
+                    }.onFailure { ErrorHelper(discordClient, appConfig).handleError(it) }
+                }
+
+        override fun onChatInputAutoCompleteInteraction(event: ChatInputAutoCompleteEvent): Publisher<*> =
+            Mono.just(event)
+                .publishOn(Schedulers.boundedElastic())
+                .doOnNext {
+                    runCatching {
+                        commands.firstOrNull { event.commandName == it.name }?.autocomplete(event)
                     }.onFailure { ErrorHelper(discordClient, appConfig).handleError(it) }
                 }
     }

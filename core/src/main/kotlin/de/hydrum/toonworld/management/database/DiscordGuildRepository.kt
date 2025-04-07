@@ -8,4 +8,6 @@ interface DiscordGuildRepository : JpaRepository<DiscordGuild, Long> {
 
     fun findBySwgohGuildId(swgohGuildId: String): DiscordGuild?
 
+    fun findByDiscordGuildId(discordGuildId: Long): DiscordGuild?
+
 }

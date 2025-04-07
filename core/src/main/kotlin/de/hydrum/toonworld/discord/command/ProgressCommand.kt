@@ -114,7 +114,7 @@ class ProgressCommand(
             .build()
     )
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         deferReply().subscribe()
 
         val isPlayerOption = getOption("player").getOrNull() != null

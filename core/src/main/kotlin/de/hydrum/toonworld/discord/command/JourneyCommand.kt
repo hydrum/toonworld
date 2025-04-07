@@ -59,7 +59,7 @@ class JourneyCommand(
             .build()
     )
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         deferReply().subscribe()
 
         val journey = requireNotNull(getOption("journey").flatMap { it.value }?.map { it.asString() }?.orElse(null)) { "you have to provide a journey" }

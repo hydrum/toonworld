@@ -23,7 +23,7 @@ class TriggerFarmCommand(
     ),
     isSuperAdminCmd = true
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         deferReply().subscribe()
 
         val guildId = getOption("guild").flatMap { it.value }?.map { it.asString() }?.orElse(null)

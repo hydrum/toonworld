@@ -19,7 +19,7 @@ class RetriggerSyncCommand(
     description = "Retrigger the sync jobs based on DB values",
     isSuperAdminCmd = true
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         val nextPlayerSync = syncPlayerRepository.findNextSyncTime()?.also { jobService.scheduleNextPlayerSyncJob(it) }
         val nextGuildSync = syncGuildRepository.findNextSyncTime()?.also { jobService.scheduleNextGuildSyncJob(it) }
         reply()

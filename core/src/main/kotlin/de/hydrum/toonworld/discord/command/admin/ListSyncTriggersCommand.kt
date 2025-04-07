@@ -14,7 +14,7 @@ class ListSyncTriggersCommand(
     description = "List all active sync information to log",
     isSuperAdminCmd = true
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         jobService.listSyncJobs()
             .also { log.info { "Running Syncs: $it" } }
             .also { reply().withContent("done, check logs").withEphemeral(true).subscribe() }

@@ -37,7 +37,7 @@ class TestCommand(private val gatewayDiscordClient: GatewayDiscordClient) : Base
     ),
     isSuperAdminCmd = true
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         log.info {
             """
             Command "$commandName" arrived from ${interaction.user.username}

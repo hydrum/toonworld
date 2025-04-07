@@ -23,7 +23,7 @@ class ForceUnlinkCommand(
             .build()
     )
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         deferReply().subscribe()
         val allyCode = getOption("allycode").flatMap { it.value }.map { it.asString() }.get()
         runCatching {

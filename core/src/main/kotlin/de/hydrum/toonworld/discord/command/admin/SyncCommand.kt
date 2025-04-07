@@ -52,7 +52,7 @@ class SyncCommand(
 
     )
 ) {
-    override fun callback(event: ChatInputInteractionEvent): Unit = with(event) {
+    override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         deferReply().subscribe()
 
         val allyCode = getOption("player").getOrNull()?.getOption("allycode")?.flatMap { it.value }?.map { it.asString() }?.orElse(null)
