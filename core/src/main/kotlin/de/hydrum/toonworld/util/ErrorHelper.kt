@@ -30,10 +30,10 @@ class ErrorHelper(
     }.also { response ->
         if (e is IllegalArgumentException) log.debug { "$e" } // is expected if user input is faulty
         else {
-            log.error(e) { "$e ${if (response.isNotEmpty()) response else ""}" }
+            log.error(e) { "$e ${response.ifEmpty { "" }}" }
             discordClient
                 .getChannelById(Snowflake.of(appConfig.discord.superAdmin.errorChannel))
-                .flatMap { channel -> channel.restChannel.createMessage(":warning: $e ${if (response.isNotEmpty()) response else ""}") }
+                .flatMap { channel -> channel.restChannel.createMessage(":warning: $e ${response.ifEmpty { "" }}") }
                 .subscribe()
         }
     }

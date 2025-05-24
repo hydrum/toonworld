@@ -36,7 +36,7 @@ class PlayerSyncService(
         // validation
         validateAllyCode(allyCode)
 
-        var player = playerRepository.findPlayerByAllyCode(allyCode)
+        val player = playerRepository.findPlayerByAllyCode(allyCode)
         if (!force && player != null && utcNow().isBefore(player.updateTime.plusSeconds(appConfig.sync.player.delayInSeconds))) {
             log.warn { "Sync skipped for $allyCode because it is too early." }
             return null

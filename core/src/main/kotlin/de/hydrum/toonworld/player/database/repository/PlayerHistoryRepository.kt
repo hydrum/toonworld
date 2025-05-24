@@ -25,9 +25,9 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                     paramCallback = {
                         it.setString(1, allyCode)
                     }
-                ),
-                { rs: ResultSet, rowNum: Int -> rs.getTimestamp("row_start").toInstant() }
-            ).firstOrNull()
+                )
+            ) { rs: ResultSet, rowNum: Int -> rs.getTimestamp("row_start").toInstant() }
+            .firstOrNull()
 
     fun findPlayerAtTimestamp(allyCode: String, instant: Instant): Player? =
         jdbcTemplate

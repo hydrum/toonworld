@@ -23,8 +23,8 @@ class PlayerProgressReportService(
         // validation
         validateAllyCode(allyCode)
 
-        var fromDate = from ?: requireNotNull(playerHistoryRepository.findEarliestSyncDateTime(allyCode)) { "No sync data found" }
-        var toDate = to ?: utcNow()
+        val fromDate = from ?: requireNotNull(playerHistoryRepository.findEarliestSyncDateTime(allyCode)) { "No sync data found" }
+        val toDate = to ?: utcNow()
 
         require(fromDate <= toDate) { "cannot find progress from future to past. please check your input." }
 

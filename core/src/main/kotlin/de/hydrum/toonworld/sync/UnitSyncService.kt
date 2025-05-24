@@ -45,7 +45,7 @@ class UnitSyncService(
                                 .also { it.unit = entity }
                         }?.also { entity.abilities.clear() }?.also { entity.abilities.addAll(it) }
                 }.also {
-                    if (it.abilities.isEmpty() == true) errorHelper.sendErrorMessage("no abilities found for ${it.baseId}")
+                    if (it.abilities.isEmpty()) errorHelper.sendErrorMessage("no abilities found for ${it.baseId}")
                 }
 
         }.also { unitRepository.saveAll(it) }

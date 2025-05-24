@@ -20,20 +20,6 @@ nice info: how many under-leveled / non-matching mods you have
 
 ## User Stories
 
-### Link player to another discord user
-
-1. I want to have a reference of a player to their discord user (e.g for automatic role assignments, ...)
-2. I call something like `/link-other <@user> <allyCode> <slot:0>`
-3. Should this be restricted to officers?
-4. The user is then assigned to that allyCode (analog actions of `/link` applies)
-
-### List linked players of discord
-
-1. I want to be able to see which of my guild mates is registered already and whose not
-2. I call something like `/link-list guild`
-3. A list of all GuildMembers as well as their linked Discord User is shown
-4. This should be done silently and not mention the discord user, but still display the name
-
 ### Be able to link a role to a toon
 
 1. I want to be able to put all players of an owning toon to a discord role
@@ -65,10 +51,10 @@ Note: later on there should be the possibility to define farms (such as `Reva-re
 - value for TW
 - TW omicrons
 - Journey status + progression
+- guild farms
 
 ## Ideas
 
-- Account timeline
 - GAC: track history, what the player used against someone else, counters that match your account
     - scouting based on https://youtu.be/wkcap-W5kTc
 - Fleet Arena: track position, observe shard to see their progress regarding fleet + changes
@@ -77,40 +63,16 @@ Note: later on there should be the possibility to define farms (such as `Reva-re
 - define squads for teams for 3v3 and 5v5, track farming progress
 - conquest: show feats, suggest teams based on roster, track impossible feats etc
 - guid features:
-    - track progress of each player per time period
     - tw counters
     - tb missions
-    - assign roles based on unlocked toons
 - track progress on assault battles, suggested squads and their progress. also ability to mark which done
 - proving grounds: suggested squads and the player's progress. also ability to mark which are done
 - ship counter planner (mods to increase speed etc) [compared to fleet shard?]
 - notification for fleet arena movement, GL + Journey unlocks, ...
-- Toon Farms (guild farms, AB farms, player-based squad planner)
-    - define name of farm (Reva-ready) + team size
-    - define toons at gear/relic level as well as required or not
-        - required/optional
-        - rarity requirement
-        - gear/relic requirement
-        - target speed/health/offense/prot
-        - zeta/omi requirements
-        - turn order (or related to speed?)
-    - examples:
-        - Reva-ready: teamSize: 5
-            - GI, R7 required
-            - each other Inq unit, R7 optional
-        - JKCK-ready: teamSize: 2
-            - Cere, R7 required
-            - JKCK, R7 required
-        - Mandalore-ready: teamSize: 3
-            - BKM, R7 required
-            - BAM, R7 optional
-            - Grogu, R7 optional
-            - Paz, R7 optional
 
 ## Bugs
 
 - letting it join a new discord server does not automatically register commands. only a restart does
-- PlayerHistoryByGuildId includes former players, because it is not joined over GuildMembers
 
 ## Snippets
 

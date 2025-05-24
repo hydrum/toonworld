@@ -17,8 +17,8 @@ class GuildProgressReportService(
     @Transactional
     fun reportProgress(swgohGuildId: String, from: Instant?, to: Instant?): GuildProgressData {
 
-        var fromDate = from ?: requireNotNull(guildHistoryRepository.findEarliestSyncDateTime(swgohGuildId = swgohGuildId)) { "No sync data found" }
-        var toDate = to ?: utcNow()
+        val fromDate = from ?: requireNotNull(guildHistoryRepository.findEarliestSyncDateTime(swgohGuildId = swgohGuildId)) { "No sync data found" }
+        val toDate = to ?: utcNow()
 
         require(fromDate <= toDate) { "cannot find progress from future to past. please check your input." }
 

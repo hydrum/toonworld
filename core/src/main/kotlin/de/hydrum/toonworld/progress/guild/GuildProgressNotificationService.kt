@@ -50,7 +50,7 @@ class GuildProgressNotificationService(
 
     fun sendDiscordNotificationForJourneyProgress(swgohGuildId: String, unlockTexts: List<String>) {
         if (unlockTexts.isEmpty()) return // ignore empty progress
-        var discordGuild = discordGuildRepository.findBySwgohGuildId(swgohGuildId = swgohGuildId)
+        val discordGuild = discordGuildRepository.findBySwgohGuildId(swgohGuildId = swgohGuildId)
         if (discordGuild?.journeyProgressReportChannelId == null) return // we should not report it.
         discordClient
             .getChannelById(Snowflake.of(discordGuild.journeyProgressReportChannelId!!))

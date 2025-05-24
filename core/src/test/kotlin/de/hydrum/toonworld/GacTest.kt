@@ -49,9 +49,9 @@ class GacTest {
                     )
                 }
                 .map {
-                    when {
-                        it.first == "League" -> Pair(it.first, it.second?.select("img")?.last()?.attr("src")) // TODO resolve image to league + division
-                        it.first == "Zone" -> Pair(it.first, it.second?.select("svg")?.first()?.children()?.indexOfFirst { it.hasClass("gac-zone-layout--is-active") } ?: -1)
+                    when (it.first) {
+                        "League" -> Pair(it.first, it.second?.select("img")?.last()?.attr("src")) // TODO resolve image to league + division
+                        "Zone" -> Pair(it.first, it.second?.select("svg")?.first()?.children()?.indexOfFirst { it.hasClass("gac-zone-layout--is-active") } ?: -1)
                         else -> Pair(it.first, it.second?.text())
                     }
                 }

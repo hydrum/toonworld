@@ -114,5 +114,5 @@ fun Player.hasCompletedFarm(farm: Farm): Boolean =
     }.let {
         val requiredNotMatched = it.any { (required, fulfilled) -> required && !fulfilled }
         if (requiredNotMatched) return false
-        return farm.teamSize <= it.count { (_, fulfilled) -> fulfilled == true }
+        return farm.teamSize <= it.count { (_, fulfilled) -> fulfilled }
     }

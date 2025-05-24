@@ -24,9 +24,9 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                     paramCallback = {
                         it.setString(1, swgohGuildId)
                     }
-                ),
-                { rs: ResultSet, rowNum: Int -> rs.getTimestamp("row_start").toInstant() }
-            ).firstOrNull()
+                )
+            ) { rs: ResultSet, rowNum: Int -> rs.getTimestamp("row_start").toInstant() }
+            .firstOrNull()
 
     fun findGuildAtTimestamp(swgohGuildId: String, instant: Instant): Guild? =
         jdbcTemplate

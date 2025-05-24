@@ -120,7 +120,7 @@ fun Long?.abvFormatting(): String {
     if (this > 1_000_000) return "%4.3f".format(this / 1_000_000.0) + "m"
     if (this > 100_000) return "%4.1f".format(this / 1_000.0) + "k"
     if (this > 10_000) return "%4.2f".format(this / 1_000.0) + "k"
-    else return return "%6d".format(this)
+    else return "%6d".format(this)
 }
 
 fun Int?.abvFormatting(): String {
@@ -129,5 +129,5 @@ fun Int?.abvFormatting(): String {
     if (this > 1_000_000) return "%4.3f".format(this / 1_000_000.0) + "m"
     if (this > 100_000) return "%4.1f".format(this / 1_000.0) + "k"
     if (this > 10_000) return "%4.2f".format(this / 1_000.0) + "k"
-    else return return "%6d".format(this)
+    else return "%6d".format(this)
 }
