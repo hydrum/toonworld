@@ -4,44 +4,19 @@ import jakarta.persistence.*
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 
-
 @Entity
 @Table(name = "players_units")
 data class PlayerUnit(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "players_units_seq")
-    var id: Long?,
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "player_id", nullable = false)
-    var player: Player?,
-
-    @Column(name = "base_id", nullable = false)
-    var baseId: String,
-
-    @Column(name = "gear_level", nullable = false)
-    var gearLevel: Int,
-
-    @Column(name = "level", nullable = false)
-    var level: Int,
-
-    @Column(name = "rarity", nullable = false)
-    var rarity: Int,
-
-    @Column(name = "relic_tier", nullable = false)
-    @Enumerated(EnumType.STRING)
-    var relicTier: RelicTier,
-
-    @Column(name = "has_ultimate", nullable = false)
-    var hasUltimate: Boolean,
-
-    @Column(name = "zetas", nullable = false)
-    var zetas: Int,
-
-    @Column(name = "omicrons", nullable = false)
-    var omicrons: Int,
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) @SequenceGenerator(name = "players_units_seq") var id: Long?,
+    @Column(nullable = false) var baseId: String,
+    @Column(nullable = false) var gearLevel: Int,
+    @Column(nullable = false) var level: Int,
+    @Column(nullable = false) var rarity: Int,
+    @Column(nullable = false) @Enumerated(EnumType.STRING) var relicTier: RelicTier,
+    @Column(nullable = false) var hasUltimate: Boolean,
+    @Column(nullable = false) var zetas: Int,
+    @Column(nullable = false) var omicrons: Int,
 
     @OneToMany(
         mappedBy = "unit",
@@ -57,5 +32,10 @@ data class PlayerUnit(
         orphanRemoval = true
     )
     @Fetch(value = FetchMode.SUBSELECT)
-    var mods: MutableList<PlayerUnitMod> = mutableListOf()
+    var mods: MutableList<PlayerUnitMod> = mutableListOf(),
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "player_id", nullable = false)
+    var player: Player?
+
 )

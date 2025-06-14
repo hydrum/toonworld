@@ -9,15 +9,9 @@ import org.hibernate.annotations.FetchMode
 @Table(name = "farms")
 class Farm(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?,
-
-    @Column(name = "name", nullable = false)
-    var name: String,
-
-    @Column(name = "team_size", nullable = false)
-    var teamSize: Int,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long?,
+    @Column(nullable = false) var name: String,
+    @Column(nullable = false) var teamSize: Int,
 
     @OneToMany(
         mappedBy = "farm",
@@ -31,4 +25,5 @@ class Farm(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_discord_guild_id")
     var ownerDiscordGuild: DiscordGuild?
+
 )

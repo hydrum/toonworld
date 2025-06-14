@@ -6,18 +6,11 @@ import jakarta.persistence.*
 @Table(name = "units_categories")
 class UnitCategory(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long?,
+    @Column(nullable = false) var unitBaseId: String,
+    @Column(nullable = false) var category: String,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "unit_id", nullable = false)
-    var unit: Unit?,
-
-    @Column(name = "unit_base_id", nullable = false)
-    var unitBaseId: String,
-
-    @Column(name = "category", nullable = false)
-    var category: String
+    @JoinColumn(name = "unit_id", nullable = false) var unit: Unit?
 
 )

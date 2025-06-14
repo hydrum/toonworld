@@ -8,33 +8,15 @@ import java.time.Instant
 @Table(name = "guilds")
 data class Guild(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?,
-
-    @Column(name = "swgoh_guild_id", nullable = false)
-    var swgohGuildId: String,
-
-    @Column(name = "update_time", nullable = false)
-    var updateTime: Instant,
-
-    @Column(name = "name", nullable = false)
-    var name: String,
-
-    @Column(name = "banner_logo_id", nullable = false)
-    var bannerLogoId: String,
-
-    @Column(name = "banner_color_id", nullable = false)
-    var bannerColorId: String,
-
-    @Column(name = "member_count", nullable = false)
-    var memberCount: Int,
-
-    @Column(name = "galactic_power", nullable = false)
-    var galacticPower: Long,
-
-    @Column(name = "next_reset_time", nullable = false)
-    var nextResetTime: Instant,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long?,
+    @Column(name = "swgoh_guild_id", nullable = false) var swgohGuildId: String,
+    @Column(nullable = false) var updateTime: Instant,
+    @Column(nullable = false) var name: String,
+    @Column(nullable = false) var bannerLogoId: String,
+    @Column(nullable = false) var bannerColorId: String,
+    @Column(nullable = false) var memberCount: Int,
+    @Column(nullable = false) var galacticPower: Long,
+    @Column(nullable = false) var nextResetTime: Instant,
 
     @OneToMany(
         mappedBy = "guild",
@@ -53,4 +35,5 @@ data class Guild(
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     @JoinColumn(name = "swgoh_guild_id", referencedColumnName = "swgoh_guild_id", insertable = false, updatable = false)
     var discordGuild: DiscordGuild? = null
+
 )

@@ -8,40 +8,16 @@ import org.hibernate.annotations.FetchMode
 @Table(name = "units")
 data class Unit(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long?,
-
-    @Column(name = "base_id", nullable = false)
-    var baseId: String,
-
-    @Column(name = "name", nullable = false)
-    var name: String,
-
-    @Column(name = "image", nullable = false)
-    var image: String,
-
-    @Column(name = "alignment", nullable = false)
-    @Enumerated(EnumType.STRING)
-    var alignment: Alignment,
-
-    @Column(name = "role", nullable = false)
-    var role: String,
-
-    @Column(name = "combat_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    var combatType: CombatType,
-
-    @Column(name = "ship_base_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long?,
+    @Column(nullable = false) var baseId: String,
+    @Column(nullable = false) var name: String,
+    @Column(nullable = false) var image: String,
+    @Column(nullable = false) @Enumerated(EnumType.STRING) var alignment: Alignment,
+    @Column(nullable = false) var role: String,
+    @Column(nullable = false) @Enumerated(EnumType.STRING) var combatType: CombatType,
     var shipBaseId: String?,
-
-    @Column(name = "ship_slot")
     var shipSlot: Int?,
-
-    @Column(name = "is_capital_ship")
     var isCapitalShip: Boolean,
-
-    @Column(name = "is_galactic_legend")
     var isGalacticLegend: Boolean,
 
     @OneToMany(
@@ -69,5 +45,6 @@ data class Unit(
         fetch = FetchType.EAGER
     )
     @Fetch(value = FetchMode.SUBSELECT)
-    var aliases: MutableList<UnitAlias> = mutableListOf(),
+    var aliases: MutableList<UnitAlias> = mutableListOf()
+
 )

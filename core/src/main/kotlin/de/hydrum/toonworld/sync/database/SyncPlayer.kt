@@ -7,22 +7,11 @@ import java.time.Instant
 @Table(name = "sync_players")
 class SyncPlayer(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-
-    @Column(name = "ally_code", nullable = false)
-    var allyCode: String,
-
-    @Column(name = "last_success_sync")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long,
+    @Column(nullable = false) var allyCode: String,
     var lastSuccessSync: Instant?,
-
-    @Column(name = "next_sync")
     var nextSync: Instant?,
+    @Column(nullable = false) var playerSyncEnabled: Boolean,
+    @Column(nullable = false) var gacSyncEnabled: Boolean
 
-    @Column(name = "player_sync_enabled", nullable = false)
-    var playerSyncEnabled: Boolean,
-
-    @Column(name = "gac_sync_enabled", nullable = false)
-    var gacSyncEnabled: Boolean,
 )
