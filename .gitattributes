@@ -1,1 +1,1 @@
-core/src/test/resources/data/* linguist-vendored
+core/src/test/resources/data/** linguist-vendored
