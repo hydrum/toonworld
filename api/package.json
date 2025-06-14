@@ -8,10 +8,10 @@
     "build:swgohgg": "tsp compile src/swgohgg --config=src/swgohgg/tspconfig.yaml"
   },
   "peerDependencies": {
-    "@typespec/compiler": "1.0.0",
-    "@typespec/http": "1.0.0",
-    "@typespec/rest": "1.0.0",
-    "@typespec/openapi3": "1.0.0"
+    "@typespec/compiler": "^1.1.0",
+    "@typespec/http": "^1.1.0",
+    "@typespec/rest": "^0.71.0",
+    "@typespec/openapi3": "^1.1.0"
   },
   "private": true
 }

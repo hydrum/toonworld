@@ -9,7 +9,7 @@ using TypeSpec.Http;
 using TypeSpec.OpenAPI;
 
 @service
-@info({
+@info(#{
     title: "Swgoh.gg API",
     version: "1.0.0"
 })

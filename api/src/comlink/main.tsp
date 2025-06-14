@@ -9,7 +9,7 @@ using TypeSpec.Http;
 using TypeSpec.OpenAPI;
 
 @service
-@info({
+@info(#{
     title: "Comlink API",
     version: "2.0.0"
 })
