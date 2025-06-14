@@ -12,8 +12,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
@@ -58,25 +56,25 @@ class UnitSyncServiceTest {
 
         service.updateUnits()
 
-        assertEquals(2, capturedEntities.captured.size)
+        assert(2 == capturedEntities.captured.size)
         assertEntity(capturedEntities.captured, SWGOHGG_UNIT_1, listOf(SWGOHGG_ABILITY_1, SWGOHGG_ABILITY_2, SWGOHGG_ABILITY_3))
         assertEntity(capturedEntities.captured, SWGOHGG_UNIT_2, listOf(SWGOHGG_ABILITY_4))
     }
 
     fun assertEntity(entities: List<ToonWorldUnit>, expectedUnit: SwgohggUnit, expectedAbilities: List<SwgohggAbility>) = with(expectedUnit) {
         val found = entities.find { it.baseId == baseId } ?: fail { "$baseId was not found" }
-        assertEquals(null, found.id)
-        assertEquals(baseId, found.baseId)
-        assertEquals(name, found.name)
-        assertEquals(image, found.image)
-        assertEquals(getAlignment(this), found.alignment)
-        assertEquals(role, found.role)
-        assertEquals(getCombatType(this), found.combatType)
-        assertEquals(shipBaseId, found.shipBaseId)
-        assertEquals(shipSlot, found.shipSlot)
-        assertEquals(isCapitalShip, found.isCapitalShip)
-        assertEquals(isGalacticLegend, found.isGalacticLegend)
-        assertTrue(found.categories.all {
+        assert(null == found.id)
+        assert(baseId == found.baseId)
+        assert(name == found.name)
+        assert(image == found.image)
+        assert(getAlignment(this) == found.alignment)
+        assert(role == found.role)
+        assert(getCombatType(this) == found.combatType)
+        assert(shipBaseId == found.shipBaseId)
+        assert(shipSlot == found.shipSlot)
+        assert(isCapitalShip == found.isCapitalShip)
+        assert(isGalacticLegend == found.isGalacticLegend)
+        assert(found.categories.all {
             it.unitBaseId == found.baseId
                     && it.id == null
                     && it.unit == found
@@ -89,17 +87,17 @@ class UnitSyncServiceTest {
         with(it) {
             val foundAbility = entity.abilities.find { it -> it.baseId == baseId } ?: fail { "ability $baseId not found in entity ${entity.baseId}" }
 
-            assertEquals(null, foundAbility.id)
-            assertEquals(entity, foundAbility.unit)
-            assertEquals(name, foundAbility.name)
-            assertEquals(baseId, foundAbility.baseId)
-            assertEquals(getAbilityType(this), foundAbility.type)
-            assertEquals(getOmicronType(this), foundAbility.omicronMode)
-            assertEquals(tierMax, foundAbility.maxTier)
-            assertEquals(isOmega, foundAbility.isOmega)
-            assertEquals(isZeta, foundAbility.isZeta)
-            assertEquals(isOmicron, foundAbility.isOmicron)
-            assertEquals(isUltimate, foundAbility.isUltimate)
+            assert(null == foundAbility.id)
+            assert(entity == foundAbility.unit)
+            assert(name == foundAbility.name)
+            assert(baseId == foundAbility.baseId)
+            assert(getAbilityType(this) == foundAbility.type)
+            assert(getOmicronType(this) == foundAbility.omicronMode)
+            assert(tierMax == foundAbility.maxTier)
+            assert(isOmega == foundAbility.isOmega)
+            assert(isZeta == foundAbility.isZeta)
+            assert(isOmicron == foundAbility.isOmicron)
+            assert(isUltimate == foundAbility.isUltimate)
         }
     }
 

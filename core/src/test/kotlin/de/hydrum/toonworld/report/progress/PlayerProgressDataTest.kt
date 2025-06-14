@@ -6,7 +6,6 @@ import de.hydrum.toonworld.progress.player.PlayerProgressUnit
 import de.hydrum.toonworld.util.gainToBoolean
 import de.hydrum.toonworld.util.gainToInt
 import de.hydrum.toonworld.util.gainToRelicTier
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class PlayerProgressDataTest {
@@ -27,14 +26,14 @@ class PlayerProgressDataTest {
             abilityGains = emptyList()
         )
 
-        assertTrue(compare.gearLevelGain.hasChanged())
-        assertTrue(compare.levelGain.hasChanged())
+        assert(compare.gearLevelGain.hasChanged())
+        assert(compare.levelGain.hasChanged())
 
-        assertFalse(compare.rarityGain.hasChanged())
-        assertFalse(compare.relicTierGain.hasChanged())
-        assertFalse(compare.ultimateGain.hasChanged())
+        assert(!compare.rarityGain.hasChanged())
+        assert(!compare.relicTierGain.hasChanged())
+        assert(!compare.ultimateGain.hasChanged())
 
-        assertTrue(compare.hasChanged())
+        assert(compare.hasChanged())
     }
 
     @Test
@@ -52,30 +51,30 @@ class PlayerProgressDataTest {
             abilityGains = emptyList()
         )
 
-        assertTrue(compare.gearLevelGain.hasChanged())
-        assertTrue(compare.levelGain.hasChanged())
-        assertTrue(compare.rarityGain.hasChanged())
-        assertTrue(compare.relicTierGain.hasChanged())
-        assertTrue(compare.ultimateGain.hasChanged())
-        assertTrue(compare.hasChanged())
+        assert(compare.gearLevelGain.hasChanged())
+        assert(compare.levelGain.hasChanged())
+        assert(compare.rarityGain.hasChanged())
+        assert(compare.relicTierGain.hasChanged())
+        assert(compare.ultimateGain.hasChanged())
+        assert(compare.hasChanged())
 
-        assertEquals(13, compare.gearLevelGain.absGain)
-        assertEquals(85, compare.levelGain.absGain)
-        assertEquals(7, compare.rarityGain.absGain)
-        assertEquals(RelicTier.TIER_7, compare.relicTierGain.absGain)
-        assertEquals("R7 (+7)", compare.relicTierGain.changeText())
-        assertEquals(false, compare.ultimateGain.absGain)
+        assert(13 == compare.gearLevelGain.absGain)
+        assert(85 == compare.levelGain.absGain)
+        assert(7 == compare.rarityGain.absGain)
+        assert(RelicTier.TIER_7 == compare.relicTierGain.absGain)
+        assert("R7 (+7)" == compare.relicTierGain.changeText())
+        assert(false == compare.ultimateGain.absGain)
     }
 
     @Test
     fun relicAbsGain() {
         var relicTierGain = null gainToRelicTier RelicTier.TIER_7
-        assertEquals(RelicTier.TIER_7, relicTierGain.absGain)
-        assertEquals("R7 (+7)", relicTierGain.changeText())
+        assert(RelicTier.TIER_7 == relicTierGain.absGain)
+        assert("R7 (+7)" == relicTierGain.changeText())
 
 
         relicTierGain = RelicTier.TIER_5 gainToRelicTier RelicTier.TIER_7
-        assertEquals(RelicTier.TIER_2, relicTierGain.absGain)
-        assertEquals("R7 (+2)", relicTierGain.changeText())
+        assert(RelicTier.TIER_2 == relicTierGain.absGain)
+        assert("R7 (+2)" == relicTierGain.changeText())
     }
 }
