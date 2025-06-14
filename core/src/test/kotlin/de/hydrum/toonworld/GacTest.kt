@@ -1,5 +1,6 @@
 package de.hydrum.toonworld
 
+import de.hydrum.toonworld.testutils.TestUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
@@ -41,7 +42,7 @@ class GacTest {
         val battles = element.select(".gac-counters-battle-summary")
         log.info { "${battles.size} battles" }
         battles.forEach { battle ->
-            val stats = battle.select(".gac-counters-battle-summary__stat")
+            battle.select(".gac-counters-battle-summary__stat")
                 .map {
                     Pair(
                         it.select(".gac-counters-battle-summary__stat-label").first()?.text(),

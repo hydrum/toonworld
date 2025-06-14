@@ -1,4 +1,4 @@
-package de.hydrum.toonworld
+package de.hydrum.toonworld.testutils
 
 import com.fasterxml.jackson.databind.ObjectMapper
 

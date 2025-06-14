@@ -1,13 +1,15 @@
 package de.hydrum.toonworld.data
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import de.hydrum.toonworld.TestUtil
 import de.hydrum.toonworld.api.comlink.models.Player
 import de.hydrum.toonworld.api.comlink.toEntity
+import de.hydrum.toonworld.testutils.TestUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
+@Disabled("only for manual testing")
 class JourneyGuideTest {
 
     @Test

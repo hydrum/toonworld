@@ -1,4 +1,4 @@
-package de.hydrum.toonworld
+package de.hydrum.toonworld.testutils
 
 import de.hydrum.toonworld.unit.database.model.AbilityType
 import de.hydrum.toonworld.unit.database.model.Alignment
