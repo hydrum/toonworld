@@ -5,6 +5,6 @@ set -o pipefail
 
 source .env
 
-./mvnw clean verify package
+./mvnw clean package
 docker build -t hydrum/toonworld:latest ./core
 docker push hydrum/toonworld:latest

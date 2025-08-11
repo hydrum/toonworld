@@ -9,10 +9,12 @@ using TypeSpec.OpenAPI;
 namespace Comlink;
 
 model PlayerPayload {
-    allyCode?: string,
-    playerId?: string;
+  allyCode?: string;
+  playerId?: string;
 }
 
 @tag("Player")
 @route("/player")
-@post @operationId("findPlayer") op findPlayer(@body request: ComlinkRequest<PlayerPayload>): Player;
+@post
+@operationId("findPlayer")
+op findPlayer(@body request: ComlinkRequest<PlayerPayload>): Player;

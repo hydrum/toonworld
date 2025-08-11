@@ -9,16 +9,18 @@ using TypeSpec.OpenAPI;
 namespace Comlink;
 
 model RetrieveGuildPayload {
-    guildId: string;
-    includeRecentGuildActivityInfo: boolean;
+  guildId: string;
+  includeRecentGuildActivityInfo: boolean;
 }
 
 @tag("Guild")
 @route("/guild")
 @post
 @operationId("getGuild")
-op retrieveGuild(@body request: ComlinkRequest<RetrieveGuildPayload>): RetrieveGuildResult;
+op retrieveGuild(
+  @body request: ComlinkRequest<RetrieveGuildPayload>,
+): RetrieveGuildResult;
 
 model RetrieveGuildResult {
-    guild: Guild
+  guild: Guild;
 }

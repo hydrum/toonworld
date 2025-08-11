@@ -13,6 +13,7 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_SCHEMA: ${DATABASE_SCHEMA}
       DISCORD_TOKEN: ${DISCORD_TOKEN}
+      SWGOHGG_API_KEY: ${SWGOHGG_API_KEY}
     networks:
       - toonworld
     depends_on:

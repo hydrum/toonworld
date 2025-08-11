@@ -1,6 +1,7 @@
 package de.hydrum.toonworld.api.swgohgg
 
 import de.hydrum.toonworld.api.swgohgg.apis.UnitApi
+import de.hydrum.toonworld.api.swgohgg.infrastructure.ApiClient.Companion.apiKey
 import de.hydrum.toonworld.api.swgohgg.models.Ability
 import de.hydrum.toonworld.config.AppConfig
 import org.springframework.context.annotation.Bean
@@ -11,11 +12,14 @@ import de.hydrum.toonworld.api.swgohgg.models.Unit as SwgohggUnit
 class SwgohggConfiguration {
 
     @Bean
-    fun swgohggApi(config: AppConfig): SwgohggApi = with(config.api.swgohgg) {
+    fun swgohggApi(config: AppConfig): SwgohggApi =
         SwgohggApi(
-            UnitApi(basePath = baseUrl)
+            UnitApi(
+                basePath = config.api.swgohgg.baseUrl
+            ).apply {
+                client.apply { apiKey["x-gg-bot-access"] = config.api.swgohgg.apiKey }
+            }
         )
-    }
 
 }
 

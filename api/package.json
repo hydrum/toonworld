@@ -5,7 +5,8 @@
   "scripts": {
     "build": "npm run build:comlink && npm run build:swgohgg",
     "build:comlink": "tsp compile src/comlink --config=src/comlink/tspconfig.yaml",
-    "build:swgohgg": "tsp compile src/swgohgg --config=src/swgohgg/tspconfig.yaml"
+    "build:swgohgg": "tsp compile src/swgohgg --config=src/swgohgg/tspconfig.yaml",
+    "format": "tsp format **/*.tsp"
   },
   "peerDependencies": {
     "@typespec/compiler": "^1.1.0",

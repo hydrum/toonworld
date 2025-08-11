@@ -37,6 +37,7 @@ app:
   api:
     swgohgg:
       base-url: "https://swgoh.gg/api"
+      api-key: ${SWGOHGG_API_KEY}
     comlink:
       base-url: "http://comlink:3000"
   discord:

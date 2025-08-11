@@ -33,12 +33,17 @@ data class UnitSyncConfig(
 )
 
 data class ApiCategoryConfig(
-    val swgohgg: ApiConfig,
+    val swgohgg: SwgohggApiConfig,
     val comlink: ApiConfig
 )
 
 data class ApiConfig(
     val baseUrl: String
+)
+
+data class SwgohggApiConfig(
+    val baseUrl: String,
+    val apiKey: String
 )
 
 data class DiscordConfig(

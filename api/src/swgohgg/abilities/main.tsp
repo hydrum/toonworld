@@ -9,4 +9,6 @@ namespace Swgohgg;
 
 @tag("Unit")
 @route("/abilities")
-@get @operationId("getAbilities") op getAbilities(): Ability[];
+@get
+@operationId("getAbilities")
+op getAbilities(): Ability[];
