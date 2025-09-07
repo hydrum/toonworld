@@ -13,16 +13,16 @@
 
     <properties>
         <java.version>21</java.version>
-        <kotlin.version>2.1.21</kotlin.version>
-        <kotlinlogging.version>7.0.7</kotlinlogging.version>
+        <kotlin.version>2.2.10</kotlin.version>
+        <kotlinlogging.version>7.0.13</kotlinlogging.version>
         <springmockk.version>4.0.2</springmockk.version>
-        <discord4j.version>3.2.8</discord4j.version>
-        <openapigenerator.version>7.13.0</openapigenerator.version>
+        <discord4j.version>3.2.9</discord4j.version>
+        <openapigenerator.version>7.15.0</openapigenerator.version>
         <okhttp.version>4.12.0</okhttp.version>
-        <jsoup.version>1.20.1</jsoup.version>
-        <tc.version>1.21.1</tc.version>
+        <jsoup.version>1.21.2</jsoup.version>
+        <tc.version>1.21.3</tc.version>
         <wiremock.version>3.13.1</wiremock.version>
-        <mockk.version>1.14.2</mockk.version>
+        <mockk.version>1.14.5</mockk.version>
     </properties>
 
     <dependencies>

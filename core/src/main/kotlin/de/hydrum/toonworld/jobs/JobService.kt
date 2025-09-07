@@ -14,8 +14,8 @@ import java.util.*
 @Service
 class JobService(
     private val scheduler: Scheduler,
-    @Qualifier(PlayerSyncJob.JOB_NAME) private val playerSyncJobDetail: JobDetail,
-    @Qualifier(GuildSyncJob.JOB_NAME) private val guildSyncJobDetail: JobDetail
+    @param:Qualifier(PlayerSyncJob.JOB_NAME) private val playerSyncJobDetail: JobDetail,
+    @param:Qualifier(GuildSyncJob.JOB_NAME) private val guildSyncJobDetail: JobDetail
 ) {
 
     fun scheduleNextPlayerSyncJob(startTime: Instant) = scheduleNextSyncJob(startTime, playerSyncJobDetail, PlayerSyncJob.JOB_NAME)

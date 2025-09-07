@@ -15,15 +15,21 @@ model Unit {
   role: string;
   @encodedName("application/json", "ship_base_id") shipBaseId?: string;
   @encodedName("application/json", "ship_slot") shipSlot?: int32;
+
   @encodedName("application/json", "activate_shard_count")
   activateShardCount: int32;
+
   @encodedName("application/json", "is_capital_ship") isCapitalShip: boolean;
+
   @encodedName("application/json", "is_galactic_legend")
   isGalacticLegend: boolean;
+
   @encodedName("application/json", "made_available_on") madeAvialableOn: string;
   @encodedName("application/json", "crew_base_ids") crewBaseIds: string[];
+
   @encodedName("application/json", "omicron_ability_ids")
   omicronAbilityIds: string[];
+
   @encodedName("application/json", "zeta_ability_ids") zetaAbilityIds: string[];
 }
 

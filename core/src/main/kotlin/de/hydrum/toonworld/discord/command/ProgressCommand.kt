@@ -22,8 +22,8 @@ class ProgressCommand(
     private val playerProgressReportService: PlayerProgressReportService,
     private val guildProgressReportService: GuildProgressReportService,
     private val playerCacheService: DiscordPlayerCacheService,
-    @Value("\${commands.player-progress.default-from:#{null}}") private val defaultFrom: Long?,
-    @Value("\${commands.player-progress.default-to:#{null}}") private val defaultTo: Long?,
+    @param:Value("\${commands.player-progress.default-from:#{null}}") private val defaultFrom: Long?,
+    @param:Value("\${commands.player-progress.default-to:#{null}}") private val defaultTo: Long?,
 ) : BaseCommand(
     name = "progress",
     description = "Retrieve a progress report",
