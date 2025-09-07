@@ -1,6 +1,5 @@
 package de.hydrum.toonworld.progress.guild
 
-import de.hydrum.toonworld.util.abvFormatting
 import de.hydrum.toonworld.util.toDiscordRelativeDateTime
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.rest.util.Color
@@ -8,13 +7,14 @@ import java.time.Duration
 
 fun GuildProgressData.toDiscordEmbed(): List<EmbedCreateSpec> =
     """
-        > Stats
-        **Guild**:           `$name`
-        **Guild id**:        `$guildId`
-        **Data from**:       ${fromDateTime.toDiscordRelativeDateTime()}
-        **Data to**:         ${toDateTime.toDiscordRelativeDateTime()}
-        **Galactic Power**: `${galacticPowerGain.toValue.abvFormatting()}`
+        > Data
+        **Guild**: `$name`
+        **Guild id**: `$guildId`
+        **Data from**: ${fromDateTime.toDiscordRelativeDateTime()}
+        **Data to**: ${toDateTime.toDiscordRelativeDateTime()}
         
+        > Stats
+        ```${toStatsProgressText()}```
         > Total
         ```${toMemberProgressText()}```
         > Top 10
@@ -34,10 +34,13 @@ fun GuildProgressData.toDiscordEmbed(): List<EmbedCreateSpec> =
         }
         .let { listOfNotNull(it) }
 
+fun GuildProgressData.toStatsProgressText() =
+    "Galactic Power | ${galacticPowerGain.changeText()} | ${galacticPowerGain.toPctText()}"
+
 fun GuildProgressData.toMemberProgressText() =
     members
         .sortedWith(
-            compareByDescending<GuildMemberProgress> { it.galacticPowerGain.sortByValue() }
+            compareByDescending { it.galacticPowerGain.sortByValue() }
         )
         .take(50)
         .let {
@@ -50,7 +53,7 @@ fun GuildProgressData.toMemberProgressText() =
 fun GuildProgressData.toMemberTopProgressText() =
     members
         .sortedWith(
-            compareByDescending<GuildMemberProgress> { it.galacticPowerGain.sortByChangeValue() }
+            compareByDescending { it.galacticPowerGain.sortByChangeValue() }
         )
         .filter { it.galacticPowerGain.fromValue != null }
         .take(10)
@@ -63,7 +66,7 @@ fun GuildProgressData.toMemberTopProgressText() =
 fun GuildProgressData.toMemberLeastProgressText() =
     members
         .sortedWith(
-            compareBy<GuildMemberProgress> { it.galacticPowerGain.sortByChangeValue() }
+            compareBy { it.galacticPowerGain.sortByChangeValue() }
         )
         .filter { it.galacticPowerGain.fromValue != null }
         .take(10)
