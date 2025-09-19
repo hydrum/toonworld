@@ -1442,6 +1442,107 @@
           "relicTier": "TIER_5"
         }
       ]
+    },
+    {
+      "baseId": "GLHONDO",
+      "requiredUnits": [
+        {
+          "baseId": "ITHANO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_3"
+        },
+        {
+          "baseId": "QUIGGOLD",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "KIX",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "BRUTUS",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "VANE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "CAPTAINSILVO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "HONDO",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "SMUGGLERCHEWBACCA",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_7"
+        },
+        {
+          "baseId": "EZRABRIDGERS3",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_6"
+        },
+        {
+          "baseId": "GENERALSKYWALKER",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "REY",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "GENERALKENOBI",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_9"
+        },
+        {
+          "baseId": "CHIRRUTIMWE",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_5"
+        },
+        {
+          "baseId": "COUNTDOOKU",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "BOSSK",
+          "rarity": 7,
+          "gearLevel": 13,
+          "relicTier": "TIER_8"
+        },
+        {
+          "baseId": "MILLENNIUMFALCONEP7",
+          "rarity": 7,
+          "gearLevel": 0,
+          "relicTier": "NONE"
+        }
+      ]
     }
   ]
 }

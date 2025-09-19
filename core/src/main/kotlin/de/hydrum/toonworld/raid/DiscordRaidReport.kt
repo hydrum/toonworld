@@ -14,7 +14,7 @@ data class RaidMemberPerformance(val player: Player?, val guildName: String, val
 
 fun List<RaidDetails>.toDiscordEmbed(csv: Boolean): List<EmbedCreateSpec> =
     with(sortedWith(compareByDescending { it.endTs })) {
-        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(ZoneOffset.UTC)
+        val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withZone(ZoneOffset.UTC)
         (if (csv)
             buildString {
                 appendLine("```raidName,endTs,score")
@@ -41,7 +41,7 @@ fun List<RaidDetails>.toDiscordEmbed(csv: Boolean): List<EmbedCreateSpec> =
 
 fun List<RaidMemberPerformance>.toSinglePlayerDiscordEmbed(csv: Boolean): List<EmbedCreateSpec> =
     with(sortedWith(compareByDescending { it.endTs })) {
-        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(ZoneOffset.UTC)
+        val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withZone(ZoneOffset.UTC)
         (if (csv)
             buildString {
                 appendLine("```playerName,allyCode,raidName,endTs,score")
@@ -72,7 +72,7 @@ fun List<RaidMemberPerformance>.toRaidDiscordEmbed(csv: Boolean): List<EmbedCrea
     with(sortedWith(compareByDescending { it.score })) {
         fun playerName(player: Player?) = player?.name ?: "???"
         val maxNameLength = maxOf { playerName(it.player).length }
-        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(ZoneOffset.UTC)
+        val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withZone(ZoneOffset.UTC)
         (if (csv)
             buildString {
                 appendLine("```raidName,playerName,allyCode,endTs,score")
