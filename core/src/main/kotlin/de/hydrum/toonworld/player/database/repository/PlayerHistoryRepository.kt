@@ -145,7 +145,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
     }
 
     private class PlayerHistoryMapper : RowMapper<Player> {
-        override fun mapRow(rs: ResultSet, rowNum: Int): Player? =
+        override fun mapRow(rs: ResultSet, rowNum: Int): Player =
             Player(
                 id = rs.getLong("id"),
                 allyCode = rs.getString("ally_code"),
@@ -169,7 +169,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
     }
 
     private class PlayerUnitMapper : RowMapper<PlayerUnit> {
-        override fun mapRow(rs: ResultSet, rowNum: Int): PlayerUnit? =
+        override fun mapRow(rs: ResultSet, rowNum: Int): PlayerUnit =
             PlayerUnit(
                 id = rs.getLong("id"),
                 player = null,
@@ -185,7 +185,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
     }
 
     private class PlayerUnitAbilityMapper : RowMapper<PlayerUnitAbility> {
-        override fun mapRow(rs: ResultSet, rowNum: Int): PlayerUnitAbility? =
+        override fun mapRow(rs: ResultSet, rowNum: Int): PlayerUnitAbility =
             PlayerUnitAbility(
                 id = rs.getLong("id"),
                 unit = null,
@@ -201,7 +201,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
     }
 
     private class PlayerUnitModMapper : RowMapper<PlayerUnitMod> {
-        override fun mapRow(rs: ResultSet, rowNum: Int): PlayerUnitMod? =
+        override fun mapRow(rs: ResultSet, rowNum: Int): PlayerUnitMod =
             PlayerUnitMod(
                 id = rs.getLong("id"),
                 unit = null,

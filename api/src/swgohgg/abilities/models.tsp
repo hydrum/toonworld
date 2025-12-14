@@ -15,9 +15,12 @@ model Ability {
   @encodedName("application/json", "combat_type") combatType: int32;
   @encodedName("application/json", "omicron_mode") omicronMode: int32;
   type: int32;
+
   @encodedName("application/json", "character_base_id")
   characterBaseId?: string;
+
   @encodedName("application/json", "ship_base_id") shipBaseId?: string;
+
   @encodedName("application/json", "omicron_battle_types")
   omicronBattleTypes: string[];
 }

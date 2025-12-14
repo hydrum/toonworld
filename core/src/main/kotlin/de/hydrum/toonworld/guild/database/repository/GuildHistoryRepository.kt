@@ -73,7 +73,7 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
     }
 
     private class GuildHistoryMapper : RowMapper<Guild> {
-        override fun mapRow(rs: ResultSet, rowNum: Int): Guild? =
+        override fun mapRow(rs: ResultSet, rowNum: Int): Guild =
             Guild(
                 id = rs.getLong("id"),
                 name = rs.getString("name"),
@@ -88,7 +88,7 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
     }
 
     private class GuildMemberHistoryMapper : RowMapper<GuildMember> {
-        override fun mapRow(rs: ResultSet, rowNum: Int): GuildMember? =
+        override fun mapRow(rs: ResultSet, rowNum: Int): GuildMember =
             GuildMember(
                 id = rs.getLong("id"),
                 guild = null,
