@@ -194,12 +194,12 @@ class LinkCommand(
                     val discordMembers = interaction.guild.flatMap { it.members.filter { it.id in linkedDiscordUserIds }.collectList() }.block(10.seconds.toJavaDuration())!!
                     val text = {
                         val maxPlayerNameLength = accounts.maxOf { it.playerName.length }
-                        val maxDiscordUserNameLength = discordMembers.maxOf { it.displayName.length }
+                        val maxDiscordUserNameLength = discordMembers.maxOf { it.displayName.length } + 1 // Add one for the '@' prefix
                         accounts.joinToString("\n") { info ->
                             val member = discordMembers.firstOrNull { member -> member.id.asLong() == info.userId }
                             val discordName = member?.displayName?.let { "@$it" } ?: ""
-                            val slotText = member?.let { " [${info.slot ?: "--"}]" } ?: ""
-                            "${info.allyCode} | ${info.playerName.padEnd(maxPlayerNameLength)} | ${discordName.padEnd(maxDiscordUserNameLength)}$slotText"
+                            val slotText = member?.let { "[${info.slot ?: "-"}]" } ?: ""
+                            "${info.allyCode} | ${info.playerName.padEnd(maxPlayerNameLength)} | ${discordName.padEnd(maxDiscordUserNameLength)} $slotText"
                         }
                     }
                     editReply(
