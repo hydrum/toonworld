@@ -68,4 +68,3 @@ app:
     expire-after-write-in-minutes: 5
   data:
     mod-file: game-data-mods_20250110.json
-    journey-guide-file: journey-guide.json

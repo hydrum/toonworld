@@ -12,12 +12,13 @@ data class DiscordFarmWrapper(val farm: Farm, val unitCacheService: UnitCacheSer
         val maxLengthName = farm.units.maxOf { unitCacheService.findUnit(it.baseId)?.name?.length ?: 0 }
         val maxLengthRarity = farm.units.maxOf { it.minRarity.toString().length }
         val maxLengthGearLevel = farm.units.maxOf { it.minGearLevel.toString().length }
-        return """> ${farm.name} (needed toons: ${farm.teamSize})
+        return """> ${farm.name()} (needed toons: ${farm.teamSize})
         ```${farm.units.joinToString("\n") { "${it.requiredString().padEnd(maxLengthRequired)}${(unitCacheService.findUnit(it.baseId)?.name ?: it.baseId).padEnd(maxLengthName)} | ${"${it.minRarity}*".padEnd(maxLengthRarity)} | G${it.minGearLevel.toString().padEnd(maxLengthGearLevel)} | ${it.minRelicTier.label}" }}```
     """.trimIndent()
     }
 
     fun FarmUnit.requiredString() = if (required) "REQ " else ""
+    fun Farm.name() = if (unlockBaseId == null) name else "${unitCacheService.findUnit(unlockBaseId!!)?.name} Journey Guide"
 }
 
 fun List<DiscordFarmWrapper>.toDiscordEmbed(): List<EmbedCreateSpec> =

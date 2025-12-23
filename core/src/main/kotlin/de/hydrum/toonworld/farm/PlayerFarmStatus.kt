@@ -1,7 +1,5 @@
-package de.hydrum.toonworld.status
+package de.hydrum.toonworld.farm
 
-import de.hydrum.toonworld.data.JourneyGuideProgress
-import de.hydrum.toonworld.data.toPctText
 import de.hydrum.toonworld.player.database.model.Player
 import de.hydrum.toonworld.player.database.model.RelicTier
 import de.hydrum.toonworld.unit.UnitCacheService
@@ -10,16 +8,16 @@ import discord4j.core.spec.EmbedCreateSpec
 import discord4j.rest.util.Color
 import java.time.Instant
 
-data class PlayerStatusJourney(
+data class PlayerFarmStatus(
     val playerName: String,
     val playerAllyCode: String,
     val playerUpdateTime: Instant,
-    val unitName: String,
+    val farmName: String,
     val totalProgress: Double,
-    val requirements: List<PlayerStatusJourneyUnit>
+    val requirements: List<PlayerFarmUnitStatus>
 )
 
-data class PlayerStatusJourneyUnit(
+data class PlayerFarmUnitStatus(
     val unitName: String,
     val rarityRequirement: Int,
     val gearRequirement: Int,
@@ -33,23 +31,23 @@ data class PlayerStatusJourneyUnit(
     val totalProgress: Double,
 )
 
-fun JourneyGuideProgress.toStatus(player: Player, unitCacheService: UnitCacheService): PlayerStatusJourney =
-    PlayerStatusJourney(
+fun FarmProgress.toStatus(player: Player, unitCacheService: UnitCacheService): PlayerFarmStatus =
+    PlayerFarmStatus(
         playerName = player.name,
         playerAllyCode = player.allyCode,
         playerUpdateTime = player.updateTime,
-        unitName = checkNotNull(unitCacheService.findUnit(journeyGuide.baseId)).name,
+        farmName = if (farm.unlockBaseId == null) farm.name else checkNotNull(unitCacheService.findUnit(farm.unlockBaseId!!)).name,
         totalProgress = totalProgress,
         requirements = relatedPlayerUnits.map {
-            PlayerStatusJourneyUnit(
-                unitName = checkNotNull(unitCacheService.findUnit(it.journeyUnit.baseId)).name,
+            PlayerFarmUnitStatus(
+                unitName = checkNotNull(unitCacheService.findUnit(it.farmUnit.baseId)).name,
                 rarityProgress = it.getRarityProgress() ?: 1.0,
                 gearProgress = it.getRarityProgress() ?: 1.0,
                 relicProgress = it.getRarityProgress() ?: 1.0,
                 totalProgress = it.getWeightedProgress(),
-                rarityRequirement = it.journeyUnit.rarity,
-                gearRequirement = it.journeyUnit.gearLevel,
-                relicRequirement = it.journeyUnit.relicTier,
+                rarityRequirement = it.farmUnit.minRarity,
+                gearRequirement = it.farmUnit.minGearLevel,
+                relicRequirement = it.farmUnit.minRelicTier,
                 rarityStatus = it.playerUnit?.rarity,
                 gearStatus = it.playerUnit?.gearLevel,
                 relicStatus = it.playerUnit?.relicTier,
@@ -57,32 +55,28 @@ fun JourneyGuideProgress.toStatus(player: Player, unitCacheService: UnitCacheSer
         }
     )
 
-fun List<PlayerStatusJourney>.toDiscordEmbed(): List<EmbedCreateSpec> {
-    if (isEmpty()) return emptyList()
-    return map {
-        """     
-            **Player:**         `${it.playerName}`
-            **AllyCode:**       `${it.playerAllyCode}`
-            **UpdateTime:**      ${it.playerUpdateTime.toDiscordRelativeDateTime()}
+fun PlayerFarmStatus.toDiscordEmbed(): EmbedCreateSpec =
+    """     
+            **Player:**         `${playerName}`
+            **AllyCode:**       `${playerAllyCode}`
+            **UpdateTime:**      ${playerUpdateTime.toDiscordRelativeDateTime()}
             
-            ${it.toDiscordText()}
+            ${toDiscordText()}
         """.trimIndent()
-    }
-        .map {
+        .let {
             EmbedCreateSpec.builder()
                 .color(Color.RUBY)
                 .title("Status - Journey")
                 .description(it)
                 .build()
         }
-}
 
-fun PlayerStatusJourney.toDiscordText(): String {
+fun PlayerFarmStatus.toDiscordText(): String {
     val units = requirements.sortedByDescending { it.totalProgress }
     val maxToonLength = units.maxOf { it.unitName.length }
     val maxStatusText = units.maxOf { it.toStatusText().length }
     val maxTotalProgressLength = units.maxOf { it.totalProgress.toPctText().length }
-    return """> $unitName **${totalProgress.toPctText()} %**
+    return """> $farmName **${totalProgress.toPctText()} %**
     ```${
         units.joinToString("\n") {
             "${it.unitName.padEnd(maxToonLength)} | ${it.toStatusText().padEnd(maxStatusText)} | ${it.totalProgress.toPctText().padEnd(maxTotalProgressLength)} %"
@@ -91,18 +85,18 @@ fun PlayerStatusJourney.toDiscordText(): String {
     """.trimIndent()
 }
 
-fun PlayerStatusJourneyUnit.toMostNeededText() = when {
+fun PlayerFarmUnitStatus.toMostNeededText() = when {
     relicRequirement.ordinal > RelicTier.LOCKED.ordinal -> relicRequirement.label
     gearRequirement > 0 -> "G$gearRequirement"
     rarityRequirement > 0 -> "$rarityRequirement*"
     else -> "nothing to do ?!"
 }
 
-fun PlayerStatusJourneyUnit.toCurrentText() = when {
+fun PlayerFarmUnitStatus.toCurrentText() = when {
     (relicStatus?.ordinal ?: 0) > RelicTier.LOCKED.ordinal -> relicStatus?.label
     (rarityStatus ?: 0) < 7 -> "${rarityStatus ?: 0}*"
     (gearStatus ?: 0) < gearRequirement -> "G${gearStatus ?: 0}"
     else -> "nothing to do ?!"
 }
 
-fun PlayerStatusJourneyUnit.toStatusText() = if (totalProgress == 1.0) toMostNeededText() else "${toCurrentText()} / ${toMostNeededText()}"
+fun PlayerFarmUnitStatus.toStatusText() = if (totalProgress == 1.0) toMostNeededText() else "${toCurrentText()} / ${toMostNeededText()}"

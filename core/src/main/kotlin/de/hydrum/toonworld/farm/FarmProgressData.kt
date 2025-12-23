@@ -1,44 +1,30 @@
-package de.hydrum.toonworld.data
+package de.hydrum.toonworld.farm
 
+import de.hydrum.toonworld.farm.database.Farm
+import de.hydrum.toonworld.farm.database.FarmUnit
 import de.hydrum.toonworld.player.database.model.PlayerUnit
 import de.hydrum.toonworld.player.database.model.RelicTier
 import de.hydrum.toonworld.util.round
 import kotlin.math.pow
 
-data class JourneyGuides(
-    val units: List<JourneyGuide>
-)
-
-data class JourneyGuide(
-    val baseId: String,
-    val requiredUnits: List<JourneyGuideUnit>
-)
-
-data class JourneyGuideUnit(
-    val baseId: String,
-    val rarity: Int,
-    val gearLevel: Int,
-    val relicTier: RelicTier
-)
-
-class JourneyGuideProgress(
-    val journeyGuide: JourneyGuide,
+class FarmProgress(
+    val farm: Farm,
     playerUnits: List<PlayerUnit>
 ) {
-    val relatedPlayerUnits: List<JourneyGuideProgressUnit> = journeyGuide
-        .requiredUnits
-        .map { journeyUnit ->
-            JourneyGuideProgressUnit(
-                journeyUnit = journeyUnit,
-                playerUnit = playerUnits.firstOrNull { journeyUnit.baseId == it.baseId }
+    val relatedPlayerUnits: List<FarmProgressUnit> = farm
+        .units
+        .map { farmUnit ->
+            FarmProgressUnit(
+                farmUnit = farmUnit,
+                playerUnit = playerUnits.firstOrNull { farmUnit.baseId == it.baseId }
             )
         }
 
     val totalProgress = relatedPlayerUnits.map { it.getWeightedProgress() }.average()
 }
 
-data class JourneyGuideProgressUnit(
-    val journeyUnit: JourneyGuideUnit,
+data class FarmProgressUnit(
+    val farmUnit: FarmUnit,
     val playerUnit: PlayerUnit?
 ) {
     companion object {
@@ -64,25 +50,25 @@ data class JourneyGuideProgressUnit(
     }
 
     fun getRarityProgress(): Double? {
-        val progress = if (journeyUnit.rarity == 0) null
+        val progress = if (farmUnit.minRarity == 0) null
         else if (playerUnit == null) 0.0
-        else (playerUnit.rarity / journeyUnit.rarity.toDouble()).pow(EXPONENT_RARITY)
+        else (playerUnit.rarity / farmUnit.minRarity.toDouble()).pow(EXPONENT_RARITY)
 
         return if (progress != null) 1.0.coerceAtMost(progress) else progress
     }
 
     fun getGearProgress(): Double? {
-        val progress = if (journeyUnit.gearLevel == 0) null
+        val progress = if (farmUnit.minGearLevel == 0) null
         else if (playerUnit == null) 0.0
-        else (playerUnit.gearLevel / journeyUnit.gearLevel.toDouble()).pow(EXPONENT_GEAR)
+        else (playerUnit.gearLevel / farmUnit.minGearLevel.toDouble()).pow(EXPONENT_GEAR)
 
         return if (progress != null) 1.0.coerceAtMost(progress) else progress
     }
 
     fun getRelicProgress(): Double? {
-        val progress = if (journeyUnit.relicTier in listOf(RelicTier.NONE, RelicTier.LOCKED)) null
+        val progress = if (farmUnit.minRelicTier in listOf(RelicTier.NONE, RelicTier.LOCKED)) null
         else if (playerUnit == null) 0.0
-        else (playerUnit.relicTier.relicValue / journeyUnit.relicTier.relicValue.toDouble()).pow(EXPONENT_RELIC)
+        else (playerUnit.relicTier.relicValue / farmUnit.minRelicTier.relicValue.toDouble()).pow(EXPONENT_RELIC)
 
         return if (progress != null) 1.0.coerceAtMost(progress) else progress
     }

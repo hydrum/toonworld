@@ -23,7 +23,7 @@ data class PlayerProgressData(
     val modsSpeed15: Gain<Int?>,
     val mods25SpeedAverage: Gain<Double?>,
     val mods500SpeedAverage: Gain<Double?>,
-    val journeyProgress: List<PlayerProgressJourney>
+    val farmProgress: List<PlayerProgressFarm>
 )
 
 @Data
@@ -46,14 +46,14 @@ data class PlayerProgressUnit(
                 || abilityGains.any { it.hasChanged() }
 }
 
-data class PlayerProgressJourney(
-    val unitBaseId: String,
-    val unitName: String,
+data class PlayerProgressFarm(
+    val farmId: Long,
+    val farmName: String,
     val totalProgressGain: Gain<Double?>,
-    val requirementGains: List<PlayerProgressJourneyUnit>
+    val unitGains: List<PlayerProgressFarmUnit>
 )
 
-data class PlayerProgressJourneyUnit(
+data class PlayerProgressFarmUnit(
     val unitName: String,
     val rarityProgress: Gain<Double?>,
     val gearProgress: Gain<Double?>,

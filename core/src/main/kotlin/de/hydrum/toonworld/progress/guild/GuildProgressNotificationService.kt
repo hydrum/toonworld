@@ -1,6 +1,5 @@
 package de.hydrum.toonworld.progress.guild
 
-import de.hydrum.toonworld.data.DataCacheService
 import de.hydrum.toonworld.management.database.DiscordGuildRepository
 import de.hydrum.toonworld.progress.guild.GuildProgressService.GuildProgressUpdateEvent
 import de.hydrum.toonworld.progress.player.PlayerProgressData
@@ -18,52 +17,54 @@ import org.springframework.transaction.annotation.Transactional
 class GuildProgressNotificationService(
     private val discordClient: GatewayDiscordClient,
     private val discordGuildRepository: DiscordGuildRepository,
-    private val dataCacheService: DataCacheService,
     private val unitCacheService: UnitCacheService
 ) {
 
     @EventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     fun sendJourneyProgressMessage(event: GuildProgressUpdateEvent) {
+        val guild = discordGuildRepository.findBySwgohGuildId(event.swgohGuildId)
+            ?: return
         event.progress
             .flatMap { progress ->
                 val unlocks = PlayerUnlockProgress(progress)
-                dataCacheService.getJourneyData()
-                    .map { journey ->
-                        val requirementDone = unlocks.getJourneyRequirementCompletions().any { it.unitBaseId == journey.baseId }
-                        val hasUnlockedToon = unlocks.getToonUnlocks().any { it.baseId == journey.baseId }
-                        val journeyToonName = unitCacheService.findUnit(journey.baseId)?.name ?: journey.baseId
-                        Triple(progress.player.name, journeyToonName, listOf(requirementDone, hasUnlockedToon))
-                    }
-                    .filter { (_, _, done) -> done[0] || done[1] }
-                    .mapNotNull { (playerName, toonName, done) ->
-                        when {
-                            done[0] && done[1] -> "**$playerName** has completed the requirements and unlocked **$toonName**"
-                            done[0] -> "**$playerName** has completed the requirements for **$toonName**"
-                            done[1] -> "**$playerName** has unlocked **$toonName**"
-                            else -> null
-                        }
+                guild.farms
+                    .mapNotNull { discordGuildFarm ->
+                        val hasFarmCompleted = unlocks.getFarmCompletions().any { it.farmId == discordGuildFarm.farm.id }
+                        val hasUnlockedToon = unlocks.getToonUnlocks().any { it.baseId == discordGuildFarm.farm.unlockBaseId }
+                        val farmName = if (discordGuildFarm.farm.unlockBaseId == null) discordGuildFarm.farm.name else unitCacheService.findUnit(discordGuildFarm.farm.unlockBaseId!!)?.name ?: discordGuildFarm.farm.unlockBaseId
+                        if (discordGuildFarm.announceChannelId != null && (hasFarmCompleted || hasUnlockedToon))
+                            GuildProgressNotification(
+                                guildId = event.swgohGuildId,
+                                announceChannelId = discordGuildFarm.announceChannelId!!,
+                                farmName = farmName ?: "Unknown",
+                                playerName = progress.player.name,
+                                farmCompleted = hasFarmCompleted,
+                                toonUnlocked = hasUnlockedToon
+                            )
+                        else null
                     }
             }
-            .let { sendDiscordNotificationForJourneyProgress(event.swgohGuildId, it) }
+            .let { sendDiscordNotificationForJourneyProgress(it) }
     }
 
-    fun sendDiscordNotificationForJourneyProgress(swgohGuildId: String, unlockTexts: List<String>) {
-        if (unlockTexts.isEmpty()) return // ignore empty progress
-        val discordGuild = discordGuildRepository.findBySwgohGuildId(swgohGuildId = swgohGuildId)
-        if (discordGuild?.journeyProgressReportChannelId == null) return // we should not report it.
-        discordClient
-            .getChannelById(Snowflake.of(discordGuild.journeyProgressReportChannelId!!))
-            .flatMap { channel ->
-                channel.restChannel.createMessage(
-                    EmbedData.builder()
-                        .color(Color.LIGHT_SEA_GREEN.rgb)
-                        .title("Journey Progress")
-                        .description(unlockTexts.joinToString("\n"))
-                        .build()
-                )
+    fun sendDiscordNotificationForJourneyProgress(guildNotifications: List<GuildProgressNotification>) {
+        if (guildNotifications.isEmpty()) return // ignore empty progress
+        guildNotifications.groupBy { it.announceChannelId }
+            .forEach { (channelId, notifications) ->
+                discordClient
+                    .getChannelById(Snowflake.of(channelId))
+                    .flatMap { channel ->
+                        channel.restChannel.createMessage(
+                            EmbedData.builder()
+                                .color(Color.LIGHT_SEA_GREEN.rgb)
+                                .title("Farm Progress")
+                                .description(notifications.joinToString("\n") { it.unlockText() })
+                                .build()
+                        )
+                    }
+                    .subscribe()
             }
-            .subscribe()
     }
 
     @JvmInline
@@ -87,7 +88,16 @@ class GuildProgressNotificationService(
         fun getOmiUnlocks() = getAbilityUnlocks()
             .filter { (_, ability) -> ability.hasOmicronChanged() }
 
-        fun getJourneyRequirementCompletions() = progress.journeyProgress
+        fun getFarmCompletions() = progress.farmProgress
             .filter { it.totalProgressGain.toValue == 1.0 && it.totalProgressGain.fromValue != 1.0 }
+    }
+
+    data class GuildProgressNotification(val guildId: String, val announceChannelId: Long, val farmName: String, val playerName: String, val farmCompleted: Boolean, val toonUnlocked: Boolean) {
+        fun unlockText(): String {
+            return if (farmCompleted && toonUnlocked) "**$playerName** has completed the farm and directly unlocked **$farmName**"
+            else if (farmCompleted) "**$playerName** has completed the farm of **$farmName**"
+            else if (toonUnlocked) "**$playerName** has unlocked **$farmName**"
+            else "Unknown notification type"
+        }
     }
 }

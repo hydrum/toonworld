@@ -1,14 +1,11 @@
 package de.hydrum.toonworld.management
 
 import de.hydrum.toonworld.farm.database.Farm
-import de.hydrum.toonworld.management.database.DiscordGuildFarmRole
 import de.hydrum.toonworld.management.database.DiscordGuildRepository
 import de.hydrum.toonworld.player.database.model.Player
 import de.hydrum.toonworld.sync.GuildSyncService
 import discord4j.common.util.Snowflake
 import discord4j.core.GatewayDiscordClient
-import discord4j.discordjson.json.EmbedData
-import discord4j.rest.util.Color
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
@@ -31,7 +28,7 @@ class DiscordRoleAssignmentService(
             ?.members
             ?.mapNotNull { it.player?.discordPlayer }
 
-        if (discordGuild == null || discordGuild.farmRoles.isEmpty() || discordPlayerOfGuild.isNullOrEmpty()) {
+        if (discordGuild == null || discordGuild.farms.isEmpty() || discordPlayerOfGuild.isNullOrEmpty()) {
             log.debug { "nothing to be done for guildId=$swgohGuildId" }
             return
         }
@@ -43,47 +40,20 @@ class DiscordRoleAssignmentService(
             .collectList()
             .block(5.seconds.toJavaDuration())
 
-        val farmResponse = mutableMapOf<DiscordGuildFarmRole, MutableList<Pair<String, String>>>()
-
-        discordGuild.farmRoles.map { farmRole -> farmRole to discordPlayerOfGuild.filter { it.player?.hasCompletedFarm(farmRole.farm) == true } }
+        discordGuild.farms
+            .filter { it.discordRoleId != null }
+            .map { farm -> farm to discordPlayerOfGuild.filter { it.player?.hasCompletedFarm(farm.farm) == true } }
             .forEach { (farmRole, discordPlayerList) ->
-                val farmDiscordRoleId = Snowflake.of(farmRole.discordRoleId)
+                val farmDiscordRoleId = Snowflake.of(farmRole.discordRoleId!!)
                 val member = discordPlayerToMember?.filter { it.first in discordPlayerList }
                 member
                     ?.filter { (_, member) -> farmDiscordRoleId !in member.roleIds }
                     ?.forEach { (discordPlayer, member) ->
                         log.info { "@${member.displayName} as ${discordPlayer.player?.name} has been assigned the role $farmDiscordRoleId for ${farmRole.farm.name}." }
                         member.addRole(farmDiscordRoleId).subscribe()
-                        farmResponse.getOrPut(farmRole) { -> mutableListOf() }.add(member.displayName to discordPlayer.player?.name!!)
                     }
             }
         log.debug { "done assigning roles for guildId=$swgohGuildId" }
-
-        // notify
-        if (discordGuild.officerInfoChannelId != null && farmResponse.keys.isNotEmpty()) {
-            val discordRoles = discordClient
-                .getGuildRoles(Snowflake.of(discordGuild.discordGuildId))
-                .filter { it.id.asLong() in farmResponse.keys.map { it.discordRoleId } }
-                .collectList()
-                .block(1.seconds.toJavaDuration())
-            val text = farmResponse.map { (farmRole, assignees) ->
-                """> ${farmRole.farm.name} (@${discordRoles?.find { it.id.asLong() == farmRole.discordRoleId }?.name ?: "---"})
-                    ```${assignees.joinToString("\n") { (discordName, playerName) -> "@$discordName ($playerName)" }}```
-                """.trimIndent()
-            }.joinToString("\n")
-            discordClient
-                .getChannelById(Snowflake.of(discordGuild.officerInfoChannelId!!))
-                .flatMap { channel ->
-                    channel.restChannel.createMessage(
-                        EmbedData.builder()
-                            .color(Color.LIGHT_SEA_GREEN.rgb)
-                            .title("Role assignment")
-                            .description(text)
-                            .build()
-                    )
-                }
-                .subscribe()
-        }
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)

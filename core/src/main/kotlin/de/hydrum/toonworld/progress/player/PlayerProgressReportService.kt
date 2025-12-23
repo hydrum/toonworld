@@ -1,7 +1,8 @@
 package de.hydrum.toonworld.progress.player
 
-import de.hydrum.toonworld.data.DataCacheService
-import de.hydrum.toonworld.data.JourneyGuideProgress
+import de.hydrum.toonworld.farm.FarmProgress
+import de.hydrum.toonworld.farm.FarmService
+import de.hydrum.toonworld.management.database.DiscordGuildRepository
 import de.hydrum.toonworld.player.database.model.Player
 import de.hydrum.toonworld.player.database.repository.PlayerHistoryRepository
 import de.hydrum.toonworld.unit.UnitCacheService
@@ -15,7 +16,8 @@ import java.time.Instant
 class PlayerProgressReportService(
     private val playerHistoryRepository: PlayerHistoryRepository,
     private val unitCacheService: UnitCacheService,
-    private val dataCacheService: DataCacheService
+    private val discordGuidRepository: DiscordGuildRepository,
+    private val farmService: FarmService,
 ) {
 
     @Transactional
@@ -41,9 +43,24 @@ class PlayerProgressReportService(
         return compareProgress(fromPlayer, toPlayer)
     }
 
+    @Transactional
     fun compareProgress(player1: Player, player2: Player): PlayerProgressData {
         val fromPlayer = if (player1.updateTime <= player2.updateTime) player1 else player2
         val toPlayer = if (player1.updateTime > player2.updateTime) player1 else player2
+
+        // use journey progress by what the guild is using as farms.
+        val toPlayerDiscordGuild = if (toPlayer.swgohGuildId != null) discordGuidRepository.findBySwgohGuildId(toPlayer.swgohGuildId!!) else null
+
+        // TODO: maybe this section needs to be reworked.
+        // the idea is to include Journey Guides + Farms that are important to the Guild (such as TB Farms like Zeffo/Reva/Mandalore-ready, ...)
+        // but it should exclude other types like "any GL unlocked" or those which are there for role tracking.
+        val farms = listOfNotNull(
+            toPlayerDiscordGuild
+                ?.farms
+                ?.filter { it.announceChannelId != null }
+                ?.map { it.farm },
+            farmService.getJourneyGuideFarms()
+        ).flatten().distinct()
 
         return PlayerProgressData(
             player = toPlayer,
@@ -80,19 +97,19 @@ class PlayerProgressReportService(
                                 },
                     )
                 }.filter { it.hasChanged() },
-            journeyProgress = dataCacheService.getJourneyData()
-                .map {
-                    val fromJourneyProgress = JourneyGuideProgress(it, fromPlayer.units)
-                    val toJourneyProgress = JourneyGuideProgress(it, toPlayer.units)
-                    PlayerProgressJourney(
-                        unitBaseId = it.baseId,
-                        unitName = unitCacheService.findUnit(it.baseId)?.name ?: it.baseId,
+            farmProgress = farms
+                .map { farm ->
+                    val fromJourneyProgress = FarmProgress(farm, fromPlayer.units)
+                    val toJourneyProgress = FarmProgress(farm, toPlayer.units)
+                    PlayerProgressFarm(
+                        farmId = farm.id!!,
+                        farmName = if (farm.unlockBaseId == null) farm.name else (unitCacheService.findUnit(farm.unlockBaseId!!)?.name ?: farm.unlockBaseId!!),
                         totalProgressGain = fromJourneyProgress.totalProgress gainToDouble toJourneyProgress.totalProgress,
-                        requirementGains = it.requiredUnits.map { requiredUnits ->
-                            val fromUnit = fromJourneyProgress.relatedPlayerUnits.firstOrNull { it.playerUnit?.baseId == requiredUnits.baseId }
-                            val toUnit = toJourneyProgress.relatedPlayerUnits.firstOrNull { it.playerUnit?.baseId == requiredUnits.baseId }
-                            PlayerProgressJourneyUnit(
-                                unitName = unitCacheService.findUnit(requiredUnits.baseId)?.name ?: it.baseId,
+                        unitGains = farm.units.map { farmUnit ->
+                            val fromUnit = fromJourneyProgress.relatedPlayerUnits.firstOrNull { it.playerUnit?.baseId == farmUnit.baseId }
+                            val toUnit = toJourneyProgress.relatedPlayerUnits.firstOrNull { it.playerUnit?.baseId == farmUnit.baseId }
+                            PlayerProgressFarmUnit(
+                                unitName = unitCacheService.findUnit(farmUnit.baseId)?.name ?: farmUnit.baseId,
                                 rarityProgress = fromUnit?.getRarityProgress() gainToDouble toUnit?.getRarityProgress(),
                                 gearProgress = fromUnit?.getGearProgress() gainToDouble toUnit?.getGearProgress(),
                                 relicProgress = fromUnit?.getRelicProgress() gainToDouble toUnit?.getRelicProgress(),
@@ -110,7 +127,7 @@ class PlayerProgressReportService(
         units
             .flatMap { it.mods }
             .map { it.getSecondarySpeed() }
-            .ifEmpty { listOf<Long>(0) }
+            .ifEmpty { listOf(0) }
 
     companion object {
         private val log = KotlinLogging.logger { }

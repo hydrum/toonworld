@@ -46,7 +46,7 @@ class FarmCommand(
             val discordGuildId = interaction.guildId.orElseThrow { IllegalArgumentException("guildId not present") }
             if (name == null) {
                 farmService.getAllFarmsForGuildId(discordGuildId.asLong())
-                    .also { if (it == null || it.isEmpty()) createFollowup("nothing found").subscribe() }
+                    .also { if (it.isNullOrEmpty()) createFollowup("nothing found").subscribe() }
                     ?.toDiscordEmbed()
                     ?.forEach {
                         createFollowup(

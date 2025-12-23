@@ -12,6 +12,8 @@ class Farm(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long?,
     @Column(nullable = false) var name: String,
     @Column(nullable = false) var teamSize: Int,
+    
+    var unlockBaseId: String?,
 
     @OneToMany(
         mappedBy = "farm",

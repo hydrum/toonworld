@@ -1,6 +1,6 @@
 package de.hydrum.toonworld.progress.player
 
-import de.hydrum.toonworld.data.toPctText
+import de.hydrum.toonworld.farm.toPctText
 import de.hydrum.toonworld.util.Gain
 import de.hydrum.toonworld.util.toDiscordRelativeDateTime
 import discord4j.core.spec.EmbedCreateSpec
@@ -25,8 +25,8 @@ fun PlayerProgressData.toDiscordEmbed(): List<EmbedCreateSpec> =
         ```${toToonGearText()}```
         > Abilities
         ```${toToonAbilityTextOrNull() ?: "---"}```
-        > Journey
-        ```${toJourneyProgressText() ?: "---"}```
+        > Farms
+        ```${toFarmProgressText() ?: "---"}```
     """
         .trimIndent()
         .let {
@@ -114,15 +114,15 @@ fun PlayerProgressData.toToonAbilityTextOrNull(): String? =
             it.joinToString("\n") { "${it.first.name.padEnd(maxToonLength)} | ${it.second}" }
         }
 
-fun PlayerProgressData.toJourneyProgressText(): String? =
-    journeyProgress
+fun PlayerProgressData.toFarmProgressText(): String? =
+    farmProgress
         .take(MAX_TOON_PROGRESS)
-        .let {
-            if (it.isEmpty()) return@let null
-            val maxToonLength = it.maxOf { it.unitName.length }
-            val maxCurrValueLength = it.maxOf { it.totalProgressGain.toValue?.toPctText()?.length ?: 3 }
-            it.joinToString("\n") {
-                "${it.unitName.padEnd(maxToonLength)} " +
+        .let { farmProgress ->
+            if (farmProgress.isEmpty()) return@let null
+            val maxToonLength = farmProgress.maxOf { it.farmName.length }
+            val maxCurrValueLength = farmProgress.maxOf { it.totalProgressGain.toValue?.toPctText()?.length ?: 3 }
+            farmProgress.joinToString("\n") {
+                "${it.farmName.padEnd(maxToonLength)} " +
                         "| ${it.totalProgressGain.toValue?.toPctText()?.padEnd(maxCurrValueLength)} % " +
                         if ((it.totalProgressGain.absGain ?: 0.0) > 0.0)
                             "(+${it.totalProgressGain.absGain?.toPctText()} %)"

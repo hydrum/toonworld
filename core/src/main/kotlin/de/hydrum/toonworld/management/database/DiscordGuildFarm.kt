@@ -4,11 +4,13 @@ import de.hydrum.toonworld.farm.database.Farm
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "discord_guilds_farm_roles")
-class DiscordGuildFarmRole(
+@Table(name = "discord_guilds_farms")
+class DiscordGuildFarm(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long?,
-    @Column(nullable = false) var discordRoleId: Long,
+    var discordRoleId: Long?,
+
+    var announceChannelId: Long?,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "discord_guild_id", nullable = false)

@@ -1,9 +1,8 @@
 package de.hydrum.toonworld.discord.command
 
-import de.hydrum.toonworld.data.DataCacheService
+import de.hydrum.toonworld.farm.FarmService
+import de.hydrum.toonworld.farm.toDiscordEmbed
 import de.hydrum.toonworld.management.DiscordPlayerCacheService
-import de.hydrum.toonworld.status.PlayerStatusService
-import de.hydrum.toonworld.status.toDiscordEmbed
 import de.hydrum.toonworld.unit.UnitCacheService
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type
@@ -17,8 +16,7 @@ import kotlin.time.toJavaDuration
 @Component
 class JourneyCommand(
     private val playerCacheService: DiscordPlayerCacheService,
-    private val playerStatusService: PlayerStatusService,
-    dataCacheService: DataCacheService,
+    private val farmService: FarmService,
     unitCacheService: UnitCacheService
 ) : BaseCommand(
     name = "journey",
@@ -29,12 +27,13 @@ class JourneyCommand(
             .description("choose the journey guide to get a summary for")
             .type(Type.STRING.value)
             .addAllChoices(
-                dataCacheService.getJourneyData()
+                farmService.getJourneyGuideFarms()
+                    .filter { it.unlockBaseId != null }
                     .map {
                         ApplicationCommandOptionChoiceData
                             .builder()
-                            .value(it.baseId)
-                            .name(unitCacheService.findUnit(it.baseId)?.name ?: it.baseId)
+                            .value(it.unlockBaseId)
+                            .name(unitCacheService.findUnit(it.unlockBaseId!!)?.name ?: it.unlockBaseId)
                             .build()
                     })
             .required(true)
@@ -70,18 +69,19 @@ class JourneyCommand(
             val userOption = getOption("user").flatMap { it.value }?.map { it.asUser().blockOptional(1.seconds.toJavaDuration()) }?.orElse(null)
             val user = if (userOption?.isPresent == true) userOption.get() else interaction.user
 
-            playerStatusService.getJourneyStatus(
+            farmService.getFarmStatus(
                 allyCode = allyCode ?: playerCacheService.getAllyCodeChecked(user, slot),
-                journey = journey
+                baseId = journey
             ).also {
-                it.toDiscordEmbed().forEach {
-                    createFollowup(
-                        InteractionFollowupCreateSpec
-                            .builder()
-                            .addEmbed(it)
-                            .build()
-                    ).subscribe()
-                }
+                it.toDiscordEmbed()
+                    .also {
+                        createFollowup(
+                            InteractionFollowupCreateSpec
+                                .builder()
+                                .addEmbed(it)
+                                .build()
+                        ).subscribe()
+                    }
             }
         }.onFailure { handleError(this, it) }
     }

@@ -64,5 +64,4 @@ data class CacheAppConfig(
 
 data class DataAppConfig(
     val modFile: String,
-    val journeyGuideFile: String
 )
