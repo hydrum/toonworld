@@ -20,7 +20,7 @@ class FarmProgress(
             )
         }
 
-    val totalProgress = relatedPlayerUnits.map { it.getWeightedProgress() }.average()
+    val totalProgress = 1.0.coerceAtMost(relatedPlayerUnits.sumOf { it.getWeightedProgress() } / farm.teamSize)
 }
 
 data class FarmProgressUnit(
