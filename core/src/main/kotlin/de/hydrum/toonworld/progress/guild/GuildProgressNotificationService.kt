@@ -38,6 +38,7 @@ class GuildProgressNotificationService(
                                 guildId = event.swgohGuildId,
                                 announceChannelId = discordGuildFarm.announceChannelId!!,
                                 farmName = farmName ?: "Unknown",
+                                isJourneyGuide = discordGuildFarm.farm.unlockBaseId != null,
                                 playerName = progress.player.name,
                                 farmCompleted = hasFarmCompleted,
                                 toonUnlocked = hasUnlockedToon
@@ -92,11 +93,12 @@ class GuildProgressNotificationService(
             .filter { it.totalProgressGain.toValue == 1.0 && it.totalProgressGain.fromValue != 1.0 }
     }
 
-    data class GuildProgressNotification(val guildId: String, val announceChannelId: Long, val farmName: String, val playerName: String, val farmCompleted: Boolean, val toonUnlocked: Boolean) {
+    data class GuildProgressNotification(val guildId: String, val announceChannelId: Long, val farmName: String, val isJourneyGuide: Boolean, val playerName: String, val farmCompleted: Boolean, val toonUnlocked: Boolean) {
         fun unlockText(): String {
-            return if (farmCompleted && toonUnlocked) "**$playerName** has completed the farm and directly unlocked **$farmName**"
+            return if (isJourneyGuide && farmCompleted && toonUnlocked) "**$playerName** has completed the journey and unlocked **$farmName**"
+            else if (isJourneyGuide && farmCompleted) "**$playerName** has completed the requirements of **$farmName**"
+            else if (isJourneyGuide && toonUnlocked) "**$playerName** has unlocked **$farmName**"
             else if (farmCompleted) "**$playerName** has completed the farm of **$farmName**"
-            else if (toonUnlocked) "**$playerName** has unlocked **$farmName**"
             else "Unknown notification type"
         }
     }
