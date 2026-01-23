@@ -30,3 +30,27 @@ fun List<DiscordFarmWrapper>.toDiscordEmbed(): List<EmbedCreateSpec> =
                 .description(it)
                 .build()
         }.let { listOfNotNull(it) }
+
+fun GuildFarmStatus.toDiscordEmbed(): EmbedCreateSpec {
+    val maxNameLength = members.maxOfOrNull { it.name.length } ?: 0
+    val maxProgressLength = members.maxOfOrNull { it.progress.toPctText().length } ?: 0
+
+    return """
+        **Guild:** $guildName
+        **Farm:**  $farmName
+        **Status:** ${members.count { it.progress == 1.0 }}/${members.size}
+        
+        ```${
+        members.joinToString("\n") {
+            "${it.name.padEnd(maxNameLength)} | ${it.progress.toPctText().padStart(maxProgressLength)} %"
+        }
+    }```
+    """.trimIndent()
+        .let {
+            EmbedCreateSpec.builder()
+                .color(Color.RUBY)
+                .title("Guild Farm Status")
+                .description(it)
+                .build()
+        }
+}

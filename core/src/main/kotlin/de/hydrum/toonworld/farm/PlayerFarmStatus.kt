@@ -31,6 +31,17 @@ data class PlayerFarmUnitStatus(
     val totalProgress: Double,
 )
 
+data class GuildFarmStatus(
+    val guildName: String,
+    val farmName: String,
+    val members: List<GuildMemberFarmStatus>
+)
+
+data class GuildMemberFarmStatus(
+    val name: String,
+    val progress: Double
+)
+
 fun FarmProgress.toStatus(player: Player, unitCacheService: UnitCacheService): PlayerFarmStatus =
     PlayerFarmStatus(
         playerName = player.name,

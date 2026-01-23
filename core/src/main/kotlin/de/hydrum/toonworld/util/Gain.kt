@@ -16,7 +16,7 @@ open class Gain<T>(
     fun toDiffText(): String = "${formatValue(absGain)} | ${toPctText()}"
     fun toValueProgressText() = "${formatValue(fromValue)} | ${formatValue(toValue)} "
 
-    fun toPctText(): String = (if (pctGain != null && fromValue != null) ((pctGain - 1) * 100).round(2).toString() else "---") + " %"
+    fun toPctText(): String = (if (pctGain != null && fromValue != null) String.format("%.2f", (pctGain - 1) * 100) else "---") + " %"
 
     open fun formatValue(value: T?): String = value?.toString() ?: "---"
 
@@ -103,7 +103,7 @@ class GainDouble(
     pctGain = if (fromValue == null || toValue == null || fromValue == 0.0) null else toValue / fromValue.toDouble()
 ) {
     override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else "") + super.absGainString()
-    override fun formatValue(value: Double?): String = value?.round(2).toString()
+    override fun formatValue(value: Double?): String = String.format("%.2f", value)
 }
 
 infix fun Double?.gainToDouble(to: Double?): Gain<Double?> = GainDouble(fromValue = this, toValue = to)

@@ -139,7 +139,7 @@ class LinkCommand(
 
         runCatching {
             val hasPermission = interaction.member.getOrNull()?.roleIds?.intersect(appConfig.discord.officerRoles.map { Snowflake.of(it) })?.isNotEmpty() == true
-            if (userOption != null && !hasPermission) throw IllegalArgumentException("you don't have the permission to link other users.")
+            require(userOption == null || hasPermission) { "you don't have the permission to link other users." }
 
             val user = userOption ?: interaction.user
             val userName = user.getNicknameOrNull(interaction.guildId) ?: user.username

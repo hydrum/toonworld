@@ -4,7 +4,6 @@ import de.hydrum.toonworld.farm.database.Farm
 import de.hydrum.toonworld.farm.database.FarmUnit
 import de.hydrum.toonworld.player.database.model.PlayerUnit
 import de.hydrum.toonworld.player.database.model.RelicTier
-import de.hydrum.toonworld.util.round
 import kotlin.math.pow
 
 class FarmProgress(
@@ -80,4 +79,4 @@ data class FarmProgressUnit(
     }
 }
 
-fun Double?.toPctText(): String = this?.let { it * 100 }?.round(2)?.toString() ?: "---"
+fun Double?.toPctText(): String = this?.let { String.format("%.2f", it * 100) } ?: "---"

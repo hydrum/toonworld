@@ -3,7 +3,6 @@ package de.hydrum.toonworld.discord.command.admin
 import de.hydrum.toonworld.discord.command.BaseCommand
 import de.hydrum.toonworld.sync.GuildSyncService
 import de.hydrum.toonworld.sync.PlayerSyncService
-import de.hydrum.toonworld.util.round
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type
 import discord4j.discordjson.json.ApplicationCommandOptionData
@@ -86,7 +85,7 @@ class SyncCommand(
             duration = (System.currentTimeMillis() - startTime)
             return@runCatching result
         }.onSuccess {
-            editReply("Guild `${it?.name} (${it?.swgohGuildId})` synced in ${(duration / 1000.0).round(3)}s").subscribe()
+            editReply("Guild `${it?.name} (${it?.swgohGuildId})` synced in ${duration}ms").subscribe()
         }.onFailure { handleError(this, it, guildId) }
     }
 }

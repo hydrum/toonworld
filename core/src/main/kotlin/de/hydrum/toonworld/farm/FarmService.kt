@@ -6,6 +6,7 @@ import de.hydrum.toonworld.player.database.repository.PlayerRepository
 import de.hydrum.toonworld.unit.UnitCacheService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class FarmService(
@@ -25,9 +26,30 @@ class FarmService(
     fun getFarmStatus(allyCode: String, baseId: String): PlayerFarmStatus =
         requireNotNull(playerRepository.findPlayerByAllyCode(allyCode)) { "No record found of allyCode $allyCode" }
             .let { player ->
-                farmRepository.getFarmByUnlockBaseId(baseId)
-                    ?.let { FarmProgress(it, player.units) }
-                    ?.toStatus(player, unitCacheService)
-                    ?: throw IllegalStateException("No farm found for baseId $baseId")
+                requireNotNull(farmRepository.getFarmByUnlockBaseId(baseId)) { "No farm found for baseId $baseId" }
+                    .let { FarmProgress(it, player.units) }
+                    .toStatus(player, unitCacheService)
             }
+
+    @Transactional
+    fun getGuildFarmStatus(discordGuildId: Long, farmId: Long): GuildFarmStatus {
+        val discordGuild = requireNotNull(discordGuildRepository.findByDiscordGuildId(discordGuildId)) { "Guild not found" }
+        val farm = requireNotNull(farmRepository.findById(farmId).getOrNull()) { "Farm not found" }
+        val guild = requireNotNull(discordGuild.guild) { "SWGOH Guild not linked" }
+
+        val farmName = if (farm.unlockBaseId == null) farm.name else unitCacheService.findUnit(farm.unlockBaseId!!)?.name ?: farm.name
+
+        return GuildFarmStatus(
+            guildName = guild.name,
+            farmName = farmName,
+            members = guild.members.mapNotNull { member ->
+                member.player?.let { player ->
+                    GuildMemberFarmStatus(
+                        name = player.name,
+                        progress = FarmProgress(farm, player.units).totalProgress
+                    )
+                }
+            }.sortedByDescending { it.progress }
+        )
+    }
 }
