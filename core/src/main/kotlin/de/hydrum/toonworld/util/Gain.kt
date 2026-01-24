@@ -34,7 +34,7 @@ class GainRelicTier(
 ) : Gain<RelicTier?>(
     fromValue = fromValue,
     toValue = toValue,
-    absGain = if (toValue == null) toValue else RelicTier.entries.find { it -> it.ordinal == (toValue.ordinal - (fromValue?.ordinal ?: 2) + 2) }) {
+    absGain = if (toValue == null) toValue else RelicTier.entries.find { it.ordinal == (toValue.ordinal - (fromValue?.ordinal ?: 2) + 2) }) {
 
     override fun hasChanged() = fromValue != toValue && toValue != null && toValue.ordinal > RelicTier.LOCKED.ordinal
     override fun changeText(): String {
@@ -77,7 +77,12 @@ class GainLong(
     absGain = (toValue ?: 0L) - (fromValue ?: 0L),
     pctGain = if (fromValue == null || toValue == null || fromValue == 0L) null else toValue / fromValue.toDouble()
 ) {
-    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else "") + super.absGainString()
+    override fun absGainString(): String = when {
+        absGain != null && absGain > 0 -> "+"
+        absGain == 0L -> " "
+        else -> ""
+    } + super.absGainString()
+
     override fun formatValue(value: Long?): String = value.abvFormatting()
 }
 
@@ -90,7 +95,11 @@ class GainInt(
     absGain = (toValue ?: 0) - (fromValue ?: 0),
     pctGain = if (fromValue == null || toValue == null || fromValue == 0) null else toValue / fromValue.toDouble()
 ) {
-    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else "") + super.absGainString()
+    override fun absGainString(): String = when {
+        absGain != null && absGain > 0 -> "+"
+        absGain == 0 -> " "
+        else -> ""
+    } + super.absGainString()
 }
 
 class GainDouble(
@@ -100,9 +109,14 @@ class GainDouble(
     fromValue = fromValue ?: 0.0,
     toValue = toValue ?: 0.0,
     absGain = (toValue ?: 0.0) - (fromValue ?: 0.0),
-    pctGain = if (fromValue == null || toValue == null || fromValue == 0.0) null else toValue / fromValue.toDouble()
+    pctGain = if (fromValue == null || toValue == null || fromValue == 0.0) null else toValue / fromValue
 ) {
-    override fun absGainString(): String = (if (absGain != null && absGain > 0) "+" else "") + super.absGainString()
+    override fun absGainString(): String = when {
+        absGain != null && absGain > 0 -> "+"
+        absGain == 0.0 -> " "
+        else -> ""
+    } + super.absGainString()
+
     override fun formatValue(value: Double?): String = String.format("%.2f", value)
 }
 

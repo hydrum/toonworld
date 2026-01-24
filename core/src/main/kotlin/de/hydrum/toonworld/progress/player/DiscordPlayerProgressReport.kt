@@ -124,8 +124,8 @@ fun PlayerProgressData.toFarmProgressText(): String? =
             val maxCurrValueLength = farmProgress.maxOf { it.totalProgressGain.toValue?.toPctText()?.length ?: 3 }
             farmProgress.joinToString("\n") {
                 "${it.farmName.padEnd(maxToonLength)} " +
-                        "| ${it.totalProgressGain.toValue?.toPctText()?.padEnd(maxCurrValueLength)} % " +
-                        if ((it.totalProgressGain.absGain ?: 0.0) >= 0.0)
+                        "| ${it.totalProgressGain.toValue?.toPctText()?.padStart(maxCurrValueLength)} % " +
+                        if ((it.totalProgressGain.absGain ?: 0.0) > 0.0)
                             "(+${it.totalProgressGain.absGain?.toPctText()} %)"
                         else ""
             }
