@@ -84,6 +84,7 @@ fun PlayerFarmStatus.toDiscordEmbed(): EmbedCreateSpec =
 
 fun PlayerFarmStatus.toDiscordText(): String {
     val units = requirements.sortedByDescending { it.totalProgress }
+    if (units.isEmpty()) return "> $farmName **${totalProgress.toPctText()} %**\n```---```"
     val maxToonLength = units.maxOf { it.unitName.length }
     val maxStatusText = units.maxOf { it.toStatusText().length }
     val maxTotalProgressLength = units.maxOf { it.totalProgress.toPctText().length }

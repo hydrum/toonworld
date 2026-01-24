@@ -89,6 +89,7 @@ fun PlayerProgressData.toToonGearText(): String =
         )
         .take(MAX_TOON_PROGRESS)
         .let {
+            if (it.isEmpty()) return@let "---"
             val maxToonLength = it.maxOf { it.name.length }
             val maxStarsLength = it.maxOf { it.rarityGain.changeText().length }
             it.joinToString("\n") { "${it.name.padEnd(maxToonLength)} | ${it.rarityGain.changeText().padEnd(maxStarsLength)} | ${if (it.relicTierGain.hasChanged()) it.relicTierGain.changeText() else "G" + it.gearLevelGain.changeText()}" }
@@ -124,7 +125,7 @@ fun PlayerProgressData.toFarmProgressText(): String? =
             farmProgress.joinToString("\n") {
                 "${it.farmName.padEnd(maxToonLength)} " +
                         "| ${it.totalProgressGain.toValue?.toPctText()?.padEnd(maxCurrValueLength)} % " +
-                        if ((it.totalProgressGain.absGain ?: 0.0) > 0.0)
+                        if ((it.totalProgressGain.absGain ?: 0.0) >= 0.0)
                             "(+${it.totalProgressGain.absGain?.toPctText()} %)"
                         else ""
             }

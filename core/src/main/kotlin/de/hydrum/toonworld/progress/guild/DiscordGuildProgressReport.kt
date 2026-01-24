@@ -44,6 +44,7 @@ fun GuildProgressData.toMemberProgressText() =
         )
         .take(50)
         .let {
+            if (it.isEmpty()) return@let "---"
             val maxNameLength = it.maxOf { it.name.length }
             val maxTotalLength = it.maxOf { it.galacticPowerGain.changeText().length }
 
@@ -58,6 +59,7 @@ fun GuildProgressData.toMemberTopProgressText() =
         .filter { it.galacticPowerGain.fromValue != null }
         .take(10)
         .let {
+            if (it.isEmpty()) return@let "---"
             val maxNameLength = it.maxOf { it.name.length }
 
             it.joinToString("\n") { "${it.name.padEnd(maxNameLength)} | ${it.galacticPowerGain.toDiffText()}" }
@@ -71,6 +73,7 @@ fun GuildProgressData.toMemberLeastProgressText() =
         .filter { it.galacticPowerGain.fromValue != null }
         .take(10)
         .let {
+            if (it.isEmpty()) return@let "---"
             val maxNameLength = it.maxOf { it.name.length }
 
             it.joinToString("\n") { "${it.name.padEnd(maxNameLength)} | ${it.galacticPowerGain.toDiffText()}" }
@@ -88,6 +91,7 @@ fun GuildProgressData.toMemberLeastRaidTicketsText() =
         )
         .take(10)
         .let {
+            if (it.isEmpty()) return@let "---"
             val maxNameLength = it.maxOf { it.first.length }
             it.joinToString("\n") { "${it.first.padEnd(maxNameLength)} | ${it.second}" }
         }

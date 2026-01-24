@@ -190,11 +190,15 @@ class LinkCommand(
 
                 isListGuildOption -> {
                     val accounts = playerLinkService.listGuildLinkAccounts(playerCacheService.getGuildIdChecked(user, slot ?: 0))
+                    if (accounts.isEmpty()) {
+                        editReply("no accounts linked for this guild").subscribe()
+                        return
+                    }
                     val linkedDiscordUserIds = accounts.mapNotNull { it.userId.returnNullOr { Snowflake.of(it) } }
-                    val discordMembers = interaction.guild.flatMap { it.members.filter { it.id in linkedDiscordUserIds }.collectList() }.block(10.seconds.toJavaDuration())!!
+                    val discordMembers = interaction.guild.flatMap { it.members.filter { it.id in linkedDiscordUserIds }.collectList() }.block(10.seconds.toJavaDuration()) ?: emptyList()
                     val text = {
-                        val maxPlayerNameLength = accounts.maxOf { it.playerName.length }
-                        val maxDiscordUserNameLength = discordMembers.maxOf { it.displayName.length } + 1 // Add one for the '@' prefix
+                        val maxPlayerNameLength = accounts.maxOfOrNull { it.playerName.length } ?: 0
+                        val maxDiscordUserNameLength = (discordMembers.maxOfOrNull { it.displayName.length } ?: 0) + 1 // Add one for the '@' prefix
                         accounts.joinToString("\n") { info ->
                             val member = discordMembers.firstOrNull { member -> member.id.asLong() == info.userId }
                             val discordName = member?.displayName?.let { "@$it" } ?: ""
@@ -206,7 +210,7 @@ class LinkCommand(
                         InteractionReplyEditSpec.builder()
                             .addEmbed(
                                 EmbedCreateSpec.builder()
-                                    .title("Linked accounts for ${accounts.first { it.guildId.isNotBlank() }.guildName} on this server")
+                                    .title("Linked accounts for ${accounts.firstOrNull { it.guildId.isNotBlank() }?.guildName ?: "unknown guild"} on this server")
                                     .color(Color.RUBY)
                                     .description("```${text()}```")
                                     .build()

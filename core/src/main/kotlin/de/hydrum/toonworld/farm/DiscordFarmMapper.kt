@@ -8,6 +8,7 @@ import discord4j.rest.util.Color
 
 data class DiscordFarmWrapper(val farm: Farm, val unitCacheService: UnitCacheService) {
     fun toDiscordText(): String {
+        if (farm.units.isEmpty()) return "> ${farm.name()} (needed toons: ${farm.teamSize})\n```---```"
         val maxLengthRequired = farm.units.maxOf { it.requiredString().length }
         val maxLengthName = farm.units.maxOf { unitCacheService.findUnit(it.baseId)?.name?.length ?: 0 }
         val maxLengthRarity = farm.units.maxOf { it.minRarity.toString().length }
