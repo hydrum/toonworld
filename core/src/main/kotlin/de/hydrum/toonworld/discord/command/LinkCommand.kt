@@ -10,7 +10,6 @@ import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.core.spec.InteractionReplyEditSpec
-import discord4j.discordjson.json.ApplicationCommandOptionChoiceData
 import discord4j.discordjson.json.ApplicationCommandOptionData
 import discord4j.rest.util.Color
 import org.springframework.stereotype.Component
@@ -85,38 +84,44 @@ class LinkCommand(
         ApplicationCommandOptionData.builder()
             .name("list")
             .description("show the linked accounts. it can either be from a user or from a swgoh guild")
-            .type(Type.SUB_COMMAND.value)
+            .type(Type.SUB_COMMAND_GROUP.value)
             .options(
                 listOf(
                     ApplicationCommandOptionData.builder()
-                        .name("choice")
-                        .description("please select whether to display all linked accounts of a player or a swgoh guild")
-                        .type(Type.STRING.value)
-                        .required(true)
-                        .choices(
+                        .name("user")
+                        .description("list all accounts that are registered for the user")
+                        .type(Type.SUB_COMMAND.value)
+                        .options(
                             listOf(
-                                ApplicationCommandOptionChoiceData.builder()
-                                    .name("user - list all accounts that are registered for the user")
-                                    .value("user")
-                                    .build(),
-                                ApplicationCommandOptionChoiceData.builder()
-                                    .name("guild - list all accounts registered of a swgoh guild")
-                                    .value("guild")
+                                ApplicationCommandOptionData.builder()
+                                    .name("user")
+                                    .description("user to be based of, if none provided, then your user is taken")
+                                    .type(Type.USER.value)
+                                    .required(false)
                                     .build()
                             )
                         )
                         .build(),
                     ApplicationCommandOptionData.builder()
-                        .name("user")
-                        .description("user to be based of, if none provided, then your user is taken")
-                        .type(Type.USER.value)
-                        .required(false)
-                        .build(),
-                    ApplicationCommandOptionData.builder()
-                        .name("slot")
-                        .description("slot to be taken. if none provided, primary slot is used")
-                        .type(Type.INTEGER.value)
-                        .required(false)
+                        .name("guild")
+                        .description("list all accounts registered of a swgoh guild")
+                        .type(Type.SUB_COMMAND.value)
+                        .options(
+                            listOf(
+                                ApplicationCommandOptionData.builder()
+                                    .name("user")
+                                    .description("user to be based of, if none provided, then your user is taken")
+                                    .type(Type.USER.value)
+                                    .required(false)
+                                    .build(),
+                                ApplicationCommandOptionData.builder()
+                                    .name("slot")
+                                    .description("slot to be taken. if none provided, primary slot is used")
+                                    .type(Type.INTEGER.value)
+                                    .required(false)
+                                    .build()
+                            )
+                        )
                         .build()
                 )
             )
@@ -128,9 +133,15 @@ class LinkCommand(
 
         val isAddOption = getOption("add").getOrNull() != null
         val isRemoveOption = getOption("remove").getOrNull() != null
-        val isListUserOption = getOption("list").getOrNull()?.getOption("choice")?.getOrNull()?.value?.map { it.asString() }?.getOrNull() == "user"
-        val isListGuildOption = getOption("list").getOrNull()?.getOption("choice")?.getOrNull()?.value?.map { it.asString() }?.getOrNull() == "guild"
-        fun getBaseOption() = getOption("add").getOrElse { getOption("remove").orElseGet { getOption("list").getOrNull() } }
+        val isListUserOption = getOption("list").getOrNull()?.getOption("user")?.getOrNull() != null
+        val isListGuildOption = getOption("list").getOrNull()?.getOption("guild")?.getOrNull() != null
+        fun getBaseOption() = getOption("add").getOrElse {
+            getOption("remove").getOrElse {
+                getOption("list").getOrNull()?.getOption("user")?.getOrElse {
+                    getOption("list").getOrNull()?.getOption("guild")?.getOrNull()
+                }
+            }
+        }
 
         val allyCode = getBaseOption()?.getOption("allycode")?.flatMap { it.value }?.map { it.asString() }?.orElse(null)
         val slot = getBaseOption()?.getOption("slot")?.flatMap { it.value }?.map { it.asLong() }?.orElse(null)
@@ -164,10 +175,6 @@ class LinkCommand(
                 }
 
                 isListUserOption -> {
-                    if (slot != null) {
-                        editReply(":warning: you cannot set a slot for the option `user`").subscribe()
-                        return
-                    }
                     val accounts = playerLinkService.listUserLinkedAccounts(user)
                     val text =
                         if (accounts.isEmpty()) "no accounts linked for @$userName"
