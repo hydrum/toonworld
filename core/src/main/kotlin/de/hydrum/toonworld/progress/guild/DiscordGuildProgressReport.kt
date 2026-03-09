@@ -3,32 +3,60 @@ package de.hydrum.toonworld.progress.guild
 import de.hydrum.toonworld.util.toDiscordRelativeDateTime
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.rest.util.Color
-import java.time.Duration
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
-fun GuildProgressData.toDiscordEmbed(): List<EmbedCreateSpec> =
-    """
-        > Data
-        **Guild**: `$name`
-        **Guild id**: `$guildId`
-        **Data from**: ${fromDateTime.toDiscordRelativeDateTime()}
-        **Data to**: ${toDateTime.toDiscordRelativeDateTime()}
-        
-        > Stats
-        ```${toStatsProgressText()}```
-        > Total
-        ```${toMemberProgressText()}```
-        > Top 10
-        ```${toMemberTopProgressText()}```
-        > Bottom 10
-        ```${toMemberLeastProgressText()}```
-        > Least Raid Tickets
-        ```${toMemberLeastRaidTicketsText()}```
-    """
+fun GuildProgressData.calculateResetDays(joinedDateTime: Instant): Long {
+    val calculationDateTime = if (fromDateTime > joinedDateTime) fromDateTime else joinedDateTime
+
+    val latestReset = if (nextResetTime == toDateTime) nextResetTime else nextResetTime.minus(24, ChronoUnit.HOURS)
+
+    if (calculationDateTime.isAfter(latestReset)) {
+        return 1
+    }
+
+    val hoursBetween = calculationDateTime.until(latestReset, ChronoUnit.HOURS)
+    val fullDaysBetween = hoursBetween / 24
+    val resets = fullDaysBetween + 1
+
+    return if (resets <= 0L) 1 else resets
+}
+
+fun GuildProgressData.toDiscordEmbed(type: ProgressType = ProgressType.GALACTIC_POWER): List<EmbedCreateSpec> =
+    when (type) {
+        ProgressType.GALACTIC_POWER -> """
+            > Data
+            **Guild**: `$name`
+            **Guild id**: `$guildId`
+            **Data from**: ${fromDateTime.toDiscordRelativeDateTime()}
+            **Data to**: ${toDateTime.toDiscordRelativeDateTime()}
+            
+            > Stats
+            ```${toStatsProgressText()}```
+            > Total
+            ```${toMemberProgressText()}```
+            > Top 10
+            ```${toMemberTopProgressText()}```
+            > Bottom 10
+            ```${toMemberLeastProgressText()}```
+        """
+
+        ProgressType.RAID_TICKETS -> """
+            > Data
+            **Guild**: `$name`
+            **Guild id**: `$guildId`
+            **Data from**: ${fromDateTime.toDiscordRelativeDateTime()}
+            **Data to**: ${toDateTime.toDiscordRelativeDateTime()}
+            
+            > Raid Tickets Progress (Average)
+            ```${toRaidTicketsAverageText()}```
+        """
+    }
         .trimIndent()
         .let {
             EmbedCreateSpec.builder()
                 .color(Color.LIGHT_SEA_GREEN)
-                .title("Progressreport")
+                .title("Progressreport - ${type.label}")
                 .description(it)
                 .build()
         }
@@ -79,19 +107,21 @@ fun GuildProgressData.toMemberLeastProgressText() =
             it.joinToString("\n") { "${it.name.padEnd(maxNameLength)} | ${it.galacticPowerGain.toDiffText()}" }
         }
 
-fun GuildProgressData.toMemberLeastRaidTicketsText() =
+fun GuildProgressData.toRaidTicketsAverageText() =
     members
         .map {
-            val calculationDateTime = if (fromDateTime > it.joinDateTime) fromDateTime else it.joinDateTime
-            val daysBetween = Duration.between(calculationDateTime, this.toDateTime).toDaysPart().let { if (it == 0L) 1 else it }
-            Pair(it.name, (it.raidTickets.absGain ?: 0) / daysBetween)
+            val daysBetween = calculateResetDays(it.joinDateTime)
+            val average = (it.raidTickets.absGain ?: 0) / daysBetween
+            Pair(it.name, average)
         }
         .sortedWith(
-            compareBy { it.second }
+            compareByDescending<Pair<String, Long>> { it.second }.thenBy { it.first }
         )
-        .take(10)
+        .take(50)
         .let {
             if (it.isEmpty()) return@let "---"
             val maxNameLength = it.maxOf { it.first.length }
-            it.joinToString("\n") { "${it.first.padEnd(maxNameLength)} | ${it.second}" }
+            val maxAvgLength = it.maxOf { it.second.toString().length }
+
+            it.joinToString("\n") { "${it.first.padEnd(maxNameLength)} | ${it.second.toString().padStart(maxAvgLength)}" }
         }

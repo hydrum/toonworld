@@ -2,6 +2,7 @@ package de.hydrum.toonworld.discord.command
 
 import de.hydrum.toonworld.management.DiscordPlayerCacheService
 import de.hydrum.toonworld.progress.guild.GuildProgressReportService
+import de.hydrum.toonworld.progress.guild.ProgressType
 import de.hydrum.toonworld.progress.guild.toDiscordEmbed
 import de.hydrum.toonworld.progress.player.PlayerProgressReportService
 import de.hydrum.toonworld.progress.player.toDiscordEmbed
@@ -108,6 +109,20 @@ class ProgressCommand(
                         .description("default is ${defaultTo ?: "now"}. If set, it uses now() - x days")
                         .type(Type.INTEGER.value)
                         .required(false)
+                        .build(),
+                    ApplicationCommandOptionData.builder()
+                        .name("type")
+                        .description("default is \"${ProgressType.GALACTIC_POWER.label}\". if provided, the report is compiled for that type")
+                        .type(Type.STRING.value)
+                        .required(false)
+                        .choices(
+                            ProgressType.entries.map {
+                                discord4j.discordjson.json.ApplicationCommandOptionChoiceData.builder()
+                                    .name(it.label)
+                                    .value(it.name)
+                                    .build()
+                            }
+                        )
                         .build()
                 )
             )
@@ -125,6 +140,7 @@ class ProgressCommand(
         val slot = getBaseOption()?.getOption("slot")?.flatMap { it.value }?.map { it.asLong() }?.orElse(0L) ?: 0L
         val from = getBaseOption()?.getOption("from")?.flatMap { it.value }?.map { it.asLong() }?.orElse(defaultFrom)
         val to = getBaseOption()?.getOption("to")?.flatMap { it.value }?.map { it.asLong() }?.orElse(defaultTo)
+        val type = getBaseOption()?.getOption("type")?.flatMap { it.value }?.map { ProgressType.valueOf(it.asString()) }?.orElse(ProgressType.GALACTIC_POWER) ?: ProgressType.GALACTIC_POWER
 
         val userOption = getBaseOption()?.getOption("user")?.flatMap { it.value }?.map { it.asUser().blockOptional(1.seconds.toJavaDuration()) }?.orElse(null)
         val user = if (userOption?.isPresent == true) userOption.get() else interaction.user
@@ -154,7 +170,7 @@ class ProgressCommand(
                     from = from?.let { utcNow().minusSeconds(24 * 60 * 60 * it) },
                     to = to?.let { utcNow().minusSeconds(24 * 60 * 60 * it) }
                 ).also {
-                    it.toDiscordEmbed().forEach {
+                    it.toDiscordEmbed(type).forEach {
                         createFollowup(
                             InteractionFollowupCreateSpec
                                 .builder()

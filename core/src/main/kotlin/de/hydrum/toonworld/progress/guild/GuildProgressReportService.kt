@@ -43,6 +43,7 @@ class GuildProgressReportService(
             guildId = toGuild.swgohGuildId,
             fromDateTime = fromGuild.updateTime,
             toDateTime = toGuild.updateTime,
+            nextResetTime = toGuild.nextResetTime,
             galacticPowerGain = fromGuild.galacticPower gainToLong toGuild.galacticPower,
             members = toGuild.members.map { toMember ->
                 Pair(fromGuild.members.firstOrNull { fromMember -> fromMember.swgohPlayerId == toMember.swgohPlayerId }, toMember)

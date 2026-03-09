@@ -83,7 +83,7 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 bannerLogoId = rs.getString("banner_logo_id"),
                 bannerColorId = rs.getString("banner_color_id"),
                 memberCount = rs.getInt("member_count"),
-                nextResetTime = rs.getTimestamp("update_time").toInstant()
+                nextResetTime = rs.getTimestamp("next_reset_time").toInstant()
             )
     }
 
