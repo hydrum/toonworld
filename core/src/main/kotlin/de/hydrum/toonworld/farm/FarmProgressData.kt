@@ -55,9 +55,9 @@ data class FarmProgressUnit(
     }
 
     fun getRarityProgress(): Double? {
-        val progress = if (farmUnit.minRarity == 0) null
+        val progress = if (farmUnit.effectiveMinRarity == 0) null
         else if (playerUnit == null) 0.0
-        else (playerUnit.rarity / farmUnit.minRarity.toDouble()).pow(EXPONENT_RARITY)
+        else (playerUnit.rarity / farmUnit.effectiveMinRarity.toDouble()).pow(EXPONENT_RARITY)
 
         return if (progress != null) 1.0.coerceAtMost(progress) else progress
     }

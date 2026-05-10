@@ -10,7 +10,7 @@ class FarmUnit(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long?,
     @Column(nullable = false) var baseId: String,
     @Column(name = "is_required", nullable = false) var required: Boolean,
-    var minRarity: Int,
+    var minRarity: Int?,
     var minGearLevel: Int,
     @Enumerated(EnumType.STRING) var minRelicTier: RelicTier,
     @Column(name = "min_stat_speed") var minSpeed: Long?,
@@ -22,4 +22,7 @@ class FarmUnit(
     @JoinColumn(name = "farm_id", nullable = false)
     var farm: Farm?
 
-)
+) {
+    val effectiveMinRarity: Int
+        get() = minRarity ?: minRelicTier.minRarity
+}

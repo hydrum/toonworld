@@ -11,10 +11,10 @@ data class DiscordFarmWrapper(val farm: Farm, val unitCacheService: UnitCacheSer
         if (farm.units.isEmpty()) return "> ${farm.name()} (needed toons: ${farm.teamSize})\n```---```"
         val maxLengthRequired = farm.units.maxOf { it.requiredString().length }
         val maxLengthName = farm.units.maxOf { unitCacheService.findUnit(it.baseId)?.name?.length ?: 0 }
-        val maxLengthRarity = farm.units.maxOf { it.minRarity.toString().length }
+        val maxLengthRarity = farm.units.maxOf { it.effectiveMinRarity.toString().length }
         val maxLengthGearLevel = farm.units.maxOf { it.minGearLevel.toString().length }
         return """> ${farm.name()} (needed toons: ${farm.teamSize})
-        ```${farm.units.joinToString("\n") { "${it.requiredString().padEnd(maxLengthRequired)}${(unitCacheService.findUnit(it.baseId)?.name ?: it.baseId).padEnd(maxLengthName)} | ${"${it.minRarity}*".padEnd(maxLengthRarity)} | G${it.minGearLevel.toString().padEnd(maxLengthGearLevel)} | ${it.minRelicTier.label}" }}```
+        ```${farm.units.joinToString("\n") { "${it.requiredString().padEnd(maxLengthRequired)}${(unitCacheService.findUnit(it.baseId)?.name ?: it.baseId).padEnd(maxLengthName)} | ${"${it.effectiveMinRarity}*".padEnd(maxLengthRarity)} | G${it.minGearLevel.toString().padEnd(maxLengthGearLevel)} | ${it.minRelicTier.label}" }}```
     """.trimIndent()
     }
 

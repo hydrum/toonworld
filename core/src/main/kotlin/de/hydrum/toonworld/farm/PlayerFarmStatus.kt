@@ -56,7 +56,7 @@ fun FarmProgress.toStatus(player: Player, unitCacheService: UnitCacheService): P
                 gearProgress = it.getRarityProgress() ?: 1.0,
                 relicProgress = it.getRarityProgress() ?: 1.0,
                 totalProgress = it.getWeightedProgress(),
-                rarityRequirement = it.farmUnit.minRarity,
+                rarityRequirement = it.farmUnit.effectiveMinRarity,
                 gearRequirement = it.farmUnit.minGearLevel,
                 relicRequirement = it.farmUnit.minRelicTier,
                 rarityStatus = it.playerUnit?.rarity,
@@ -83,7 +83,11 @@ fun PlayerFarmStatus.toDiscordEmbed(): EmbedCreateSpec =
         }
 
 fun PlayerFarmStatus.toDiscordText(): String {
-    val units = requirements.sortedByDescending { it.totalProgress }
+    val units = requirements
+        .sortedWith(
+            compareByDescending<PlayerFarmUnitStatus> { it.totalProgress }
+                .thenByDescending { it.relicRequirement }.thenByDescending { it.gearRequirement }.thenByDescending { it.rarityRequirement}
+        )
     if (units.isEmpty()) return "> $farmName **${totalProgress.toPctText()} %**\n```---```"
     val maxToonLength = units.maxOf { it.unitName.length }
     val maxStatusText = units.maxOf { it.toStatusText().length }

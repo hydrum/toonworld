@@ -76,7 +76,7 @@ fun Player.hasCompletedFarm(farm: Farm): Boolean =
         units.firstOrNull { it.baseId == farmUnit.baseId }
             .let {
                 it != null
-                        && it.rarity >= farmUnit.minRarity
+                        && it.rarity >= farmUnit.effectiveMinRarity
                         && it.gearLevel >= farmUnit.minGearLevel
                         && it.relicTier.ordinal >= farmUnit.minRelicTier.ordinal
             }

@@ -1,6 +1,6 @@
 package de.hydrum.toonworld.player.database.model
 
-enum class RelicTier(val label: String, val relicValue: Int, val minStars: Int) {
+enum class RelicTier(val label: String, val relicValue: Int, val minRarity: Int) {
     NONE("", 0, 0),
     LOCKED("", 0, 0),
     TIER_0("R0", 0, 1),
