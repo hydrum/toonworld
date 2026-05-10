@@ -1,12 +1,12 @@
 package de.hydrum.toonworld.data
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import de.hydrum.toonworld.config.AppConfig
 import de.hydrum.toonworld.config.CacheNames
 import de.hydrum.toonworld.data.mods.ModData
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import tools.jackson.databind.ObjectMapper
 
 @Service
 class DataCacheService(
@@ -16,7 +16,7 @@ class DataCacheService(
 
     @Cacheable(cacheNames = [CacheNames.MODS])
     fun getModData(): ModData = checkNotNull(this::class.java.getResource("/data/${appConfig.data.modFile}")) { "file not found of ${"/data/${appConfig.data.modFile}"}" }
-        .let { objectMapper.readValue(it, ModData::class.java) }
+        .let { it.openStream().use { stream -> objectMapper.readValue(stream, ModData::class.java) } }
         .also { log.debug { "Mod Sets: ${it.statModSet.size} | Mod Stats: ${it.statMod.size}" } }
 
     companion object {

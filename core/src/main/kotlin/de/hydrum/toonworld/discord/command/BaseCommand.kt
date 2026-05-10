@@ -19,7 +19,7 @@ abstract class BaseCommand(
     open fun autocomplete(event: ChatInputAutoCompleteEvent) {}
 
     fun handleError(event: ChatInputInteractionEvent, e: Throwable, option: String? = null): Unit = with(event) {
-        (if (e is IllegalArgumentException) e.message
+        (if (e is IllegalArgumentException) e.message ?: "Invalid argument"
         else if (errorIsGuildCannotBeFound(e)) "Failed to find guild"
         else if (option != null && errorIsAllyCodeCannotBeFound(e, option)) "Failed to find allyCode `$option`"
         else ":warning: Error while handling :warning:")
@@ -37,5 +37,5 @@ abstract class BaseCommand(
     }
 
     //    fun ChatInputAutoCompleteEvent.getValueAsStringOrBlank() = focusedOption.value.map { it.asString() }.getOrDefault("")
-    fun ChatInputAutoCompleteEvent.getValueAsStringOrBlank() = focusedOption.value.map { it.raw.toString() }.getOrDefault("")
+    fun ChatInputAutoCompleteEvent.getValueAsStringOrBlank() = focusedOption.value.map { it.raw }.getOrDefault("")
 }

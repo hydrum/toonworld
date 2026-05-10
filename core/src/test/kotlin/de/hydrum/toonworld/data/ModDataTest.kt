@@ -1,6 +1,5 @@
 package de.hydrum.toonworld.data
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import de.hydrum.toonworld.api.comlink.models.Player
 import de.hydrum.toonworld.data.mods.ModData
 import de.hydrum.toonworld.data.mods.UnitStat
@@ -10,6 +9,8 @@ import de.hydrum.toonworld.testutils.TestUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import tools.jackson.databind.ObjectMapper
+import tools.jackson.databind.json.JsonMapper
 
 class ModDataTest {
 
@@ -19,10 +20,10 @@ class ModDataTest {
         assertNotNull(objectMapper)
 
         val modDataFile = TestUtil().loadResource("/data/game-data-mods_20250110.json")
-        val modData = objectMapper.readValue(modDataFile, ModData::class.java)
+        val modData = modDataFile.openStream().use { objectMapper.readValue(it, ModData::class.java) }
 
         val playerFile = TestUtil().loadResource("/data/hydrum_20250110.json")
-        val player = objectMapper.readValue(playerFile, Player::class.java)
+        val player = playerFile.openStream().use { objectMapper.readValue(it, Player::class.java) }
 
         player.rosterUnit.forEach { unit ->
             unit.equippedStatMod.map { mod -> mod.createModWith(modData) }
@@ -53,6 +54,6 @@ class ModDataTest {
 
     companion object {
         private val log = KotlinLogging.logger { }
-        fun createObjectMapper(): ObjectMapper = ObjectMapper().findAndRegisterModules()
+        fun createObjectMapper(): ObjectMapper = JsonMapper.builder().findAndAddModules().build()
     }
 }

@@ -28,12 +28,13 @@ class JourneyCommand(
             .type(Type.STRING.value)
             .addAllChoices(
                 farmService.getJourneyGuideFarms()
-                    .filter { it.unlockBaseId != null }
-                    .map {
+                    .mapNotNull {
+                        val unlockBaseId = it.unlockBaseId ?: return@mapNotNull null
+
                         ApplicationCommandOptionChoiceData
                             .builder()
-                            .value(it.unlockBaseId)
-                            .name(unitCacheService.findUnit(it.unlockBaseId!!)?.name ?: it.unlockBaseId)
+                            .value(unlockBaseId)
+                            .name(unitCacheService.findUnit(unlockBaseId)?.name ?: unlockBaseId)
                             .build()
                     })
             .required(true)

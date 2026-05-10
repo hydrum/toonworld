@@ -11,7 +11,7 @@
   "peerDependencies": {
     "@typespec/compiler": "^1.3.0",
     "@typespec/http": "^1.3.0",
-    "@typespec/rest": "^0.71.0",
+    "@typespec/rest": "^0.81.0",
     "@typespec/openapi3": "^1.3.0"
   },
   "private": true
