@@ -33,25 +33,26 @@ class DiscordRoleAssignmentService(
             return
         }
 
-        val discordPlayerIds = discordPlayerOfGuild.map { it.discordUserId }
         val discordPlayerToMember = discordClient.getGuildMembers(Snowflake.of(discordGuild.discordGuildId))
-            .filter { it.id.asLong() in discordPlayerIds }
-            .map { member -> discordPlayerOfGuild.first { it.discordUserId == member.id.asLong() } to member }
+            .map { member -> discordPlayerOfGuild.firstOrNull { it.discordUserId == member.id.asLong() } to member }
             .collectList()
             .block(5.seconds.toJavaDuration())
+            .orEmpty()
 
         discordGuild.farms
             .filter { it.discordRoleId != null }
             .map { farm -> farm to discordPlayerOfGuild.filter { it.player?.hasCompletedFarm(farm.farm) == true } }
             .forEach { (farmRole, discordPlayerList) ->
                 val farmDiscordRoleId = Snowflake.of(farmRole.discordRoleId!!)
-                val member = discordPlayerToMember?.filter { it.first in discordPlayerList }
-                member
-                    ?.filter { (_, member) -> farmDiscordRoleId !in member.roleIds }
-                    ?.forEach { (discordPlayer, member) ->
-                        log.info { "@${member.displayName} as ${discordPlayer.player?.name} has been assigned the role $farmDiscordRoleId for ${farmRole.farm.name}." }
-                        member.addRole(farmDiscordRoleId).subscribe()
-                    }
+                val (hasCompleted, hasNotCompleted) = discordPlayerToMember.partition { it.first in discordPlayerList }
+                hasCompleted.filter { (_, member) -> farmDiscordRoleId !in member.roleIds }.forEach { (discordPlayer, member) ->
+                    log.info { "@${member.displayName} (player: ${discordPlayer?.player?.name ?: "unknown"}) has been assigned the role $farmDiscordRoleId for ${farmRole.farm.name}." }
+                    member.addRole(farmDiscordRoleId).subscribe()
+                }
+                hasNotCompleted.filter { (_, member) -> farmDiscordRoleId in member.roleIds }.forEach { (discordPlayer, member) ->
+                    log.info { "@${member.displayName} (player: ${discordPlayer?.player?.name ?: "unknown"}) has not completed ${farmRole.farm.name}. Therefore removing the role $farmDiscordRoleId." }
+                    member.removeRole(farmDiscordRoleId).subscribe()
+                }
             }
         log.debug { "done assigning roles for guildId=$swgohGuildId" }
     }
