@@ -1,0 +1,12 @@
+spring:
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:../.env[.properties]
+  datasource:
+    url: jdbc:mariadb://${LOCAL_DATABASE_HOST:localhost:3333}/${DATABASE_SCHEMA}?serverTimezone=UTC
+
+app:
+  api:
+    comlink:
+      base-url: "${LOCAL_COMLINK_BASE_URL:http://localhost:3000}"

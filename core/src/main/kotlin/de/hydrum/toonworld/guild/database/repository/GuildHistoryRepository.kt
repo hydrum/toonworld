@@ -1,5 +1,7 @@
 package de.hydrum.toonworld.guild.database.repository
 
+import de.hydrum.toonworld.database.getUtcInstant
+import de.hydrum.toonworld.database.setUtcTimestamp
 import de.hydrum.toonworld.guild.database.model.Guild
 import de.hydrum.toonworld.guild.database.model.GuildMember
 import de.hydrum.toonworld.guild.database.model.GuildMemberLevel
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Repository
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
-import java.sql.Timestamp
 import java.time.Instant
 
 @Repository
@@ -25,7 +26,7 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                         it.setString(1, swgohGuildId)
                     }
                 )
-            ) { rs: ResultSet, rowNum: Int -> rs.getTimestamp("row_start").toInstant() }
+            ) { rs: ResultSet, rowNum: Int -> rs.getUtcInstant("row_start") }
             .firstOrNull()
 
     fun findGuildAtTimestamp(swgohGuildId: String, instant: Instant): Guild? =
@@ -34,7 +35,7 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ToonWorldHistoryPreparedStatementCreator(
                     sql = SQL_GUILD_AT_TIMESTAMP,
                     paramCallback = {
-                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setUtcTimestamp(1, instant)
                         it.setString(2, swgohGuildId)
                     }
                 ),
@@ -48,7 +49,7 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ToonWorldHistoryPreparedStatementCreator(
                     sql = SQL_GUILD_MEMBERS_AT_TIMESTAMP,
                     paramCallback = {
-                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setUtcTimestamp(1, instant)
                         it.setLong(2, guildId)
                     }
                 ),
@@ -77,13 +78,13 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
             Guild(
                 id = rs.getLong("id"),
                 name = rs.getString("name"),
-                updateTime = rs.getTimestamp("update_time").toInstant(),
+                updateTime = rs.getUtcInstant("update_time"),
                 galacticPower = rs.getLong("galactic_power"),
                 swgohGuildId = rs.getString("swgoh_guild_id"),
                 bannerLogoId = rs.getString("banner_logo_id"),
                 bannerColorId = rs.getString("banner_color_id"),
                 memberCount = rs.getInt("member_count"),
-                nextResetTime = rs.getTimestamp("next_reset_time").toInstant()
+                nextResetTime = rs.getUtcInstant("next_reset_time")
             )
     }
 
@@ -95,9 +96,9 @@ class GuildHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 swgohPlayerId = rs.getString("swgoh_player_id"),
                 name = rs.getString("name"),
                 memberLevel = GuildMemberLevel.valueOf(rs.getString("member_level")),
-                joinTime = rs.getTimestamp("join_time").toInstant(),
+                joinTime = rs.getUtcInstant("join_time"),
                 galacticPower = rs.getLong("galactic_power"),
-                lastActivityTime = rs.getTimestamp("last_activity_time").toInstant(),
+                lastActivityTime = rs.getUtcInstant("last_activity_time"),
                 raidTickets = rs.getLong("raid_tickets_total"),
                 guildTokens = rs.getLong("guild_tokens_total"),
                 donations = rs.getLong("donations_total")

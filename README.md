@@ -14,6 +14,24 @@ Progress management tool for Player and Guild
 - Comlink
 - Angular Webapp for later?
 
+## Local Debugging
+
+Start only the Docker dependencies and run the Spring Boot application from the IDE or Maven with the `local` profile:
+
+```powershell
+docker compose up -d mariadb comlink
+mvnw -pl core spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+The `local` profile reads the root `.env` file when present, connects MariaDB through the published host port `localhost:3333`, and calls comlink at `http://localhost:3000`.
+
+Optional overrides:
+
+```properties
+LOCAL_DATABASE_HOST=localhost:3333
+LOCAL_COMLINK_BASE_URL=http://localhost:3000
+```
+
 ## TODO
 
 nice info: how many under-leveled / non-matching mods you have

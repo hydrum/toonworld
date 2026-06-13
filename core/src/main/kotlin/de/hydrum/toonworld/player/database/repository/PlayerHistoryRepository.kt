@@ -3,6 +3,8 @@ package de.hydrum.toonworld.player.database.repository
 import de.hydrum.toonworld.data.mods.ModSlot
 import de.hydrum.toonworld.data.mods.ModTier
 import de.hydrum.toonworld.data.mods.UnitStat
+import de.hydrum.toonworld.database.getUtcInstant
+import de.hydrum.toonworld.database.setUtcTimestamp
 import de.hydrum.toonworld.player.database.model.*
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.PreparedStatementCreator
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Repository
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
-import java.sql.Timestamp
 import java.time.Instant
 
 @Repository
@@ -26,7 +27,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                         it.setString(1, allyCode)
                     }
                 )
-            ) { rs: ResultSet, rowNum: Int -> rs.getTimestamp("row_start").toInstant() }
+            ) { rs: ResultSet, rowNum: Int -> rs.getUtcInstant("row_start") }
             .firstOrNull()
 
     fun findPlayerAtTimestamp(allyCode: String, instant: Instant): Player? =
@@ -35,7 +36,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ToonWorldHistoryPreparedStatementCreator(
                     sql = SQL_PLAYER_AT_TIMESTAMP,
                     paramCallback = {
-                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setUtcTimestamp(1, instant)
                         it.setString(2, allyCode)
                     }
                 ),
@@ -49,9 +50,9 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ToonWorldHistoryPreparedStatementCreator(
                     sql = SQL_PLAYER_OF_GUILD_AT_TIMESTAMP,
                     paramCallback = {
-                        it.setTimestamp(1, Timestamp.from(instant))
-                        it.setTimestamp(2, Timestamp.from(instant))
-                        it.setTimestamp(3, Timestamp.from(instant))
+                        it.setUtcTimestamp(1, instant)
+                        it.setUtcTimestamp(2, instant)
+                        it.setUtcTimestamp(3, instant)
                         it.setString(4, guildId)
                     }
                 ),
@@ -86,7 +87,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ToonWorldHistoryPreparedStatementCreator(
                     sql = SQL_PLAYER_UNITS_AT_TIMESTAMP,
                     paramCallback = {
-                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setUtcTimestamp(1, instant)
                         it.setLong(2, playerId)
                     }
                 ),
@@ -99,7 +100,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ToonWorldHistoryPreparedStatementCreator(
                     sql = SQL_PLAYER_UNIT_ABILITIES_AT_TIMESTAMP,
                     paramCallback = {
-                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setUtcTimestamp(1, instant)
                         it.setLong(2, playerId)
                     }
                 ),
@@ -112,7 +113,7 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 ToonWorldHistoryPreparedStatementCreator(
                     sql = SQL_PLAYER_UNIT_MODS_AT_TIMESTAMP,
                     paramCallback = {
-                        it.setTimestamp(1, Timestamp.from(instant))
+                        it.setUtcTimestamp(1, instant)
                         it.setLong(2, playerId)
                     }
                 ),
@@ -151,8 +152,8 @@ class PlayerHistoryRepository(private val jdbcTemplate: JdbcTemplate) {
                 allyCode = rs.getString("ally_code"),
                 swgohPlayerId = rs.getString("swgoh_player_id") ?: "UNKNOWN",
                 name = rs.getString("name"),
-                updateTime = rs.getTimestamp("update_time").toInstant(),
-                lastActivityTime = rs.getTimestamp("activity_time").toInstant(),
+                updateTime = rs.getUtcInstant("update_time"),
+                lastActivityTime = rs.getUtcInstant("activity_time"),
                 resetTime = rs.getTime("reset_time").toLocalTime(),
                 galacticPower = rs.getLong("galactic_power"),
                 level = rs.getInt("level"),
