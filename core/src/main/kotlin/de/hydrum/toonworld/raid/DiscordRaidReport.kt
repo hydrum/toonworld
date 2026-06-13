@@ -14,7 +14,9 @@ data class RaidMemberPerformance(val player: Player?, val guildName: String, val
 
 fun List<RaidDetails>.toDiscordEmbed(csv: Boolean): List<EmbedCreateSpec> =
     if (this.isEmpty()) emptyList()
-    else with(sortedWith(compareByDescending { it.endTs })) {
+    else sortedWith(compareByDescending { it.endTs })
+        .take(50)
+        .let {
         val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withZone(ZoneOffset.UTC)
         (if (csv)
             buildString {
@@ -42,7 +44,9 @@ fun List<RaidDetails>.toDiscordEmbed(csv: Boolean): List<EmbedCreateSpec> =
 
 fun List<RaidMemberPerformance>.toSinglePlayerDiscordEmbed(csv: Boolean): List<EmbedCreateSpec> =
     if (this.isEmpty()) emptyList()
-    else with(sortedWith(compareByDescending { it.endTs })) {
+    else sortedWith(compareByDescending { it.endTs })
+        .take(50)
+        .let {
         val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withZone(ZoneOffset.UTC)
         (if (csv)
             buildString {
@@ -72,7 +76,9 @@ fun List<RaidMemberPerformance>.toSinglePlayerDiscordEmbed(csv: Boolean): List<E
 
 fun List<RaidMemberPerformance>.toRaidDiscordEmbed(csv: Boolean): List<EmbedCreateSpec> =
     if (this.isEmpty()) emptyList()
-    else with(sortedWith(compareByDescending { it.score })) {
+    else sortedWith(compareByDescending { it.score })
+        .take(50)
+        .let {
         fun playerName(player: Player?) = player?.name ?: "???"
         val maxNameLength = maxOfOrNull { playerName(it.player).length } ?: 0
         val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy").withZone(ZoneOffset.UTC)
