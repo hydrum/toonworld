@@ -12,13 +12,13 @@
     <name>Toon World Core</name>
 
     <properties>
-        <java.version>21</java.version>
-        <kotlin.version>2.2.21</kotlin.version>
-        <kotlinlogging.version>8.0.02</kotlinlogging.version>
+        <java.version>25</java.version>
+        <kotlin.version>2.4.0</kotlin.version>
+        <kotlinlogging.version>8.0.4</kotlinlogging.version>
         <springmockk.version>5.0.1</springmockk.version>
         <discord4j.version>3.3.2</discord4j.version>
-        <openapigenerator.version>7.22.0</openapigenerator.version>
-        <okhttp.version>5.3.2</okhttp.version>
+        <openapigenerator.version>7.23.0</openapigenerator.version>
+        <okhttp.version>5.4.0</okhttp.version>
         <jsoup.version>1.22.2</jsoup.version>
         <tc.version>1.21.4</tc.version>
         <wiremock.version>3.13.2</wiremock.version>
@@ -232,6 +232,7 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <configuration>
+                    <jvmTarget>${java.version}</jvmTarget>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
