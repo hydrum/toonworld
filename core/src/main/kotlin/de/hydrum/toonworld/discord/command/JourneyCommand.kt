@@ -4,6 +4,7 @@ import de.hydrum.toonworld.farm.FarmService
 import de.hydrum.toonworld.farm.toDiscordEmbed
 import de.hydrum.toonworld.management.DiscordPlayerCacheService
 import de.hydrum.toonworld.unit.UnitCacheService
+import discord4j.core.event.domain.interaction.ChatInputAutoCompleteEvent
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.`object`.command.ApplicationCommandOption.Type
 import discord4j.core.spec.InteractionFollowupCreateSpec
@@ -17,7 +18,7 @@ import kotlin.time.toJavaDuration
 class JourneyCommand(
     private val playerCacheService: DiscordPlayerCacheService,
     private val farmService: FarmService,
-    unitCacheService: UnitCacheService
+    private val unitCacheService: UnitCacheService
 ) : BaseCommand(
     name = "journey",
     description = "Retrieve an overview of all ongoing journeys",
@@ -26,17 +27,7 @@ class JourneyCommand(
             .name("journey")
             .description("choose the journey guide to get a summary for")
             .type(Type.STRING.value)
-            .addAllChoices(
-                farmService.getJourneyGuideFarms()
-                    .mapNotNull {
-                        val unlockBaseId = it.unlockBaseId ?: return@mapNotNull null
-
-                        ApplicationCommandOptionChoiceData
-                            .builder()
-                            .value(unlockBaseId)
-                            .name(unitCacheService.findUnit(unlockBaseId)?.name ?: unlockBaseId)
-                            .build()
-                    })
+            .autocomplete(true)
             .required(true)
             .build(),
         ApplicationCommandOptionData.builder()
@@ -59,6 +50,7 @@ class JourneyCommand(
             .build()
     )
 ) {
+
     override fun handle(event: ChatInputInteractionEvent): Unit = with(event) {
         deferReply().subscribe()
 
@@ -86,4 +78,24 @@ class JourneyCommand(
             }
         }.onFailure { handleError(this, it) }
     }
+
+    override fun autocomplete(event: ChatInputAutoCompleteEvent): Unit = with(event) {
+        val value = getValueAsStringOrBlank().lowercase()
+
+        farmService.getJourneyGuideFarms()
+            .mapNotNull { farm ->
+                val unlockBaseId = farm.unlockBaseId ?: return@mapNotNull null
+                val name = unitCacheService.findUnit(unlockBaseId)?.name ?: unlockBaseId
+                if (!name.lowercase().contains(value)) return@mapNotNull null
+
+                ApplicationCommandOptionChoiceData.builder()
+                    .name(name)
+                    .value(unlockBaseId)
+                    .build()
+            }
+            .take(25)
+            .sortedBy { it.name() }
+            .let { respondWithSuggestions(it).subscribe() }
+    }
+
 }
