@@ -13,14 +13,14 @@
 
     <properties>
         <java.version>25</java.version>
-        <kotlin.version>2.4.0</kotlin.version>
+        <kotlin.version>2.4.21</kotlin.version>
         <kotlinlogging.version>8.0.4</kotlinlogging.version>
         <springmockk.version>5.0.1</springmockk.version>
-        <discord4j.version>3.3.2</discord4j.version>
-        <openapigenerator.version>7.23.0</openapigenerator.version>
-        <okhttp.version>5.4.0</okhttp.version>
-        <jsoup.version>1.22.2</jsoup.version>
-        <tc.version>1.21.4</tc.version>
+        <discord4j.version>3.3.3</discord4j.version>
+        <openapigenerator.version>7.27.0</openapigenerator.version>
+        <okhttp.version>5.5.1</okhttp.version>
+        <jsoup.version>1.24.1</jsoup.version>
+        <tc.version>2.0.5</tc.version>
         <wiremock.version>3.13.2</wiremock.version>
     </properties>
 
@@ -77,14 +77,6 @@
             <artifactId>caffeine</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
         <dependency>
             <groupId>tools.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
@@ -150,13 +142,13 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
             <version>${tc.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mariadb</artifactId>
+            <artifactId>testcontainers-mariadb</artifactId>
             <version>${tc.version}</version>
             <scope>test</scope>
         </dependency>
@@ -281,6 +273,7 @@
                                 <packageName>de.hydrum.toonworld.api.comlink</packageName>
                                 <serializationLibrary>jackson</serializationLibrary>
                                 <useSpringBoot3>true</useSpringBoot3>
+                                <useJackson3>true</useJackson3>
                                 <additionalModelTypeAnnotations>@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)</additionalModelTypeAnnotations>
                             </configOptions>
                         </configuration>
@@ -307,6 +300,7 @@
                                 <packageName>de.hydrum.toonworld.api.swgohgg</packageName>
                                 <serializationLibrary>jackson</serializationLibrary>
                                 <useSpringBoot3>true</useSpringBoot3>
+                                <useJackson3>true</useJackson3>
                                 <additionalModelTypeAnnotations>@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)</additionalModelTypeAnnotations>
                             </configOptions>
                         </configuration>
